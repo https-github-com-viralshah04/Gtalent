@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+ <!-- Talents List Action -->
+     <record id="talent_details_list_action" model="ir.actions.act_window">
+        <field name="name">Talents</field>
+        <field name="res_model">hr.applicant</field>
+        <field name="view_mode">kanban,tree,form,pivot,graph,calendar,activity</field>
+        <field name="domain"></field>
+        <field name="view_id" ref="hr_recruitment.hr_kanban_view_applicant"/>
+    </record>
+
+     <menuitem
+            id="talent__details_list"
+            name="Talents"
+            sequence="9"
+            parent="hr_recruitment.menu_hr_recruitment_root"
+            action="talent_details_list_action"/>
+            
+</odoo>

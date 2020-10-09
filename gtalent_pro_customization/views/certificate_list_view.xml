@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+ 
+    <!--Certificate List Tree View -->
+     <record id="applicant_certificate_list_tree_view" model="ir.ui.view">
+        <field name="name">applicant.certificate.list.tree.view</field>
+        <field name="model">applicant.certificate</field>
+        <field name="arch" type="xml">
+            <tree string="Certificates and Awards Details">
+               <field name="certificate_name"/>
+				<field name="certificate_id"/>
+				<field name="certificate_technology"/>
+				<field name="certificate_level"/>
+            </tree>
+        </field>
+    </record>
+
+    <!--Certificate List Form View -->
+    <record id="applicant_certificate_list_form_view" model="ir.ui.view">
+        <field name="name">applicant.certificate.list.form</field>
+        <field name="model">applicant.certificate</field>
+        <field name="arch" type="xml">
+            <form string="Certificates and Awards Details">
+            <group name="top">
+             <group string="Certificates" name="right">
+               <field name="certificate_vendor"/>
+				<field name="certificate_name"/>
+				<field name="certificate_id"/>
+				<field name="certificate_technology"/>
+				<field name="certificate_level"/>
+				<field name="certificate_documents"/>
+             </group>
+	         </group>
+            </form>
+        </field>
+    </record>
+ 
+ 
+ <!-- Certificate List Action -->
+    <record id="applicant_certificate_list_action" model="ir.actions.act_window">
+        <field name="name">Certificates and Awards</field>
+        <field name="res_model">applicant.certificate</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="applicant_certificate_list_tree_view"/>
+    </record>
+
+     <menuitem
+            id="menu_applicant_certificate_list"
+            name="Certificate and Award Details"
+            parent="hr_recruitment.menu_hr_recruitment_configuration"
+            action="applicant_certificate_list_action"/>
+            
+</odoo>

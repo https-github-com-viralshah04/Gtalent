@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+ 
+    <!--College List Tree View -->
+     <record id="applicant_college_list_tree_view" model="ir.ui.view">
+        <field name="name">applicant.college.list.tree.view</field>
+        <field name="model">applicant.college.list</field>
+        <field name="arch" type="xml">
+            <tree string="Educational Details">
+                <field name="sequence" invisible="1"/>
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <!--College List Form View -->
+    <record id="applicant_college_list_form_view" model="ir.ui.view">
+        <field name="name">applicant.college.list.form</field>
+        <field name="model">applicant.college.list</field>
+        <field name="arch" type="xml">
+            <form string="Educational Details">
+                <group>
+                <field name="name"/>
+                </group>
+                <group name="left"  string="Address Details">
+               <label for="street" string="Address"/>
+               <div class="o_address_format">
+                 <field name="street" placeholder="Street..." class="o_address_street"/>
+                 <field name="street2" placeholder="Street 2..." class="o_address_street"/>
+                 <field name="city" placeholder="City" class="o_address_city"/>
+                 <field name="state_id" class="o_address_state" placeholder="State" options='{"no_open": True}'/>
+                 <field name="zip" placeholder="ZIP" class="o_address_zip"/>
+                 <field name="country_id" placeholder="Country" class="o_address_country" options='{"no_open": True, "no_create": True}'/>
+               </div>
+              </group>
+            </form>
+        </field>
+    </record>
+ 
+ 
+ <!-- College List Action -->
+    <record id="applicant_college_list_action" model="ir.actions.act_window">
+        <field name="name">Educational Institute</field>
+        <field name="res_model">applicant.college.list</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="applicant_college_list_tree_view"/>
+    </record>
+
+     <menuitem
+            id="menu_applicant_college_list"
+            name="Educational Details"
+            parent="hr_recruitment.menu_hr_recruitment_configuration"
+            action="applicant_college_list_action"/>
+            
+</odoo>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <!--Companies Requests Tree View -->
+     <record id="companies_applicants_requests_tree_view" model="ir.ui.view">
+        <field name="name">companies.applicants.requests.tree.view</field>
+        <field name="model">companies.requests</field>
+        <field name="arch" type="xml">
+            <tree string="Requests">
+            <field name="request_date" readonly="1"/>
+             <field name="company_request" string="Request From" readonly="1" invisible="1"/>
+             <field name="company_ref" string="Request From" readonly="1"/>
+             <field name="college_ref" string="Request To"  readonly="1"/>
+             <field name="request_to" string="Request To" invisible="1" readonly="1"/>
+             <field name="industry_name" string="Industry" readonly="1"/>
+             <field name="candidate_type" string="Candidate Type" readonly="1"/>
+             <field name="specialization" string="Specialization" readonly="1"/>
+             <field name="no_of_applicants_requested" string="Number of Applicants Requested" readonly="1"/>
+             <field name="request_status" string="Status"/>
+            </tree>
+        </field>
+    </record>
+
+    <!--Companies Requests Form View -->
+    <record id="companies_requests_applicants_form_view" model="ir.ui.view">
+        <field name="name">companies.requests.applicants.form.view</field>
+        <field name="model">companies.requests</field>
+        <field name="arch" type="xml">
+          <form string="Request Details">
+            <header>
+            <field name="request_status"  widget="statusbar"/>
+            <button type="object" 
+		            name="approve_company_request" 
+		            string="Approve Request" 
+		            class="oe_right oe_button_box btn-primary" 
+		            icon="fa-check-square-o"  
+		            confirm="Are you sure you want to approve the request?"
+		            attrs="{'invisible' : [('request_status','=','approved')]}"/>
+            </header>
+            <sheet>
+            <widget name="web_ribbon" text="Approved"  attrs="{'invisible': [('request_status', '=', 'pending')]}"/>
+            <group string="Information">
+             <field name="request_date" readonly="1"/>
+             <field name="company_request" string="Request From" invisible="1" readonly="1"/>
+             <field name="company_ref" string="Request From" readonly="1"/>
+             <field name="college_ref" string="Request To"  readonly="1"/>
+             <field name="request_to" string="Request To" invisible="1" readonly="1"/>
+             <field name="industry_name" string="Industry" readonly="1"/>
+             <field name="candidate_type" string="Candidate Type" readonly="1"/>
+             <field name="specialization" string="Specialization" readonly="1"/>
+             <field name="no_of_applicants_requested" string="Number of Applicants Requested" readonly="1"/>
+             </group>
+             </sheet>
+          </form>
+        </field>
+    </record>
+ 
+ <!-- Companies Requests Action -->
+    <record id="companies_requests_action" model="ir.actions.act_window">
+        <field name="name">Requests</field>
+        <field name="res_model">companies.requests</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="companies_applicants_requests_tree_view"/>
+    </record>
+
+     <menuitem
+            id="menu_companies_request_applicants"
+            name=" All Requests"
+            sequence="13"
+            parent="hr_recruitment.menu_hr_recruitment_root"
+            action="companies_requests_action"/>
+            
+            
+</odoo>

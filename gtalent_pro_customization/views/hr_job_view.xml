@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	 <record id="custom_view_hr_job_form_inherit" model="ir.ui.view">
+        <field name="name">hr.job.form.view</field>
+        <field name="model">hr.job</field>
+        <field name="inherit_id" ref="hr.view_hr_job_form"/>
+        <field name="arch" type="xml">
+			<xpath expr="//field[@name='description']" position="replace">
+				<field name="description" invisible="1"/>
+			</xpath>
+			<!--<xpath expr="//label[@for='description']" position="replace">-->
+				<!--<label for="description"/>-->
+			<!--</xpath>-->
+			<xpath expr="//div[hasclass('oe_title')]" position="before">
+				<field name="image" widget="image" class="oe_avatar"/>
+			</xpath>
+
+            <xpath expr="//form//sheet" position="inside">
+            	<notebook>
+	            	<page string="Job Description">
+	            		<group>
+	            			<group col="2">
+								<field name="job_role"/>
+								<field name="company_id"/>
+								<field name="industry_type_id"/>
+								<field name="experience_year"/>
+								<field name="experience_month"/>
+								<field name="company_website"/>
+								<field name="min_salary_range"/>
+								<field name="max_salary_range"/>
+							</group>
+							<group col="2">
+								<field name="work_location"/>
+								<field name="candidate"/>
+								<field name="job_type"/>
+								<field name="candidate_type"/>
+								<field name="functional_area"/>
+								<field name="education"/>
+
+								<field name="Key_skills"/>
+								<field name="s_key_skill"/>
+								<field name="degree_id"/>
+								<field name="specialization"/>
+							</group>
+
+		                </group>
+	            	</page>
+					<page string="Additional Info">
+						<group>
+								<field name="description" invisible="0"/>
+								<field name="company_benefits"/>
+								<field name="instructions"/>
+								<field name="roles_responsibility"/>
+								<field name="company_profile"/>
+						</group>
+					</page>
+            	</notebook>
+            </xpath>
+       </field>
+	</record>
+
+	<record id="custom_crm_lead_form_inherit" model="ir.ui.view">
+        <field name="name">crm.lead.form.view</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+        <field name="arch" type="xml">
+			<xpath expr="//field[@name='company_id']" position="after">
+				<field name="category"/>
+			</xpath>
+		</field>
+	</record>
+</odoo>

@@ -1,0 +1,704 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="web.login" name="Login">
+        <t t-call="web.login_layout">
+
+    <div class="custom-login">
+
+      <div class="n-pages-breadcrumb" style="background: rgba(0, 0, 0, 0.6) url(/gtalent_pro_customization/static/src/images/login-page/login-image.png) 0 0 no-repeat;
+         -webkit-background-size: cover; -moz-background-size: cover;
+          -o-background-size: cover; background-size: cover; background-position: top center; background-attachment:scroll;     padding-top: 90px;
+    padding-bottom: 90px;">
+     <div class="container">
+        <div class="row">
+           <div class="col-md-12 col-12">
+              <div class="n-breadcrumb-info">
+                <h1>Account Signin</h1>
+
+              </div>
+           </div>
+        </div>
+     </div>
+</div>
+            <form class="oe_login_form" role="form" t-attf-action="/web/login" method="post" onsubmit="this.action = this.action + location.hash">
+
+              <div class="row">
+              <div class="col-md-7 col-12">
+                <div class="login-left">
+                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+
+                <div class="form-group field-db" t-if="databases and len(databases) &gt; 1">
+                    <label for="db" class="col-form-label">Database</label>
+                    <div t-attf-class="input-group {{'input-group-sm' if form_small else ''}}">
+                        <input type="text" name="db" t-att-value="request.db" id="db" t-attf-class="form-control #{'form-control-sm' if form_small else ''}" required="required" readonly="readonly"/>
+                        <span class="input-group-append">
+                            <a role="button" href="/web/database/selector" class="btn btn-secondary">Select <i class="fa fa-database" role="img" aria-label="Database" title="Database"></i></a>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="form-group field-login">
+                    <label for="login">Email</label>
+                    <input type="text" placeholder="Email" name="login" t-att-value="login" id="login" t-attf-class="form-control #{'form-control-sm' if form_small else ''}" required="required" autofocus="autofocus" autocapitalize="off"/>
+                </div>
+
+                <div class="form-group field-password">
+                    <label for="password">Password</label>
+                    <input type="password" placeholder="Password" name="password" id="password" t-attf-class="form-control #{'form-control-sm' if form_small else ''}" required="required" autocomplete="current-password" t-att-autofocus="'autofocus' if login else None" maxlength="4096"/>
+                </div>
+                <div class="form-group">
+                    <a t-if="signup_enabled" class="btn reset-password" t-attf-href="/web/reset_password?{{ keep_query() }}">Forgot Password?</a>
+                  </div>
+
+                <p class="alert alert-danger" t-if="error" role="alert">
+                    <t t-esc="error"/>
+                </p>
+                <p class="alert alert-success" t-if="message" role="status">
+                    <t t-esc="message"/>
+                </p>
+
+                <div t-attf-class="clearfix oe_login_buttons text-center mb-1 {{'pt-2' if form_small else 'pt-3'}}">
+                    <button type="submit" class="btn btn-primary btn-block">Log in</button>
+                    <t t-if="debug">
+                        <button type="submit" name="redirect" value="/web/become" class="btn btn-link btn-sm btn-block">Log in as superuser</button>
+                    </t>
+                    <div class="o_login_auth"/>
+                </div>
+
+                <input type="hidden" name="redirect" t-att-value="redirect"/>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-5 col-12 nopadding">
+            <div class="loginpage-right">
+              <div class="social-buttons">
+                              <h2>Register as a</h2>
+                              <div class="form-group">
+                                <a t-if="signup_enabled" t-attf-href="/web/signup?user_type=candidate">Candidate</a>
+                              </div>
+
+                                   <div class="form-group">
+                                    <a t-if="signup_enabled" t-attf-href="/web/signup?user_type=recruiter">Employer</a>
+                                  </div>
+
+                                  <div class="form-group">
+                                    <a t-if="signup_enabled" t-attf-href="/web/signup?user_type=recruiter">Recruiment Vendor</a>
+                                  </div>
+
+                                  <div class="form-group">
+                                    <a t-if="signup_enabled" t-attf-href="/web/signup?user_type=college">Campus</a>
+                                  </div>
+
+                                  <!-- <div class="form-group">
+                                    <a t-if="signup_enabled" class="btn reset-password" t-attf-href="/web/reset_password?{{ keep_query() }}">Reset Password</a>
+                                  </div> -->
+                                            </div>
+            </div>
+        </div>
+
+
+
+        </div>
+
+
+            </form>
+            </div>
+
+
+
+
+        </t>
+    </template>
+
+
+
+<template id="auth_signup.login" inherit_id="web.login" name="Sign up - Reset Password">
+        <xpath expr="//button[@type='submit']" position="after">
+            <div class="justify-content-between mt-2 d-flex small">
+                <!--<a t-if="signup_enabled" t-attf-href="/web/signup?user_type=candidate">Register as a candidate</a>
+                <a t-if="signup_enabled" t-attf-href="/web/signup?user_type=recruiter">Register as a Company/Employer</a>
+                <a t-if="signup_enabled" t-attf-href="/web/signup?user_type=college">Register as a College</a>
+
+                <a t-if="reset_password_enabled" t-attf-href="/web/reset_password?{{ keep_query() }}">Reset Password</a>-->
+            </div>
+        </xpath>
+    </template>
+
+    <!--<template id="web_login_custom" inherit_id="web.login" name="Login">-->
+        <!--<xpath expr="//form[hasclass('oe_login_form')]" position="before">-->
+            <!--<div id="div_login">-->
+            <!--</div>-->
+        <!--</xpath>-->
+    <!--</template>-->
+
+    <template id="signup_fields" inherit_id="auth_signup.fields" name="Auth Signup/ResetPassword form fields">
+        <xpath expr="//div[hasclass('field-login')]" position="replace">
+            <div class="form-group field-login">
+                <label for="login">Your Email</label><span style="color:#FF0000;">*</span>
+                <input type="text" name="login" t-att-value="login" id="login" class="form-control form-control-sm" autofocus="autofocus"
+                    autocapitalize="off" required="required" t-att-readonly="'readonly' if only_passwords else None"/>
+            </div>
+        </xpath>
+        <xpath expr="//div[hasclass('field-name')]" position="replace">
+            <div class="form-group field-name">
+                <label for="name">Your Name</label><span style="color:#FF0000;">*</span>
+                <input type="text" name="name" t-att-value="name" id="name" class="form-control form-control-sm" placeholder="e.g. John Doe"
+                    required="required" t-att-readonly="'readonly' if only_passwords else None"
+                    t-att-autofocus="'autofocus' if login and not only_passwords else None" />
+            </div>
+            <div class="form-group field-name">
+                <label for="name">Mobile Number</label><span style="color:#FF0000;">*</span>
+                <input type="text" name="phone" id="mobile" class="form-control form-control-sm"
+                    required="required"/>
+            </div>
+        </xpath>
+        <xpath expr="//div[hasclass('field-password')]" position="replace">
+            <div class="form-group field-password pt-2">
+                <label for="password">Password</label><span style="color:#FF0000;">*</span>
+                <input type="password" name="password" id="password" class="form-control form-control-sm"
+                    required="required" t-att-autofocus="'autofocus' if only_passwords else None"/>
+            </div>
+
+            <div class="alert alert-warning" id="medium_password">Your password strength is medium</div>
+            <div class="alert alert-danger" id="weak_password">Your password strength is weak</div>
+            <div class="alert alert-success" id="strong_password">Your password strength is strong</div>
+        </xpath>
+        <xpath expr="//div[hasclass('field-confirm_password')]" position="replace">
+            <div class="form-group field-confirm_password">
+                <label for="confirm_password">Confirm Password</label><span style="color:#FF0000;">*</span>
+                <input type="password" name="confirm_password" id="confirm_password" class="form-control form-control-sm" required="required"/>
+            </div>
+
+            <t t-if="usertype == 'candidate'">
+            <div id="extra_details">
+                <div class="form-group field-name">
+                    <label for="date_of_birth">Date of Birth</label><span style="color:#FF0000;">*</span>
+                    <input type="date" name="date_of_birth" id="date_of_birth" class="form-control form-control-sm" placeholder="dd/mm/yy"
+                        required="required"/>
+                </div>
+            </div>
+            </t>
+        </xpath>
+        <!--<xpath expr="//div[hasclass('field-name')]" position="after">-->
+            <!--<div class="form-group field-name">-->
+                <!--<label for="name">Mobile Number</label><span style="color:#FF0000;">*</span>-->
+                <!--<input type="text" name="phone" id="mobile" class="form-control form-control-sm"-->
+                    <!--required="required"/>-->
+            <!--</div>-->
+        <!--</xpath>-->
+        <!--<xpath expr="//div[hasclass('field-password')]" position="after">-->
+            <!--<div class="alert alert-warning" id="medium_password">Your password strength is medium</div>-->
+            <!--<div class="alert alert-danger" id="weak_password">Your password strength is weak</div>-->
+            <!--<div class="alert alert-success" id="strong_password">Your password strength is strong</div>-->
+        <!--</xpath>-->
+        <!--<xpath expr="//div[hasclass('field-confirm_password')]" position="after">-->
+
+            <!--<t t-if="usertype == 'candidate'">-->
+            <!--<div id="extra_details">-->
+                <!--<div class="form-group field-name">-->
+                    <!--<label for="date_of_birth">Date of Birth</label><span style="color:#FF0000;">*</span>-->
+                    <!--<input type="date" name="date_of_birth" id="date_of_birth" class="form-control form-control-sm" placeholder="dd/mm/yy"-->
+                        <!--required="required"/>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--</t>-->
+        <!--</xpath>-->
+    </template>
+
+    <template id="auth_signup.signup" name="Sign up login">
+        <t t-call="web.login_layout">
+        <div class="greybg">
+
+            <article class="form-whitebg">
+            <t t-if="usertype == 'candidate'">
+                <h1 class="text-left" style="padding-top: 30px;">Candidate Registration</h1>
+            </t>
+            <t t-if="usertype == 'recruiter'">
+                <h1 class="text-left" style="padding-top: 30px;">Company/Employer Registration</h1>
+            </t>
+            <t t-if="usertype == 'college'">
+                <h1 class="text-left" style="padding-top: 30px;">College Registration</h1>
+            </t>
+        <div class="col-md-12">
+            <!--<form class="oe_signup_form" role="form" method="post" t-if="not message">-->
+        <form role="form" method="post" t-if="not message">
+              <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+
+                <div id="login_details" class="login_details">
+                    <t t-call="gtalent_pro_customization.signup_fields">
+                        <t t-set="only_passwords" t-value="bool(token and not invalid_token)"/>
+                    </t>
+
+                    <t t-if="usertype == 'candidate'">
+                        <input type="hidden" id="user_type" value="candidate" name="user_type"/>
+                        <div id="candidate_details">
+
+                          <div class="form-row">
+                            <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                                <label for="qualification"><b>Highest Qualification</b>
+                                </label>
+                                <input type="text" class="form-control" id="qualification" placeholder="Enter your highest qualification" name="qualification"/><br></br>
+                            </div>
+                            <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                                <label for="vat"><b>Years of Experience</b>
+                                </label><span style="color:#FF0000;">*</span>
+                                <!-- <select id="experience" name="experience" class="form-control" required="required">
+                                    <option>Select Experience</option>
+                                    <option value="0">0</option>
+                                    <option value="1">1</option>
+                                     <option value="1+">1+</option>
+                                    <option value="2">2</option>
+                                     <option value="2+">2+</option>
+                                    <option value="3">3</option>
+                                     <option value="3+">3+</option>
+                                    <option value="4">4</option>
+                                    <option value="4+">4+</option>
+                                     <option value="5">5</option>
+                                    <option value="5+">5+</option>
+                                </select> -->
+                                <input type="text" class="form-control" id="experience" placeholder="Enter Years of Experience" name="experience"/><br></br>
+                                </div>
+                          </div>
+                          <div class="form-row">
+                            <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                                <label for="company_name"><b>Gender</b>
+                                </label><span style="color:#FF0000;">*</span>
+                                <select id="gender" name="gender" class="form-control" required="required">
+                                    <option value="">Select Gender</option>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                                <label for="vat"><b>Nationality</b>
+                                </label><span style="color:#FF0000;">*</span>
+                                <select name="nationality" id="nationality" class="form-control" required="required">
+                                      <option value="">Select Nationality</option>
+                                      <option value="afghan">Afghan</option>
+                                      <option value="albanian">Albanian</option>
+                                      <option value="algerian">Algerian</option>
+                                      <option value="american">American</option>
+                                      <option value="andorran">Andorran</option>
+                                      <option value="angolan">Angolan</option>
+                                      <option value="antiguans">Antiguans</option>
+                                      <option value="argentinean">Argentinean</option>
+                                      <option value="armenian">Armenian</option>
+                                      <option value="australian">Australian</option>
+                                      <option value="austrian">Austrian</option>
+                                      <option value="azerbaijani">Azerbaijani</option>
+                                      <option value="bahamian">Bahamian</option>
+                                      <option value="bahraini">Bahraini</option>
+                                      <option value="bangladeshi">Bangladeshi</option>
+                                      <option value="barbadian">Barbadian</option>
+                                      <option value="barbudans">Barbudans</option>
+                                      <option value="batswana">Batswana</option>
+                                      <option value="belarusian">Belarusian</option>
+                                      <option value="belgian">Belgian</option>
+                                      <option value="belizean">Belizean</option>
+                                      <option value="beninese">Beninese</option>
+                                      <option value="bhutanese">Bhutanese</option>
+                                      <option value="bolivian">Bolivian</option>
+                                      <option value="bosnian">Bosnian</option>
+                                      <option value="brazilian">Brazilian</option>
+                                      <option value="british">British</option>
+                                      <option value="bruneian">Bruneian</option>
+                                      <option value="bulgarian">Bulgarian</option>
+                                      <option value="burkinabe">Burkinabe</option>
+                                      <option value="burmese">Burmese</option>
+                                      <option value="burundian">Burundian</option>
+                                      <option value="cambodian">Cambodian</option>
+                                      <option value="cameroonian">Cameroonian</option>
+                                      <option value="canadian">Canadian</option>
+                                      <option value="capeverdean">Cape Verdean</option>
+                                      <option value="centralafrican">Central African</option>
+                                      <option value="chadian">Chadian</option>
+                                      <option value="chilean">Chilean</option>
+                                      <option value="chinese">Chinese</option>
+                                      <option value="colombian">Colombian</option>
+                                      <option value="comoran">Comoran</option>
+                                      <option value="congolese">Congolese</option>
+                                      <option value="costarican">Costa Rican</option>
+                                      <option value="croatian">Croatian</option>
+                                      <option value="cuban">Cuban</option>
+                                      <option value="cypriot">Cypriot</option>
+                                      <option value="czech">Czech</option>
+                                      <option value="danish">Danish</option>
+                                      <option value="djibouti">Djibouti</option>
+                                      <option value="dominican">Dominican</option>
+                                      <option value="dutch">Dutch</option>
+                                      <option value="east timorese">East Timorese</option>
+                                      <option value="ecuadorean">Ecuadorean</option>
+                                      <option value="egyptian">Egyptian</option>
+                                      <option value="emirian">Emirian</option>
+                                      <option value="equatorial guinean">Equatorial Guinean</option>
+                                      <option value="eritrean">Eritrean</option>
+                                      <option value="estonian">Estonian</option>
+                                      <option value="ethiopian">Ethiopian</option>
+                                      <option value="fijian">Fijian</option>
+                                      <option value="filipino">Filipino</option>
+                                      <option value="finnish">Finnish</option>
+                                      <option value="french">French</option>
+                                      <option value="gabonese">Gabonese</option>
+                                      <option value="gambian">Gambian</option>
+                                      <option value="georgian">Georgian</option>
+                                      <option value="german">German</option>
+                                      <option value="ghanaian">Ghanaian</option>
+                                      <option value="greek">Greek</option>
+                                      <option value="grenadian">Grenadian</option>
+                                      <option value="guatemalan">Guatemalan</option>
+                                      <option value="guinea-bissauan">Guinea-Bissauan</option>
+                                      <option value="guinean">Guinean</option>
+                                      <option value="guyanese">Guyanese</option>
+                                      <option value="haitian">Haitian</option>
+                                      <option value="herzegovinian">Herzegovinian</option>
+                                      <option value="honduran">Honduran</option>
+                                      <option value="hungarian">Hungarian</option>
+                                      <option value="icelander">Icelander</option>
+                                      <option value="indian">Indian</option>
+                                      <option value="indonesian">Indonesian</option>
+                                      <option value="iranian">Iranian</option>
+                                      <option value="iraqi">Iraqi</option>
+                                      <option value="irish">Irish</option>
+                                      <option value="israeli">Israeli</option>
+                                      <option value="italian">Italian</option>
+                                      <option value="ivorian">Ivorian</option>
+                                      <option value="jamaican">Jamaican</option>
+                                      <option value="japanese">Japanese</option>
+                                      <option value="jordanian">Jordanian</option>
+                                      <option value="kazakhstani">Kazakhstani</option>
+                                      <option value="kenyan">Kenyan</option>
+                                      <option value="kittian and nevisian">Kittian and Nevisian</option>
+                                      <option value="kuwaiti">Kuwaiti</option>
+                                      <option value="kyrgyz">Kyrgyz</option>
+                                      <option value="laotian">Laotian</option>
+                                      <option value="latvian">Latvian</option>
+                                      <option value="lebanese">Lebanese</option>
+                                      <option value="liberian">Liberian</option>
+                                      <option value="libyan">Libyan</option>
+                                      <option value="liechtensteiner">Liechtensteiner</option>
+                                      <option value="lithuanian">Lithuanian</option>
+                                      <option value="luxembourger">Luxembourger</option>
+                                      <option value="macedonian">Macedonian</option>
+                                      <option value="malagasy">Malagasy</option>
+                                      <option value="malawian">Malawian</option>
+                                      <option value="malaysian">Malaysian</option>
+                                      <option value="maldivan">Maldivan</option>
+                                      <option value="malian">Malian</option>
+                                      <option value="maltese">Maltese</option>
+                                      <option value="marshallese">Marshallese</option>
+                                      <option value="mauritanian">Mauritanian</option>
+                                      <option value="mauritian">Mauritian</option>
+                                      <option value="mexican">Mexican</option>
+                                      <option value="micronesian">Micronesian</option>
+                                      <option value="moldovan">Moldovan</option>
+                                      <option value="monacan">Monacan</option>
+                                      <option value="mongolian">Mongolian</option>
+                                      <option value="moroccan">Moroccan</option>
+                                      <option value="mosotho">Mosotho</option>
+                                      <option value="motswana">Motswana</option>
+                                      <option value="mozambican">Mozambican</option>
+                                      <option value="namibian">Namibian</option>
+                                      <option value="nauruan">Nauruan</option>
+                                      <option value="nepalese">Nepalese</option>
+                                      <option value="new zealander">New Zealander</option>
+                                      <option value="ni-vanuatu">Ni-Vanuatu</option>
+                                      <option value="nicaraguan">Nicaraguan</option>
+                                      <option value="nigerien">Nigerien</option>
+                                      <option value="north korean">North Korean</option>
+                                      <option value="northern irish">Northern Irish</option>
+                                      <option value="norwegian">Norwegian</option>
+                                      <option value="omani">Omani</option>
+                                      <option value="pakistani">Pakistani</option>
+                                      <option value="palauan">Palauan</option>
+                                      <option value="panamanian">Panamanian</option>
+                                      <option value="papua new guinean">Papua New Guinean</option>
+                                      <option value="paraguayan">Paraguayan</option>
+                                      <option value="peruvian">Peruvian</option>
+                                      <option value="polish">Polish</option>
+                                      <option value="portuguese">Portuguese</option>
+                                      <option value="qatari">Qatari</option>
+                                      <option value="romanian">Romanian</option>
+                                      <option value="russian">Russian</option>
+                                      <option value="rwandan">Rwandan</option>
+                                      <option value="saint lucian">Saint Lucian</option>
+                                      <option value="salvadoran">Salvadoran</option>
+                                      <option value="samoan">Samoan</option>
+                                      <option value="san marinese">San Marinese</option>
+                                      <option value="sao tomean">Sao Tomean</option>
+                                      <option value="saudi">Saudi</option>
+                                      <option value="scottish">Scottish</option>
+                                      <option value="senegalese">Senegalese</option>
+                                      <option value="serbian">Serbian</option>
+                                      <option value="seychellois">Seychellois</option>
+                                      <option value="sierra leonean">Sierra Leonean</option>
+                                      <option value="singaporean">Singaporean</option>
+                                      <option value="slovakian">Slovakian</option>
+                                      <option value="slovenian">Slovenian</option>
+                                      <option value="solomon islander">Solomon Islander</option>
+                                      <option value="somali">Somali</option>
+                                      <option value="south african">South African</option>
+                                      <option value="south korean">South Korean</option>
+                                      <option value="spanish">Spanish</option>
+                                      <option value="sri lankan">Sri Lankan</option>
+                                      <option value="sudanese">Sudanese</option>
+                                      <option value="surinamer">Surinamer</option>
+                                      <option value="swazi">Swazi</option>
+                                      <option value="swedish">Swedish</option>
+                                      <option value="swiss">Swiss</option>
+                                      <option value="syrian">Syrian</option>
+                                      <option value="taiwanese">Taiwanese</option>
+                                      <option value="tajik">Tajik</option>
+                                      <option value="tanzanian">Tanzanian</option>
+                                      <option value="thai">Thai</option>
+                                      <option value="togolese">Togolese</option>
+                                      <option value="tongan">Tongan</option>
+                                      <option value="trinidadian or tobagonian">Trinidadian or Tobagonian</option>
+                                      <option value="tunisian">Tunisian</option>
+                                      <option value="turkish">Turkish</option>
+                                      <option value="tuvaluan">Tuvaluan</option>
+                                      <option value="ugandan">Ugandan</option>
+                                      <option value="ukrainian">Ukrainian</option>
+                                      <option value="uruguayan">Uruguayan</option>
+                                      <option value="uzbekistani">Uzbekistani</option>
+                                      <option value="venezuelan">Venezuelan</option>
+                                      <option value="vietnamese">Vietnamese</option>
+                                      <option value="welsh">Welsh</option>
+                                      <option value="yemenite">Yemenite</option>
+                                      <option value="zambian">Zambian</option>
+                                      <option value="zimbabwean">Zimbabwean</option>
+                                    </select>
+                            </div>
+                      </div>
+
+
+                        <div class="form-row">
+                            <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                                <label for="vat"><b>Aadhar Number</b>
+                                </label><span style="color:#FF0000;">*</span>
+                                <input type="text" class="form-control" id="aadhar_number" required="required" placeholder="Enter Aadhar number" name="aadhar_number"/><br></br>
+                                </div>
+                              </div>
+                        </div>
+                    </t>
+
+                    <t t-if="usertype == 'recruiter'">
+                        <input type="hidden" id="user_type" value="recruiter" name="user_type"/>
+                        <div id="company_section">
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="company_website"><b>Company Website</b>
+                                </label><span style="color:#FF0000;">*</span>
+                                <input type="text" class="form-control" id="company_website" required="required" name="company_website"/><br></br>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="industry">Industry Type</label>
+                                <select name="industry" placeholder="Industry Type" class="form-control">
+                                    <option value="" class="form-control o_website_form_input">Industry Type...</option>
+                                         <t t-foreach="industry_obj" t-as="industry">
+                                             <option t-att-value="industry.id">
+                                                 <t t-esc="industry.name" />
+                                             </option>
+                                         </t>
+                                 </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="registered_id"><b>Registered ID</b>
+                                </label><span style="color:#FF0000;">*</span>
+                                <input type="text" class="form-control" id="registered_id" required="required" placeholder="Enter Registered ID" name="registered_id"/><br></br>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="company_gsnt"><b>GSTN</b>
+                                </label><span style="color:#FF0000;">*</span>
+                                <input type="text" class="form-control" id="company_gsnt" required="required" name="company_gsnt"/><br></br>
+                            </div>
+                        </div>
+                        <!--<div class="form-row">-->
+                      <!--</div>-->
+                    </div>
+                    </t>
+
+                    <t t-if="usertype == 'college'">
+                        <div id="college_section">
+                        <input type="hidden" id="user_type" value="college" name="user_type"/>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="university_name"><b>University Name</b>
+                                </label>
+                                <input type="text" class="form-control" id="university_name" name="university_name"/><br></br>
+                            </div>
+                             <div class="form-group col-md-6">
+                                <label for="college_website"><b>College Website</b>
+                                </label><span style="color:#FF0000;">*</span>
+                                <input type="text" class="form-control" id="college_website" required="required" name="college_website"/><br></br>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="company_name"><b>Affiliation ID</b>
+                                </label><span style="color:#FF0000;">*</span>
+                                <input type="text" class="form-control" id="affiliation_id" required="required" placeholder="Enter Affiliation ID" name="affiliation_id"/><br></br>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="college_gstn"><b>GSTN</b>
+                                </label><span style="color:#FF0000;">*</span>
+                                <input type="text" class="form-control" id="college_gstn" required="required" name="college_gstn"/><br></br>
+                            </div>
+
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <label for="placement_officer_name"><b>Placement Officer Name</b>
+                                </label>
+                                <input type="text" class="form-control" id="placement_officer_name" name="placement_officer_name"/><br></br>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="placement_officer_email"><b>Placement Officer Email</b>
+                                </label>
+                                <input type="text" class="form-control" id="placement_officer_email" name="placement_officer_email"/><br></br>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="placement_officer_mobile"><b>Placement Officer Mobile</b>
+                                </label>
+                                <input type="text" class="form-control" id="placement_officer_mobile" name="placement_officer_mobile"/><br></br>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <label for="placement_head_name"><b>Placement Head</b>
+                                </label>
+                                <input type="text" class="form-control" id="placement_head_name" name="placement_head_name"/><br></br>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="placement_head_email"><b>Placement Head Email</b>
+                                </label>
+                                <input type="text" class="form-control" id="placement_head_email" name="placement_head_email"/><br></br>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="placement_head_mobile"><b>Placement Head Mobile</b>
+                                </label>
+                                <input type="text" class="form-control" id="placement_head_mobile" name="placement_head_mobile"/><br></br>
+                            </div>
+                        </div>
+                        </div>
+                    </t>
+
+                    <div id="address">
+                        <div class="form-group signup_street">
+
+                                 <label for="street">Address
+                                </label><span style="color:#FF0000;">*</span>
+                            <span class="input-section">
+                                <input type="text" class="form-control" id="street"
+                                       name="street" t-att-value="street" required="required"/>
+                            </span>
+
+                          </div>
+
+                        <div class="form-group">
+
+                                <label for="street2">Street2
+                                </label>
+                            <span class="input-section">
+                                <input type="text" class="form-control" id="street2"
+                                       name="street2" t-att-value="street2"/>
+                            </span>
+
+                          </div>
+
+                        <div class="form-row">
+                          <div class="form-group col-md-6 col-sm-6 colxs-12 signup_city">
+
+                                <label for="city">City
+                                </label><span style="color:#FF0000;">*</span>
+                            <span class="input-section">
+                                <input type="text" class="form-control" id="city"
+                                       name="city" t-att-value="city" required="required"/>
+                            </span>
+                            </div>
+
+
+                            <div class="form-group col-md-6 col-sm-6 colxs-12">
+                                <label for="zip">Zip
+                                </label>
+                            <span class="input-section">
+                            <input type="text" class="form-control" id="zip"
+                                       name="zip"/>
+                            </span>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                          <div class="form-group col-md-6">
+                               <label for="country_id">Country
+                                </label><span style="color:#FF0000;">*</span>
+                            <span class="input-section">
+
+                                <select name="country_id" id="country_id" class="form-control" required="required">
+                                    <option value="">Country...</option>
+                                    <t t-foreach="countries or []" t-as="country">
+                                        <option t-att-value="country.id">
+                                            <t t-esc="country.name" />
+                                        </option>
+                                    </t>
+                                </select>
+                            </span>
+                            </div>
+
+                            <div class="form-group col-md-6 state_province" id="state_province">
+                                <label for="state_id">State
+                                </label>
+                            <span class="input-section">
+
+                                <select id="state_id" name="state_id" class="form-control" >
+                                    <option value="">-- Select State -- </option>
+                                    <t t-foreach="state or []" t-as="state">
+                                        <option t-att-isred="state.country_id.id" t-att-data-country_id="state.country_id.id" t-att-value="state.id">
+                                            <t t-esc="state.name" />
+                                        </option>
+                                    </t>
+                                </select>
+                            </span>
+                            </div>
+
+                    </div>
+                    </div>
+                </div>
+
+
+
+
+
+                <p class="alert alert-danger" t-if="error" role="alert">
+                    <t t-esc="error"/>
+                </p>
+                <input type="hidden" name="redirect" t-att-value="redirect"/>
+                <input type="hidden" name="token" t-att-value="token"/>
+                <div class="text-center oe_login_buttons pt-3">
+
+                    <t t-if="usertype == 'candidate'">
+                        <button type="submit" class="btn btn-primary custom-btn custom-user-signup-candidate"> Sign up</button>
+                    </t>
+                    <t t-else="">
+                        <button type="submit" class="btn btn-primary custom-btn custom-user-signup"> Sign up</button>
+                    </t>    
+                    <a t-attf-href="/web/login?{{ keep_query() }}" class="btn-link btn-sm" role="button">Already have an account?</a>
+                    <div class="o_login_auth"/>
+                </div>
+            </form>
+          </div>
+    </article>
+</div>
+
+
+
+        </t>
+    </template>
+
+
+</odoo>

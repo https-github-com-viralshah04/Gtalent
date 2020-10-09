@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+ 	<!-- Applicant project Form View -->
+        <record id="applicant_project_form_view" model="ir.ui.view">
+            <field name="name">applicant.project</field>
+            <field name="model">applicant.project</field>
+            <field name="arch" type="xml">
+                <form string="Projects">
+                    <sheet>
+                    	<group name="top">
+                    	<group name="left" string="Project Details">
+                    		<field name="name" required="1"/>
+                            <field name="recruitment_industry_id" required="1"/>
+                            <field name="technology" required="1"/>
+                            <field name="project_for" required="1"/>
+                            <field name="impact"/>
+                            <field name="guided_by"/>
+                    	</group>
+                            <group name="right" string="Team Details">
+                            <field name="team_size" required="1"/>	
+                            <field name="project_start_date"/>
+                            <field name="project_end_date"/>
+                            <field name="project_duration"/>
+                            <field name="project_link"/>
+                            </group>
+                        </group>
+                        <group>
+                         <field name="project_summary"/>
+                            <field name="project_accomplishments"/>
+                        </group>
+                        
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="applicant_project_tree_view" model="ir.ui.view">
+            <field name="name">applicant.project.tree.view</field>
+            <field name="model">applicant.project</field>
+            <field name="arch" type="xml">
+                <tree string="Projects">
+                    <field name="name"/>
+                    <field name="recruitment_industry_id"/>
+                     <field name="technology"/>
+                     <field name="team_size"/>
+                     <field name="impact"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="applicant_project_search_view" model="ir.ui.view">
+            <field name="name">applicant.project.search.view</field>
+            <field name="model">applicant.project</field>
+            <field name="arch" type="xml">
+                <search string="Search Applicant project">
+                    <field name="name"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="applicant_project_action" model="ir.actions.act_window">
+            <field name="name">Projects</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">applicant.project</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="applicant_project_search_view"/>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                Create a new project
+                </p>
+            </field>
+        </record>
+        
+      <menuitem
+            id="menu_applicant_project"
+            name="Projects"
+            parent="hr_recruitment.menu_hr_recruitment_configuration"
+            action="applicant_project_action"/>
+            
+        
+</odoo>

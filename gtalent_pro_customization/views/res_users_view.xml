@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+ <record id="inherit_res_users_form_view" model="ir.ui.view">
+	 <field name="name">inherit.res.users.form.view</field>
+	 <field name="model">res.users</field>
+	 <field name="inherit_id" ref="base.view_users_form"/>
+	 <field name="arch" type="xml">
+	 	<xpath expr="//notebook/page[2]" position="after">
+	 	 <page name="gtalent_customization" string="GTalent Settings">
+	 	 <group name="top">
+		 	 <group string="College Details">
+<!-- 		 	 <field name="is_college"/>
+ -->	 		 <field name="is_recruitment_company"/>
+ 		 	 <field name="college_type"/>
+ 		 	 <field name="university_name"/>
+ 		 	 <field name="university_type"/>
+ 		 	 <field name="college_email"/>
+ 		 	 <field name="college_contact"/>
+ 		 	 <field name="college_founded_in"/>
+ 		 	 <field name="number_of_students"/>
+ 		 	 <field name="placement_ratio"/>
+ 		 	 <field name="college_website"/>
+  		 	 <field name="college_management"/>
+  		 	 <field name="college_year_establishment"/>
+  		 	 <field name="college_specialization"/>
+  		 	 <field name="college_location"/>
+  		 	 </group>
+  		 	<!--  <group string="Placement Officer Details">
+  		 	 <field name="placement_officer_name"/>
+	 	 	 <field name="placement_officer_contact"/>
+	 	 	 <field name="placement_officer_email"/>
+		 	 </group> -->
+	 	 </group>
+	 	 </page>
+	 	</xpath>
+ 
+ 
+ 	 </field>
+ </record>
+
+</odoo>

@@ -1,0 +1,384 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<!-- Inheriting Partner form view for College -->
+	<record id="inherit_res_partner_view_form" model="ir.ui.view">
+	<field name="name">inherit.res.partner.view.form</field>
+	<field name="model">res.partner</field>
+	<field name="inherit_id" ref="base.view_partner_form"/>
+	<field name="arch" type="xml">
+	
+		<xpath expr="//widget[@name='web_ribbon']" position="before">
+		<field name="is_connect" invisible="1"/>
+		<widget name="web_ribbon" text="Approved" attrs="{'invisible': [('request_state', '!=', 'request_approved')]}"/>
+		</xpath>
+		
+		<xpath expr="//field[@name='vat']" position="after">
+		<field name="registered_id" attrs="{'invisible': ['|',('gtalent_users', '=', 'campus'),('gtalent_users', '=', 'candidate')]}" />
+		<field name="gstn_id" attrs="{'invisible': [('gtalent_users', '=', 'candidate')]}" />
+		<field name="affiliation_id" attrs="{'invisible':[('gtalent_users','!=','campus')]}"/>
+
+		</xpath>
+		
+		<!-- Commented by alfiya as per client's requirement -->
+		<!-- <xpath expr="//field[@name='city']" position="attributes">
+			<attribute name="required">1</attribute>
+		</xpath>
+		
+		<xpath expr="//field[@name='state_id']" position="attributes">
+			<attribute name="required">1</attribute>
+		</xpath> -->
+		
+		
+		<xpath expr="//form/div[@class='alert alert-warning oe_edit_only']" position="before">
+		<header>
+		<field name="request_state"  widget="statusbar"/>
+		</header>
+		</xpath>
+		
+		<xpath expr="//field[@name='type']" position="before">
+		<field name="gtalent_users" string="Contact Type"/>
+		</xpath>
+		
+		
+		<xpath expr="//div[@name='button_box']" position="inside">
+			<button type="object" class="oe_stat_button" icon="fa-user" name="view_applicants">
+	         <div class="o_form_field o_stat_info">
+	          <span class="o_stat_value">
+	              <field name="total_applicants"/>
+	            </span>
+	             <span class="o_stat_text">Applicants</span>
+	         </div>
+	        </button>
+	        
+	        <button type="object" class="oe_stat_button" icon="fa-info-circle" name="view_campus_requests">
+	         <div class="o_form_field o_stat_info">
+	          <span class="o_stat_value">
+	            </span>
+	             <span class="o_stat_text">Campus Requests</span>
+	         </div>
+	        </button>
+	        	
+			<button type="object" class="oe_stat_button" attrs="{'invisible' : [('request_state','not in',['open'])]}" icon="fa-envelope" name="action_request_applicant">
+	        <div class="o_form_field o_stat_info">
+	            <span class="o_stat_text">Connect</span>
+	        </div>
+	        </button>
+	        <button name="%(gtalent_pro_customization.open_company_requests_wizard_action_id)d" 
+	       			type="action" 
+	       			icon="fa-arrow-circle-right"> 
+	       	 <div class="o_form_field o_stat_info">
+	           <span class="o_stat_text">Request</span>
+	         </div>
+	         </button>
+		</xpath>
+	
+	 	<xpath expr="//notebook/page[4]" position="before">
+			<!--<page name="personal_info" string="Personal Information">-->
+				<!--<group name="top">-->
+					<!--<group name="left">-->
+						<!--<field name="app_gender"/>-->
+						<!--<field name="nationality"/>-->
+						<!--<field name="blood_group"/>-->
+						<!--<field name="language"/>-->
+						<!--<field name="aadhar_number"/>-->
+						<!--<field name="date_of_birth"/>-->
+						<!--<field name="years_of_exp"/>-->
+						<!--<field name="qualification"/>-->
+					<!--</group>-->
+					<!--<group name="right">-->
+						<!--<field name="social_twitter_acc"/>-->
+						<!--<field name="social_facebook_acc"/>-->
+						<!--<field name="social_github_acc"/>-->
+						<!--<field name="social_linkedin_acc"/>-->
+						<!--<field name="social_youtube_acc"/>-->
+						<!--<field name="social_googleplus_acc"/>-->
+						<!--<field name="social_instagram_acc"/>-->
+					<!--</group>-->
+				<!--</group>-->
+				<!--<group>-->
+				<!--<div class="o_hr_skills_group o_group_skills col-lg-5 d-flex flex-column" attrs="{'invisible' : [('gtalent_users','!=','candidate')]}">-->
+				         <!--<separator string="Skills"/>-->
+				         <!--<field mode="tree" nolabel="1" name="partner_skill_ids"  widget="hr_skills">-->
+				           <!--<tree>-->
+			               <!--<field name="skill_type_id" invisible="1"/>-->
+			               <!--<field name="skill_id"/>-->
+			               <!--<field name="skill_level_id"/>-->
+			               <!--<field name="level_progress" widget="progressbar"/>-->
+				           <!--</tree>-->
+				         <!--</field>-->
+        				<!--</div>-->
+				<!--</group>-->
+			<!--</page>-->
+
+
+			<page name="personal_info" string="Personal Information" attrs="{'invisible': [('gtalent_users', '!=', 'candidate')]}">
+			<group name="top">
+				<group name="left">
+				<field name="app_gender"/>
+				<field name="nationality"/>
+				<field name="blood_group"/>
+				<field name="language"/>
+				<field name="category"/>
+				<field name="aadhar_number"/>
+				<field name="years_of_exp"/>
+				<field name="voter_id"/>
+				</group>
+				<group name="right">
+			    <field name="applicant_id"/>
+				<field name="source"/>
+				<field name="uploaded_by"/>
+				<field name="candidate_type"/>
+				<!-- <field name="candidate_exp"/> -->
+				<field name="date_of_birth"/>
+				<field name="industry"/>
+				<field name="visa_info"/>
+				</group>
+			</group>
+			<group name="top">
+              <group name="right" string="Social Media">
+				<field name="social_twitter_acc"/>
+				<field name="social_facebook_acc"/>
+				<field name="social_github_acc"/>
+				<field name="social_linkedin_acc"/>
+				<field name="social_youtube_acc"/>
+				<field name="social_googleplus_acc"/>
+				<field name="social_instagram_acc"/>
+			  </group>
+            </group>
+            <group>
+			<field name="experience_summary_info" string="Experience Summary"/>
+			</group>
+			</page>
+
+			<!-- Educational Details Page -->
+			<page name="educational_details" string="Educational Details" attrs="{'invisible': [('gtalent_users', '!=', 'candidate')]}">
+			<group name="top">
+             <field name="educational_type_id">
+	             <tree editable="bottom">
+	             <field name="degree_type_id" required="1"/>
+	             <field name="degree_type" required="1"/>
+	             	<field name="name" required="1" domain="[('gtalent_users','=','campus')]"/>
+	             	<field name="state_id" required="1"/>
+	             	<field name="country_id" required="1"/>
+	             	<field name="degree_start_year" required="1"/>
+	             	<field name="degree_end_year" required="1"/>
+	             	<field name="degree_score" required="1"/>
+	             	<field name="degree_percentage" required="1" string="Percentage/CGPA"/>
+	             	<field name="upload_certifcate" string="Certiifcate Upload"/>
+	             </tree>
+ 
+            </field>
+			</group>
+			</page>
+
+			<!-- 	 Employment Page-->
+			<page name="employment_info" string="Employment Details" attrs="{'invisible': [('gtalent_users', '!=', 'candidate')]}">
+			<group>
+				<field name="employment_type_id">
+				<tree editable="bottom">
+				<field name="company_name" required="1"/>
+				<field name="designation_type_id" required="1"/>
+				<field name="department_type_id" required="1"/>
+				<field name="employment_start_date" required="1"/>
+				<field name="employment_end_date" required="1"/>
+				<field name="emp_duration"/>
+				<field name="upload_employment_attachment" required="1"/>
+				</tree>
+				</field>
+			</group>
+			</page>
+
+			<!-- Applicant Assessment Page -->
+			<page name="assessment_info" string="Assessment" attrs="{'invisible': [('gtalent_users', '!=', 'candidate')]}">
+			<group name="top">
+			<field name="assesment_type_id">
+			<tree editable="bottom">
+  			  <field name="name"/>
+              <field name="assessment_description" widget="many2many_tags"/>
+              <field name="assessment_scores"/>
+              <field name="vendor"/>
+              <field name="link" widget="url"/>
+              <field name="assessment_date"/>
+			</tree>
+
+
+			</field>
+			</group>
+			</page>
+
+			<!-- Course and Certificates Page -->
+			<page name="course_certificate_info" string="Course and Certificates" attrs="{'invisible': [('gtalent_users', '!=', 'candidate')]}">
+			<group name="top">
+				<field name="course_id" string="Course Details">
+				<tree editable="bottom">
+				<field name="course" string="Course/Training"/>
+				<field name="course_vendor" />
+				<field name="course_technology"/>
+				<field name="course_status"/>
+				<field name="course_start"/>
+				<field name="course_end"/>
+				<field name="course_documents"/>
+				</tree>
+				</field>
+				</group>
+				<group name="top">
+				<field name="certificate_id" string="Certificate Details">
+				<tree editable="bottom">
+				<field name="certificate_name"/>
+				<field name="certificate_vendor"/>
+				<field name="certificate_id"/>
+				<field name="certificate_technology"/>
+				<field name="certificate_level"/>
+				<field name="certificate_documents"/>
+				</tree>
+				</field>
+				</group>
+				<group name="top">
+				<field name="awards_id" string="Award Details">
+				<tree editable="bottom">
+				<field name="award_name"/>
+				<field name="present_by"/>
+				<field name="award_year"/>
+				</tree>
+				</field>
+				</group>
+			</page>
+
+			<!-- Skills Page-->
+			<page name="skills_info" string="Skills" attrs="{'invisible': [('gtalent_users', '!=', 'candidate')]}">
+			<div class="o_hr_skills_group o_group_skills col-lg-5 d-flex flex-column">
+		  <!--   <field name="progress_rate" widget="percentpie" options="{'max_field': 'maximum_rate'}"/> -->
+              <separator string="Skills"/>
+              <field mode="tree" nolabel="1" name="applicant_skill_ids"  widget="hr_skills">
+                <tree>
+                    <field name="skill_type_id" invisible="1"/>
+                    <field name="skill_id"/>
+                    <field name="skill_level_id"/>
+                    <field name="primary_skill"/>
+                    <field name="secondary_skill"/>
+                    <field name="level_progress" widget="progressbar"/>
+                </tree>
+              </field>
+          	</div>
+			</page>
+
+			<!-- Projects Page-->
+			<page name="projects_info" string="Projects" attrs="{'invisible': [('gtalent_users', '!=', 'candidate')]}">
+			<group name="top">
+             <field name="project_id" required="1">
+	             <tree editable="bottom">
+	             	<field name="name" required="1"/>
+	             	<field name="project_for" required="1"/>
+	             	<field name="recruitment_industry_id" required="1"/>
+	             	<field name="technology" required="1"/>
+	             	<field name="team_size" required="1"/>
+	             	<field name="project_link" widget="url"/>
+	             </tree>
+             </field>
+			</group>
+			</page>
+
+			<!-- Hobbies Page -->
+			<page name="hobbies_info" string="Hobbies" attrs="{'invisible': [('gtalent_users', '!=', 'candidate')]}">
+			<group name="top">
+			<field name="hobbies_id">
+			<tree editable="bottom">
+			<field name="name"/>
+			<field name="hobbies_comments"/>
+			<field name="hobbies_achievements"/>
+			</tree>
+			</field>
+			</group>
+
+			</page>
+
+			<!-- Shared Details Tab -->
+			<page name="shared_details" string="Shared Details" attrs="{'invisible': [('gtalent_users', '!=', 'candidate')]}">
+			<group>
+			<field name="shared_applicant_info_ids">
+			<tree editable="bottom">
+				<field name="shared_company"/>
+				<field name="stage_status"/>
+				<field name="shared_date"/>
+			</tree>
+			</field>
+			</group>
+			</page>
+
+			<!-- Exp. Details Tab -->
+			<page name="Experience_Summary" string="Experience Summary">
+			<group>
+			<field name="experience_summary_ids">
+			<tree editable="bottom">
+				<field name="summary_detail"/>
+			</tree>
+			</field>
+			</group>
+			</page>
+
+			<!--//////////////////////////////////////////////////////////////////////////////////////////////////////////-->
+
+	 	 	<page name="campus_details" string="Campus Details" attrs="{'invisible': [('gtalent_users', '!=', 'campus')]}">
+		 	 <group string="Information">
+ 		 	 <field name="college_type"/>
+ 		 	 <field name="university_name"/>
+ 		 	 <field name="university_type"/>
+ 		 	 <field name="total_applicants" readonly="1" string="Number of Applicants"/>
+ 		 	 <field name="placement_ratio"/>
+  		 	 <field name="college_management"/>
+  		 	 <field name="college_year_establishment"/>
+  		 	 <field name="college_specialization"/>
+  		 	 <field name="college_location"/>
+  		 	 </group>
+	 	 </page>
+	 	 
+	 	 	<page name="placement_cell" string="Placement Cell" attrs="{'invisible': [('gtalent_users', '!=', 'campus')]}" >
+	 	 <group string="Information">
+  		 	 <field name="placement_details_id">
+  		 	 <tree editable="bottom">
+  		 	 <field name="placement_officer_name" required="1"/>
+	 	 	 <field name="placement_officer_contact"/>
+	 	 	 <field name="placement_officer_email" required="1"/>
+	 	 	 <field name="placement_officer_position"/>
+	 	 	 </tree> 
+	 	 	 </field>
+		 	 </group>
+	 	 </page>
+
+	 	 	<page name="employer_details" string="Employer Details" attrs="{'invisible': [('gtalent_users', '!=', 'employer')]}">
+	 	 <group name="top">
+		 	<group name="branding_information" string="Branding Information">
+			<field name="employer_about_company"/>
+			<field name="company_vision" string="Company Vision and Mission"/>
+			<field name="company_offerings"/>
+			<field name="company_registration" string="Company Registration"/>
+			<field name="number_of_employees" string="Number of Employees"/>
+			<field name="yearly_business" string="Yearly Business"/>
+			<field name="achievements" string="Highlights/Achievements"/>
+			<field name="industry"/>
+	 	 </group>
+ 		 </group>
+ 		 </page>
+	 	
+	 	</xpath>
+	</field>
+	</record>
+	
+	
+    <act_window name="Connect"
+                res_model="mail.compose.message"
+                binding_model="res.partner"
+                binding_views="list"
+                view_mode="form"
+                target="new"
+                id="action_partner_mass_mail"
+                context="{
+                        'default_composition_mode': 'mass_mail',
+                        'default_partner_to': '${object.id or \'\'}',
+                        'default_use_template': True,
+                        'default_template_id': ref('gtalent_pro_customization.applicants_connect_request_template'),
+     					}"/>
+
+
+</odoo>

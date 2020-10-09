@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<data noupdate="1">
+
+		<record id="hr_recruitment_assessment_aptitudeassessment0" model="hr.recruitment.assessment">
+			<field name="name">Aptitude Assessment</field>
+			<field eval="1" name="sequence"/>
+			<field name="create_uid" ref="base.user_admin"/>
+			
+		</record>
+	
+		<record id="hr_recruitment_assessment_technicalassessment0" model="hr.recruitment.assessment">
+			<field name="name">Technical Assessment</field>
+			<field eval="1" name="sequence"/>
+			<field name="create_uid" ref="base.user_admin"/>
+			
+		</record>
+	
+		<record id="hr_recruitment_assessment_domainassessment0" model="hr.recruitment.assessment">
+			<field name="name">Domain Assessment</field>
+			<field eval="1" name="sequence"/>
+			<field name="create_uid" ref="base.user_admin"/>
+			
+		</record>
+	
+		<record id="hr_recruitment_assessment_languageassessment0" model="hr.recruitment.assessment">
+			<field name="name">Language Assessment</field>
+			<field eval="1" name="sequence"/>
+			<field name="create_uid" ref="base.user_admin"/>
+		</record>
+		<record id="hr_recruitment_assessment_behaviouralassessment0" model="hr.recruitment.assessment">
+			<field name="name">Behavioural Assessment</field>
+			<field eval="1" name="sequence"/>
+			<field name="create_uid" ref="base.user_admin"/>
+		</record>
+		
+	</data>
+</odoo>

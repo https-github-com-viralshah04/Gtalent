@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+ 
+     <record id="share_data_tree_view" model="ir.ui.view">
+        <field name="name">share.applicant.data.tree.view</field>
+        <field name="model">share.applicant.data</field>
+        <field name="arch" type="xml">
+            <tree string="Applicants Shared">
+				<field name="shared_company"/>
+				<field name="stage_status"/>
+				<field name="shared_date"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="share_data_form_view" model="ir.ui.view">
+        <field name="name">share.applicant.data.form</field>
+        <field name="model">share.applicant.data</field>
+        <field name="arch" type="xml">
+            <form string="Applicants Shared">
+            <group name="top">
+             <group string="Certificates" name="right">
+				<field name="shared_company"/>
+				<field name="stage_status"/>
+				<field name="shared_date"/>
+             </group>
+	         </group>
+            </form>
+        </field>
+    </record>
+ 
+ 
+    <record id="share_data_action" model="ir.actions.act_window">
+        <field name="name">Applicants Shared</field>
+        <field name="res_model">share.applicant.data</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="share_data_tree_view"/>
+    </record>
+
+     <menuitem
+            id="menu_share_applicant_data"
+            name="Applicants Shared data"
+            parent="hr_recruitment.menu_hr_recruitment_configuration"
+            action="share_data_action"/>
+            
+</odoo>

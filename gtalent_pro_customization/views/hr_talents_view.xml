@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<!-- Talents List View -->
+	<record id="hr_talents_list_view" model="ir.ui.view">
+		<field name="name">hr.talents.list.view</field> 
+		<field name="model">hr.talents</field>
+		<field name="arch" type="xml">
+		 <tree string="Talents Details">
+               <field name="applicant_id"/>
+				<field name="college"/>
+				<field name="companies"/>
+            </tree>
+		</field>
+	</record>
+	
+	<!--Talents Form View -->
+    <record id="hr_talents_form_view" model="ir.ui.view">
+        <field name="name">hr.talents.form.view</field>
+        <field name="model">hr.talents</field>
+        <field name="arch" type="xml">
+            <form string="Talents Details">
+            <group name="top">
+            <field name="applicant_id"/>
+				<field name="college" domain="[('gtalent_users','=','campus')]"/>
+				<field name="companies"/>
+	         </group>
+            </form>
+        </field>
+    </record>
+ 
+ 
+ <!-- Talents List Action -->
+    <record id="talents_list_action" model="ir.actions.act_window">
+        <field name="name">Talents</field>
+        <field name="res_model">hr.talents</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="view_id" ref="hr_talents_list_view"/>
+    </record>
+
+     <menuitem
+            id="menu_hr_talents_list"
+            name="Talents"
+            sequence="9"
+            parent="hr_recruitment.menu_hr_recruitment_root"
+            action="talents_list_action"/>
+
+</odoo>

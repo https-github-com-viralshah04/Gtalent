@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<!--Creating Partner List View for College -->
+	<record id="inherit_res_partner_view_tree_college" model="ir.ui.view">
+	<field name="name">inherit.res.partner.view.tree.college</field>
+	<field name="model">res.partner</field>
+	<field name="arch" type="xml">
+		<tree>
+		<field name="id"/>
+		<field name="display_name"/>
+		<field name="email"/>	
+		<field name="gtalent_users" invisible="1"/>
+		<field name="university_name" domain="[('gtalent_users', '=', 'campus')]"/>
+		<field name="university_type" attrs="{'invisible': ['|',('gtalent_users', '=', 'recruitment_vendor'),('gtalent_users', '=', 'employer')]}"/>
+		<field name="college_year_establishment" attrs="{'invisible': ['|',('gtalent_users', '=', 'recruitment_vendor'),('gtalent_users', '=', 'employer')]}"/>
+	 	<field name="college_management" attrs="{'invisible': ['|',('gtalent_users', '=', 'recruitment_vendor'),('gtalent_users', '=', 'employer')]}"/>
+  		<field name="college_specialization"  attrs="{'invisible': ['|',('gtalent_users', '=', 'recruitment_vendor'),('gtalent_users', '=', 'employer')]}"/>
+  		<field name="college_location" attrs="{'invisible': ['|',('gtalent_users', '=', 'recruitment_vendor'),('gtalent_users', '=', 'employer')]}"/>
+  		<field name="total_applicants" attrs="{'invisible': ['|',('gtalent_users', '=', 'recruitment_vendor'),('gtalent_users', '=', 'employer')]}"/>
+	 	<field name="college_website" attrs="{'invisible': ['|',('gtalent_users', '=', 'recruitment_vendor'),('gtalent_users', '=', 'employer')]}"/>
+		<!-- <field name="placement_officer_name" attrs="{'invisible': ['|',('gtalent_users', '=', 'recruitment_vendor'),('gtalent_users', '=', 'employer')]}"/>
+		<field name="placement_officer_contact" attrs="{'invisible': ['|',('gtalent_users', '=', 'recruitment_vendor'),('gtalent_users', '=', 'employer')]}"/>
+		<field name="placement_officer_email" attrs="{'invisible': ['|',('gtalent_users', '=', 'recruitment_vendor'),('gtalent_users', '=', 'employer')]}"/> -->
+	
+	</tree>	
+	</field>
+	</record>
+	
+ 	<!-- College List Action -->
+    <record id="applicant_college_user_details_list_action" model="ir.actions.act_window">
+        <field name="name">College Details</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">tree,kanban,form,activity</field>
+        <field name="domain">[('gtalent_users', '=', 'campus')]</field>
+        <field name="view_id" ref="gtalent_pro_customization.inherit_res_partner_view_tree_college"/>
+    </record>
+
+     <menuitem
+            id="menu_college_user_details_list"
+            name="Campus"
+            parent="hr_recruitment.menu_hr_recruitment_root"
+            action="applicant_college_user_details_list_action"/>
+            
+            
+    	
+	
+            
+    <!-- Inherit Kanban view for displaying fields as per colleges -->
+    <record id="inherit_partner_kanban_view_college" model="ir.ui.view">
+    <field name="name">inherit.partner.kanban.view.college</field>
+    <field name="model">res.partner</field>
+    <field name="inherit_id" ref="base.res_partner_kanban_view"/>
+    <field name="arch" type="xml">
+    <xpath expr="//t//div[@class='oe_kanban_details']//li[@t-if='record.email.raw_value']" position="inside">
+         <field name="gtalent_users" invisible="1"/>
+         <!-- Displaying College founded on kanban -->
+          <li t-if="record.college_founded_in">
+             <field name="college_founded_in" attrs="{'invisible': [('gtalent_users', '!=', 'campus')]}"/>
+          </li>
+          
+          <!-- Displaying College Specialization on kanban -->
+          <li t-if="record.college_specialization.raw_value">
+             <field name="college_specialization" attrs="{'invisible': [('gtalent_users', '!=', 'campus')]}"/>
+          </li>
+          
+          <!-- Displaying College Management -->
+          <li t-if="record.college_management.raw_value">
+             <field name="college_management" attrs="{'invisible': [('gtalent_users', '!=', 'campus')]}"/>
+          </li>
+          
+           <!-- Displaying Placement Ratio -->
+           <li t-if="record.placement_ratio.raw_value">
+             <field name="placement_ratio" attrs="{'invisible': [('gtalent_users', '!=', 'campus')]}"/>
+          </li>
+          
+            <!-- Displaying Total Applicants -->
+           <li t-if="record.total_applicants">
+             <field name="total_applicants" attrs="{'invisible': [('gtalent_users', '!=', 'campus')]}"/>
+          </li>'
+          
+          <!-- Displaying College Website -->
+          <li t-if="record.college_website.raw_value">
+             <field name="college_website" widget="url" attrs="{'invisible': [('gtalent_users', '!=', 'campus')]}"/>
+          </li>
+             
+     
+    </xpath>
+    </field>
+    </record>
+            
+</odoo>

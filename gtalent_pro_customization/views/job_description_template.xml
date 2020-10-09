@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="custom_portal" inherit_id="portal.portal_layout" name="Job Form">
+        <xpath expr="//div[@t-if='not no_breadcrumbs and not my_details and not breadcrumbs_searchbar']" position="replace">
+            <div class="grey-strip"></div>
+            <div class="mb-5"></div>
+        </xpath>
+    </template>
+    <template id="custom_job_description_form_page" name="Job Form">
+        <t t-call="website.layout">
+            <div class="grey-strip"></div>
+            <div class="container">
+                <div class="formbackground-centerwhite">
+                    <div id="wrap">
+                        <!--<t t-call="portal.portal_layout">-->
+                        <!--<t t-call="portal.portal_record_layout">-->
+                        <!--<t t-set="card_header">-->
+                        <form action="/custom_job_description_detail_form" method="post" id="reset_job_description_form" enctype="multipart/form-data">
+                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />
+                            <h1 class="mt-4 mb-4" style="margin-right: 50px;"><strong>Job Description form</strong></h1>
+                            <div class="col-md-12 col-12">
+                                <div class="form-row">
+                                    <div class="form-group col-md-12 form-field o_website_form_required_custom">
+                                        <label class="col-form-label" for="name">Job Name</label>
+                                        <input type="text" class="form-control o_website_form_input" placeholder="Job Name" required="required" name="name" />
+                                    </div>
+                                    <div class="form-group col-md-12 form-field">
+                                        <label class="col-form-label" for="company">Company Name</label>
+                                        <select name="company" placeholder="Company Name" class="form-control" required="required">
+                                            <option value="" class="form-control o_website_form_input">Company Name</option>
+                                            <t t-foreach="res_company_obj" t-as="company">
+                                                <option t-att-value="company.id">
+                                                    <t t-esc="company.name" />
+                                                </option>
+                                            </t>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6 form-field o_website_form_required_custom">
+                                        <label class="col-form-label" for="role">Job Role</label>
+                                        <input type="text" class="form-control o_website_form_input" placeholder="Job Role" required="required" name="role" />
+                                    </div>
+                                    <div class="form-group col-md-6 form-field">
+                                        <label class="col-form-label" for="industry">Industry Type</label>
+                                        <select name="industry" placeholder="Industry Type" class="form-control">
+                                            <option value="" class="form-control o_website_form_input">Industry Type</option>
+                                            <t t-foreach="industry_obj" t-as="industry">
+                                                <option t-att-value="industry.id">
+                                                    <t t-esc="industry.name" />
+                                                </option>
+                                            </t>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6 form-field ">
+                                        <label class="col-form-label" for="companywebsite">Company Website</label>
+                                        <input type="text" class="form-control o_website_form_input" placeholder="Company Website" name="companywebsite" />
+                                    </div>
+                                    <div class="form-group col-md-6 form-field o_website_form_required_custom">
+                                        <label class="col-form-label" for="candidatetype">Candidate type</label>
+                                        <select t-attf-class="form-control" placeholder="Candidate type" name="candidatetype" id="candidatetype" required="required">
+                                            <option value="">Candidate type</option>
+                                            <option value="fresher">Fresher</option>
+                                            <option value="experience">Experience</option>
+                                            <!--						<option value="contractor">Contractor</option>-->
+                                        </select>
+                                    </div>
+                                </div>
+                                <!--               <div class="form-group row form-field o_website_form_required_custom">-->
+                                <!--	              <div class="col-lg-3 col-md-4 text-right">-->
+                                <!--	                  <label class="col-form-label" for="experience">Experience</label>-->
+                                <!--	              </div>-->
+                                <!--	              <div class="col-lg-7 col-md-8">-->
+                                <!--	                  <input type="text" class="form-control o_website_form_input" placeholder="Experience" required="required" name="experience"/>-->
+                                <!--	              </div>-->
+                                <!--	          </div>-->
+                                <div class="form-row">
+                                    <div class="form-group col-md-6 form-field workexp ">
+                                        <label class="col-form-label" for="experience">Work Experience</label>
+                                        <div class="row" style="align-items: center;">
+                                            <div class="input-group col-5 col-md-5">
+                                            	<input class="form-control" type="text" name="experience_year" id="experience_year" placeholder="Min"/>
+                                                <span class="input-group-addon"> Years</span>
+                                            </div>
+                                            <div class="col-2 col-md-2">
+                                                <span class="mt-3"> to </span>
+                                            </div>
+                                            <div class="input-group col-5 col-md-5">
+                                                <input class="form-control" type="text" name="experience_month" id="experience_month" placeholder="Max"/>
+                                                <span class="input-group-addon"> Years</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group form-field col-md-6">
+                                        <label class="col-form-label" for="education">Education</label>
+                                        <select t-attf-class="form-control" placeholder="Education" name="education">
+                                            <option value="graduate">Graduate</option>
+                                            <option value="postgraduate">Post Graduate</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6 form-field workexp ">
+                                        <label class="col-form-label" for="experience">Degree</label>
+                                        <select t-attf-class="form-control" placeholder="Degree" name="degree">
+                                            <t t-foreach="request.env['hr.recruitment.degree'].search([])" t-as="degree">
+                                                <option t-att-value="degree.id">
+                                                    <t t-esc="degree.name" />
+                                                </option>
+                                            </t>
+                                        </select>
+                                    </div>
+                                    <div class="form-group form-field col-md-6">
+                                        <label class="col-form-label" for="education">Specialization</label>
+                                        <select t-attf-class="form-control" placeholder="Specialization" name="specialization">
+                                            <option value="computer">Computer</option>
+                                            <option value="network">Network</option>
+                                            <option value="network">Medical</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6 form-field ">
+                                        <label class="col-form-label" for="Keyskills">Key skills</label>
+                                        <!-- <input type="text" class="form-control o_website_form_input" placeholder="Key skills"  name="Keyskills"/>-->
+                                        <input type='text' placeholder='Please Enter Key Skills' class='flexdatalist form-control' data-min-length='1' data-searchContain='true' multiple='multiple' list='skills' name='Keyskills' />
+                                        <datalist id="skills">
+                                            <option value="Node.js">Node.jssss</option>
+                                            <option value="Accessibility">Accessibility</option>
+                                            <option value="Wireframing">Wireframing</option>
+                                            <option value="HTML5">HTML5</option>
+                                            <option value="CSS3">CSS3</option>
+                                            <option value="DOM Manipulation">DOM Manipulation</option>
+                                            <option value="MVC">MVC</option>
+                                            <option value="MVVM">MVVM</option>
+                                            <option value="MV*">MV*</option>
+                                            <option value="Modules">Modules</option>
+                                            <option value="Microdata">Microdata</option>
+                                            <option value="JavaScript">JavaScript</option>
+                                            <option value="jQuery">jQuery</option>
+                                            <option value="ReactJS">ReactJS</option>
+                                        </datalist>
+                                    </div>
+                                    <div class="form-group col-md-6 form-field ">
+                                        <label class="col-form-label" for="Keyskills">Secondary Key skills</label>
+                                        <!-- <input type="text" class="form-control o_website_form_input" placeholder="Key skills"  name="Keyskills"/>-->
+                                        <input type='text' placeholder='Please Enter Key Skills' class='flexdatalist form-control' data-min-length='1' data-searchContain='true' multiple='multiple' list='skills' name='SecondaryKeyskills' />
+                                        <datalist id="secondaryskills">
+                                            <option value="Node.js">Node.jssss</option>
+                                            <option value="Accessibility">Accessibility</option>
+                                            <option value="Wireframing">Wireframing</option>
+                                            <option value="HTML5">HTML5</option>
+                                            <option value="CSS3">CSS3</option>
+                                            <option value="DOM Manipulation">DOM Manipulation</option>
+                                            <option value="MVC">MVC</option>
+                                            <option value="MVVM">MVVM</option>
+                                            <option value="MV*">MV*</option>
+                                            <option value="Modules">Modules</option>
+                                            <option value="Microdata">Microdata</option>
+                                            <option value="JavaScript">JavaScript</option>
+                                            <option value="jQuery">jQuery</option>
+                                            <option value="ReactJS">ReactJS</option>
+                                        </datalist>
+                                    </div>
+                                    <div class="form-group col-md-6 form-field ">
+                                        <label class="col-form-label" for="NoofVacancies">No of Vacancies</label>
+                                        <input type="text" class="form-control o_website_form_input" placeholder="No of Vacancies" name="NoofVacancies" />
+                                    </div>
+                                </div>
+                                <!--				<div class="form-group row form-field ">-->
+                                <!--	              <div class="col-lg-3 col-md-4 text-right">-->
+                                <!--	                  <label class="col-form-label" for="salaryrange">Salary Range</label>-->
+                                <!--	              </div>-->
+                                <!--	              <div class="col-lg-7 col-md-8">-->
+                                <!--	                  <input type="text" class="form-control o_website_form_input" placeholder="Salary Range" name="salaryrange"/>-->
+                                <!--	              </div>-->
+                                <!--	          </div>-->
+                                <div class="form-row">
+                                    <div class="form-group col-md-6 form-field">
+                                        <label class="col-form-label" for="salaryrange">Annual Salary Range</label>
+                                        <div class="row" style="align-items: center;">
+                                            <div class="input-group col-md-5 col-5">
+                                                <input class="form-control" type="number" name="salaryrange" id="minsalaryrange" placeholder="Min Salary"/><span class="input-group-addon">Lakh</span>
+                                            </div>
+                                            <div class="col-md-2 col-2">
+                                                <span class="mt-3"> to </span>
+                                            </div>
+                                            <div class="input-group col-md-5 col-5">
+                                                <input type="text" class="form-control" name="maxsalaryrange" id="salaryrange" placeholder="Max Salary"/>
+                                              <span class="input-group-addon"> Lakh</span>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-6 form-field ">
+                                        <label class="col-form-label" for="worklocation">Work Location</label>
+                                        <input type="text" class="form-control o_website_form_input" placeholder="Work Location" name="worklocation" />
+                                    </div>
+                                </div>
+                                <div class="form-group  form-field ">
+                                    <label class="col-form-label" for="functionalarea">Functional Area</label>
+                                    <input type="text" class="form-control o_website_form_input" placeholder="Functional Area" name="functionalarea" />
+                                </div>
+                                <div class="form-group form-field ">
+                                    <label class="col-form-label" for="companyprofile">Company Profile</label>
+                                    <textarea cols="50" rows="5" class="form-control o_website_form_input" placeholder="Company Profile" name="companyprofile" />
+                                    </div>
+
+
+	           <!--<div class="form-group row form-field">
+	              <div class="col-lg-3 col-md-4 text-right">
+	                  <label class="col-form-label" for="candidate">Candidate</label>
+	              </div>
+	              <div class="col-lg-7 col-md-8">
+	                  <input type="text" class="form-control o_website_form_input" name="candidate"/>
+	              </div>
+	          </div>-->
+				<div class="form-group form-field  o_website_form_required_custom">
+	                  <label class="col-form-label" for="jobdescription">Job Description</label>
+	                  <textarea  cols="50" rows="5" id="txtEditor" class="form-control o_website_form_input" placeholder="Job Description" required="required" name="jobdescription"/>
+	          </div>
+
+
+				<div class="form-group form-field">
+	                  <label class="col-form-label" for="rolesandresponsibility">Roles and Responsibility</label>
+	                  <textarea cols="50" rows="5" class="form-control o_website_form_input" placeholder="Roles and Responsibility" name="rolesandresponsibility"/>
+	            </div>
+
+
+			  <div class="form-group form-field">
+
+	                  <label class="col-form-label" for="companybenefits">Company Benefits</label>
+	                  <textarea cols="50" rows="5" class="form-control o_website_form_input" placeholder="Company Benefits" name="companybenefits"/>
+	          </div>
+
+
+			  <div class="form-group form-field">
+
+	                  <label class="col-form-label" for="instructions">Instructions</label>
+	                  <textarea cols="50" rows="5" class="form-control o_website_form_input" placeholder="Instructions" name="instructions"/>
+	          </div>
+
+	          <div class="text-center">
+                 <button type="submit" class="btn btn-primary o_list_button_add" id="btnsubmit" value="Submit">Submit</button>
+               </div>
+</div>
+          </form>
+
+				<!--</t>-->
+			<!--</t>-->
+		 <!--</t>-->
+			</div>
+		</div>
+			</div>
+		</t>
+    </template>
+
+    <record id="job_description_page" model="website.page">
+		<field name="url">/custom_job_description_form</field>
+		<field name="website_published">True</field>
+		<field name="view_id" ref="custom_job_description_form_page"/>
+     </record>
+
+	<record id="job_description_menu" model="website.menu">
+        <field name="name">Post Job</field>
+        <field name="url">/custom_job_description_form</field>
+        <field name="parent_id" ref="website.main_menu"/>
+		<field name="group_ids" eval="[(4,ref('g_recruiter')),(4,ref('g_college')),(4,ref('g_admin'))]"/>
+        <field name="sequence" type="int">58</field>
+     </record>
+
+    <template id="thanks_mail_send_massage_request" name="Thanks">
+         <t t-call="website.layout">
+           <div id="wrap">
+             <div class="oe_structure"/>
+
+
+							<div class="container">
+								<div class="thankyou-div">
+									<div>
+										<img src="/gtalent_pro_customization/static/src/images/right.svg" width="100"/>
+									</div>
+									<h1>Thank You</h1>
+									<h5>Your Job is Posted successfully</h5>
+
+									<center><a role="button" t-attf-class="btn btn-primary o_list_button_add" href="/">Back to Home</a></center>
+								</div>
+							</div>
+
+
+
+
+
+
+           </div>
+         </t>
+       </template>
+</odoo>

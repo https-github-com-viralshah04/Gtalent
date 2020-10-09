@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data noupdate="0">
+
+        <record id="applicant_profile" model="website.menu">
+            <field name="name">Profile</field>
+            <field name="url">/website/profile</field>
+            <field name="group_ids" eval="[(4,ref('g_candidate')),(4,ref('g_college')),(4,ref('g_admin'))]"/>
+            <field name="parent_id" ref="website.main_menu"/>
+            <field name="sequence" type="int">30</field>
+        </record>
+        <!--<record id="update_applicant_profile" model="website.menu">-->
+            <!--<field name="name">Update Applicant Profile</field>-->
+            <!--<field name="url">/applicant/profile</field>-->
+            <!--<field name="group_ids" eval="[(4,ref('g_candidate'))]"/>-->
+            <!--<field name="parent_id" ref="website.main_menu"/>-->
+            <!--<field name="sequence" type="int">40</field>-->
+        <!--</record>-->
+
+
+        <record id="crm_category1" model="crm.lead.category">
+            <field name="name">Business Enquiry</field>
+        </record>
+        <record id="crm_category2" model="crm.lead.category">
+            <field name="name">Technical Problems</field>
+        </record>
+        <record id="crm_category3" model="crm.lead.category">
+            <field name="name">Access</field>
+        </record>
+
+        <record id="crm_category4" model="crm.lead.category">
+            <field name="name">Performance</field>
+        </record>
+        <record id="crm_category5" model="crm.lead.category">
+            <field name="name">Functionality</field>
+        </record>
+        <record id="crm_category6" model="crm.lead.category">
+            <field name="name">New Feature Addition</field>
+        </record>
+
+        <record id="crm_category7" model="crm.lead.category">
+            <field name="name">New Functionality</field>
+        </record>
+        <record id="crm_category8" model="crm.lead.category">
+            <field name="name">New Subscription</field>
+        </record>
+        <record id="crm_category9" model="crm.lead.category">
+            <field name="name">New Business Credits</field>
+        </record>
+
+        <record id="crm_category10" model="crm.lead.category">
+            <field name="name">Expansion</field>
+        </record>
+        <record id="crm_category11" model="crm.lead.category">
+            <field name="name">Demo</field>
+        </record>
+        <record id="crm_category12" model="crm.lead.category">
+            <field name="name">New Customer</field>
+        </record>
+    </data>
+</odoo>

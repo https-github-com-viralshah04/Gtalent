@@ -1,0 +1,21 @@
+
+
+
+/*-- Extra small devices (portrait phones, less than 576px)--*/
+@media (max-width: 767.98px) {
+.header-tabs-nav ul li {    font-size: 12px;}
+
+.loginpage-right {min-height: 300px;}
+
+header .navbar-brand, header .navbar-brand.logo {    padding-left: 10px;     padding-top: 15px;
+    padding-bottom: 15px; }
+
+.navbar-nav .nav-link {text-align:left; }
+
+ }
+
+
+ /* Large devices (desktops, 992px and up) */
+ @media (min-width: 992px) {
+  .nav {flex-wrap: nowrap;}
+ }

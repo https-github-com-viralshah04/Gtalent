@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+  <template id="frontend_layout_custom" inherit_id="web.frontend_layout" name="Frontend Layout">
+    <xpath expr="//footer" position="replace">
+        <footer>
+          <div class="container">
+                <div class="row">
+                      <div class="col-md-4 col-6">
+                          <div class="information-div">
+                            <h3>Information</h3>
+                                <ul>
+                                    <li><a href="#">About Us</a></li>
+                                    <li><a href="#">Terms &amp; Conditions</a></li>
+                                    <li><a href="#">Privacy Policy</a></li>
+                                    <li><a href="#">Our Offerings</a></li>
+                                    <li><a href="#">Features</a></li>
+
+                                  </ul>
+                          </div>
+                      </div>
+
+
+                      <div class="col-md-4 col-6">
+                          <div class="information-div">
+                            <h3>Connect with us</h3>
+                                <ul>
+                                    <li><a href="#">Contact us</a></li>
+                                    <li><a href="#"> +91 9513300922</a></li>
+                                    <li><a href="mailto:info@gtalentpro.com">info@gtalentpro.com</a></li>
+
+
+                                  </ul>
+                          </div>
+                      </div>
+
+
+                      <div class="col-md-4 col-6">
+                          <div class="information-div">
+                            <img src="/gtalent_pro_customization/static/src/images/gtalnd-logo.png" width="80"/>
+                            <h3>G Talent Pro - About Us</h3>
+                              <p>We are a team of passionate people whose goal is
+                                 to improve everyone's life through disruptive products.
+                                  Our AI  platform to solve all your business problems. related to talents</p>
+
+<p>Our products are designed for small to medium size companies willing to optimize their performance.</p>
+
+                          </div>
+                      </div>
+
+
+
+
+
+
+
+                </div>
+          </div>
+</footer>
+    </xpath>
+  </template>
+
+
+
+
+
+    <template id="brand_promotion_custom" inherit_id="web.brand_promotion" name="Brand Promotion">
+        <xpath expr="//div[hasclass('o_brand_promotion')]" position="replace">
+            <div class="o_brand_promotion">
+                <!--<t t-call="web.brand_promotion_message">-->
+                    <!--<t t-set="_message"></t>-->
+                    <!--<t t-set="_utm_medium">portal</t>-->
+                <!--</t>-->
+            </div>
+        </xpath>
+    </template>
+
+    <!--<template id="frontend_layout_custom" inherit_id="web.frontend_layout" name="Frontend Layout">-->
+        <!--<xpath expr="//footer" position="replace">-->
+        <!--</xpath>-->
+    <!--</template>-->
+</odoo>

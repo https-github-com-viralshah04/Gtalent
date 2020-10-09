@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <record id="applicants_share_wizard_view" model="ir.ui.view">
+	   <field name="name">applicants.share.wizard.view</field>
+	   <field name="model">applicants.share.wizard</field>
+	   <field name="arch" type="xml">
+		   <form string="Applicants Share">
+		   <sheet>
+			    <group>
+			     <field name="applicants_share_date" readonly="1"/>
+			     <field name="companies" readonly="1" string="Request From"/>
+			     <field name="college"  readonly="1" string="Request To"/>
+			     <field name="candidates" string="Candidates" required="1"/>
+			     <field name="industry_request" string="Industry" required="1"/>
+			     <field name="candidate" string="Candidate Type" required="1"/>
+			     <field name="college_specialization" readonly="1" string="Specialization" required="1"/>
+			     <field name="applicant_request" string="Applicants Requested" readonly="1" required="1"/>
+			     <field name="applicant_share"  string="Applicants Being shared" required="1"/>
+			    </group>
+			    <footer>
+			     <button  string="Share" name="share_applicants" type="object" class="oe_highlight"/>
+			     <button string="Cancel" class="oe_link" special="cancel"/>
+			    </footer>
+		   </sheet>
+		   </form>
+	   </field>
+  </record>
+
+  <record id="open_applicants_share_wizard_action_id" model="ir.actions.act_window">
+	   <field name="name">Applicants Share</field>
+	   <field name="type">ir.actions.act_window</field>
+	   <field name="res_model">applicants.share.wizard</field>
+	   <field name="view_mode">form</field>
+	   <field name="target">new</field>
+  </record>
+  
+  </odoo>

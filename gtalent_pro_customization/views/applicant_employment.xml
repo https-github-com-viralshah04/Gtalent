@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+ 
+    <!--Employment List Tree View -->
+     <record id="applicant_employee_list_tree_view" model="ir.ui.view">
+        <field name="name">applicant.employment.list.tree.view</field>
+        <field name="model">applicant.employment</field>
+        <field name="arch" type="xml">
+            <tree string="Employment Details">
+              <field name="designation_type_id"/>
+              <field name="company_name" domain="[('company_type','=','company')]"/>
+              <field name="state_id"/>
+              <field name="country_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <!--Employment List Form View -->
+    <record id="applicant_employment_list_form_view" model="ir.ui.view">
+        <field name="name">applicant.employment.list.form</field>
+        <field name="model">applicant.employment</field>
+        <field name="arch" type="xml">
+            <form string="Employment Details">
+            <group name="top">
+	            <group  string="Employment Details" name="left">
+	                <field name="designation_type_id"/>
+	                <field name="company_name"/>
+	                <field name="department_type_id"/>
+	               	<field name="employment_start_date"/>
+	               	<field name="employment_end_date"/>
+	               	<field name="employment_attachment_filename" invisible="1" string="Details"/>
+	               	<field widget="binary" height="64" name="upload_employment_attachment" filename="employment_attachment_filename" required="1"/>
+	             </group>
+              <group name="right"  string="Address Details">
+	               <label for="street" string="Address"/>
+	               <div class="o_address_format">
+	                   <field name="street" placeholder="Street..." class="o_address_street"/>
+	                   <field name="street2" placeholder="Street 2..." class="o_address_street"/>
+	                   <field name="city" placeholder="City" class="o_address_city"/>
+	                   <field name="state_id" class="o_address_state" placeholder="State" options='{"no_open": True}'/>
+	                   <field name="zip" placeholder="ZIP" class="o_address_zip"/>
+	                   <field name="country_id" placeholder="Country" class="o_address_country" options='{"no_open": True, "no_create": True}'/>
+	               </div>
+	          </group>
+            
+             </group>
+             <group>
+             <field name="deliverables"/>
+             <field name="job_summary"/>
+             <field name="job_accomplishments"/>
+             </group>
+            </form>
+        </field>
+    </record>
+ 
+ 
+ <!-- College List Action -->
+    <record id="applicant_employment_list_action" model="ir.actions.act_window">
+        <field name="name">Employment Details</field>
+        <field name="res_model">applicant.employment</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="applicant_employment_list_form_view"/>
+    </record>
+
+     <menuitem
+            id="menu_applicant_employment_list"
+            name="Employment Details"
+            parent="hr_recruitment.menu_hr_recruitment_configuration"
+            action="applicant_employment_list_action"/>
+            
+</odoo>

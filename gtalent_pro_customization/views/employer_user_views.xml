@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+ 	<!-- Employer List Action -->
+     <record id="employer_user_details_list_action" model="ir.actions.act_window">
+        <field name="name">Employer Details</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">kanban,tree,form,activity</field>
+        <field name="domain">[('gtalent_users', '=', 'employer')]</field>
+        <field name="view_id" ref="base.res_partner_kanban_view"/>
+    </record>
+
+     <menuitem
+            id="employee_user_details_list"
+            name="Employer"
+            sequence="11"
+            parent="hr_recruitment.menu_hr_recruitment_root"
+            action="employer_user_details_list_action"/>
+            
+            
+            
+    <!-- Inherit Kanban view for displaying fields as per employer -->
+    <record id="inherit_partner_kanban_view_employer" model="ir.ui.view">
+    <field name="name">inherit.partner.kanban.view.employer</field>
+    <field name="model">res.partner</field>
+    <field name="inherit_id" ref="base.res_partner_kanban_view"/>
+    <field name="arch" type="xml">
+    <xpath expr="//t//div[@class='oe_kanban_details']//li[@t-if='record.email.raw_value']" position="inside">
+        
+     
+    </xpath>
+    </field>
+    </record>
+            
+</odoo>

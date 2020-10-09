@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+     <record id="user_access_tree_view" model="ir.ui.view">
+        <field name="name">user.access.tree.view</field>
+        <field name="model">user.access</field>
+        <field name="arch" type="xml">
+            <tree editable="bottom" string="User Access">
+                <field name="user_id"/>
+                <field name="sale"/>
+                <field name="accounting"/>
+                <field name="purchase"/>
+                <field name="inventory"/>
+                <field name="project"/>
+            </tree>
+        </field>
+    </record>
+    
+    <record id="action_user_access" model="ir.actions.act_window">
+        <field name="name">User Access</field>
+        <field name="res_model">user.access</field>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="user_access_tree_view"/>
+    </record>
+
+     <menuitem
+            id="menu_user_access"
+            name="Module enable/disable access"
+            parent="hr_recruitment.menu_hr_recruitment_root"
+            sequence="150"
+            action="action_user_access"/>
+</odoo>

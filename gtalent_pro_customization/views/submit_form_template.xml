@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <template id="submit_form_template" name="Rank Template">
+            <t t-call="website.layout">
+                <div class="container">
+                    <div class="thankyou-div">
+                        <div>
+                            <img src="/gtalent_pro_customization/static/src/images/right.svg" width="100"/>
+                        </div>
+                        <h1>Thank You</h1>
+                        <h5>Your Profile has been updated successfully</h5>
+
+                        <center><a role="button" t-attf-class="btn btn-primary o_list_button_add" href="/">Back to Home</a></center>
+                    </div>
+                </div>
+            </t>
+        </template>
+    </data>
+</odoo>

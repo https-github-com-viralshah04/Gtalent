@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+        <template id="profile_portal_layout" inherit_id="portal.portal_layout" name="Portal Layout">
+            <!--<xpath expr="//div[hasclass('o_portal_my_details')]" position="replace">-->
+                <!--<div class="o_portal_my_details">-->
+                    <!--<t t-if="user_id.partner_id.gtalent_users">-->
+                        <!--<t t-if="user_id.partner_id.gtalent_users == 'candidate'">-->
+                            <!--<h4>Details <a role="button" href="/applicant/profile" class="btn btn-sm btn-link"><i class="fa fa-pencil"/> Update Profile</a></h4>-->
+                        <!--</t>-->
+                        <!--<t t-if="user_id.partner_id.gtalent_users == 'campus'">-->
+                            <!--<h4>Details <a role="button" href="/my/account" class="btn btn-sm btn-link"><i class="fa fa-pencil"/> Update Profile</a></h4>-->
+                        <!--</t>-->
+                        <!--<t t-if="user_id.partner_id.gtalent_users == 'employer'">-->
+                            <!--<h4>Details <a role="button" href="/my/account" class="btn btn-sm btn-link"><i class="fa fa-pencil"/> Update Profile</a></h4>-->
+                        <!--</t>-->
+                        <!--<t t-if="user_id.partner_id.gtalent_users == 'recruitment_vendor'">-->
+                            <!--<h4>Details <a role="button" href="/my/account" class="btn btn-sm btn-link"><i class="fa fa-pencil"/> Update Profile</a></h4>-->
+                        <!--</t>-->
+                    <!--</t>-->
+                    <!--<t t-else="not user_id.partner_id.gtalent_users">-->
+                        <!--<h4>Details <a role="button" href="/my/account" class="btn btn-sm btn-link"><i class="fa fa-pencil"/> Update Profile</a></h4>-->
+                    <!--</t>-->
+                    <!--&lt;!&ndash;<h4>Details <a role="button" href="/my/account" class="btn btn-sm btn-link"><i class="fa fa-pencil"/> Edit</a></h4>&ndash;&gt;-->
+                    <!--<hr class="mt-1 mb-0"/>-->
+                    <!--<div t-field="user_id.partner_id" t-options='{"widget": "contact", "fields": ["email", "phone", "address", "name"]}'/>-->
+                <!--</div>-->
+            <!--</xpath>-->
+            <xpath expr="//div[hasclass('o_my_contact')]" position="replace">
+            </xpath>
+            <xpath expr="//div[hasclass('o_portal_my_details')]" position="before">
+			<div>
+
+				<!--<div t-field="user_id.partner_id.image"-->
+				<div t-field="request.env.user.partner_id.image_1920"
+					t-options="{'widget': 'image', 'class': 'img-circle','style':'width:140px;height:140px;' }" />
+			</div>
+		</xpath>
+		<xpath expr="//div[hasclass('o_portal_my_details')]" position="replace">
+			<br />
+			<b>
+				<!--<t t-esc="user_id.partner_id.name" />-->
+				<t t-esc="request.env.user.partner_id.name" />
+			</b>
+			<!--<div t-field="user_id.partner_id"-->
+			<div t-field="request.env.user.partner_id"
+				t-options='{"widget": "contact", "fields": ["email", "phone", "address"]}' />
+			<!--<div class="o_user_links">-->
+				<!--&lt;!&ndash;<a t-att-href="user_id.partner_id.facebook" t-if="user_id.partner_id.facebook">&ndash;&gt;-->
+				<!--<a t-att-href="request.env.user.partner_id.facebook" t-if="request.env.user.partner_id.facebook">-->
+					<!--<i class="fa fa-facebook-square" target="_new" />-->
+				<!--</a>-->
+				<!--&lt;!&ndash;<a t-att-href="user_id.partner_id.twitter" t-if="user_id.partner_id.twitter">&ndash;&gt;-->
+				<!--<a t-att-href="request.env.user.partner_id.twitter" t-if="request.env.user.partner_id.twitter">-->
+					<!--<i class="fa fa-twitter" />-->
+				<!--</a>-->
+				<!--&lt;!&ndash;<a t-att-href="user_id.partner_id.instagram" t-if="user_id.partner_id.instagram">&ndash;&gt;-->
+				<!--<a t-att-href="request.env.user.partner_id.instagram" t-if="request.env.user.partner_id.instagram">-->
+					<!--<i class="fa fa-instagram" />-->
+				<!--</a>-->
+				<!--&lt;!&ndash;<a t-att-href="user_id.partner_id.linkedin" t-if="user_id.partner_id.linkedin">&ndash;&gt;-->
+				<!--<a t-att-href="request.env.user.partner_id.linkedin" t-if="request.env.user.partner_id.linkedin">-->
+					<!--<i class="fa fa-linkedin" />-->
+				<!--</a>-->
+            <br></br>
+			<!--</div>-->
+			<h2>
+				<!--Profile-->
+
+				<!--<a href="/my/account" class="btn btn-default btn-xs">View</a>-->
+
+
+                <t t-if="user_id.partner_id.gtalent_users">
+                    <t t-if="user_id.partner_id.gtalent_users == 'candidate'">
+                        <!--<button type="button"><a href="/applicant/profile">Update Profile</a></button>-->
+                        <a href="/applicant/profile"><button type="button" class="btn btn-theme">Update Profile</button></a>
+                        <!--<h4>Details <a role="button" href="/applicant/profile" class="btn btn-sm btn-link"><i class="fa fa-pencil"/> Update Profile</a></h4>-->
+                    </t>
+                    <t t-if="user_id.partner_id.gtalent_users == 'campus'">
+                        <a href="/my/account"><button type="button" class="btn btn-theme">Update Profile</button></a>
+                        <!--<h4>Details <a role="button" href="/my/account" class="btn btn-sm btn-link"><i class="fa fa-pencil"/> Update Profile</a></h4>-->
+                    </t>
+                    <t t-if="user_id.partner_id.gtalent_users == 'employer'">
+                        <a href="/my/account" class="btn btn-theme">Update Profile</a>
+                        <!--<h4>Details <a role="button" href="/my/account" class="btn btn-sm btn-link"><i class="fa fa-pencil"/> Update Profile</a></h4>-->
+                    </t>
+                    <t t-if="user_id.partner_id.gtalent_users == 'recruitment_vendor'">
+                        <a href="/my/account" class="btn btn-theme">Update Profile</a>
+                        <!--<h4>Details <a role="button" href="/my/account" class="btn btn-sm btn-link"><i class="fa fa-pencil"/> Update Profile</a></h4>-->
+                    </t>
+                </t>
+                <t t-else="not user_id.partner_id.gtalent_users">
+                    <a href="/my/account" class="btn btn-theme">Update Profile</a>
+                    <!--<h4>Details <a role="button" href="/my/account" class="btn btn-sm btn-link"><i class="fa fa-pencil"/> Update Profile</a></h4>-->
+                </t>
+			</h2>
+		</xpath>
+
+        </template>
+
+</odoo>

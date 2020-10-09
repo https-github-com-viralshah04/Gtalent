@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <record id="company_requests_wizard_view" model="ir.ui.view">
+	   <field name="name">company.requests.wizard.view</field>
+	   <field name="model">company.request.wizard</field>
+	   <field name="arch" type="xml">
+		   <form string="Applicants Requests">
+			    <group>
+			     <field name="company_request_date" readonly="1"/>
+			     <field name="company_name" readonly="1" string="Request From"/>
+			     <field name="college_name"  readonly="1" string="Request To"/>
+			     <field name="industry_name" string="Industry" required="1"/>
+			     <field name="candidate_type" string="Candidate Type" required="1"/>
+			     <field name="college_specialization" readonly="1" string="Specialization" required="1"/>
+			     <field name="company_applicant_request" required="1"/>
+			    </group>
+			    <footer>
+			     <button name="send_company_request" string="Send Request" type="object" class="oe_highlight"/>
+			     <button string="Cancel" class="oe_link" special="cancel"/>
+			    </footer>
+		   </form>
+	   </field>
+  </record>
+
+  <record id="open_company_requests_wizard_action_id" model="ir.actions.act_window">
+	   <field name="name">Applicants Requests</field>
+	   <field name="type">ir.actions.act_window</field>
+	   <field name="res_model">company.request.wizard</field>
+	   <field name="view_mode">form</field>
+	   <field name="target">new</field>
+  </record>
+  
+  </odoo>

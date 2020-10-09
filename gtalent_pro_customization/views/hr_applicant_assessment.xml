@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+ 
+    <!-- Assessment Tree View -->
+     <record id="hr_recruitment_assessment_tree_view" model="ir.ui.view">
+        <field name="name">hr.recruitment.assessment.tree.view</field>
+        <field name="model">hr.recruitment.assessment</field>
+        <field name="arch" type="xml">
+            <tree string="Assessment">
+                <field name="sequence" invisible="1"/>
+                <field name="name"/>
+                 <field name="assessment_description" widget="many2many_tags"/>
+                 <field name="assessment_scores"/>
+                 <field name="vendor"/>
+                 <field name="link"/>
+                 <field name="assessment_date"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Assessment Form View -->
+    <record id="hr_recruitment_assessment_form_view" model="ir.ui.view">
+        <field name="name">hr.recruitment.assessment.form</field>
+        <field name="model">hr.recruitment.assessment</field>
+        <field name="arch" type="xml">
+            <form string="Assessment">
+                <group>
+                   <field name="name"/>
+                   <field name="assessment_description" widget="many2many_tags"/>
+                   <field name="assessment_scores"/>
+                   <field name="vendor"/>
+                   <field name="link" widget="url"/>
+                   <field name="assessment_date"/>
+                </group>
+            </form>
+        </field>
+    </record>
+ 
+ 
+ <!-- Assessment Action -->
+    <record id="hr_recruitment_assessment_action" model="ir.actions.act_window">
+        <field name="name">Assessment</field>
+        <field name="res_model">hr.recruitment.assessment</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="hr_recruitment_assessment_tree_view"/>
+    </record>
+
+     <menuitem
+            id="menu_hr_recruitment_assessment"
+            name="Assessment"
+            parent="hr_recruitment.menu_hr_recruitment_configuration"
+            action="hr_recruitment_assessment_action"/>
+            
+            
+</odoo>

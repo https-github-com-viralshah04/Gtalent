@@ -1,0 +1,546 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+	<data noupdate="0">
+		<record id="profile" model="website.page">
+			<field name="name">Profile</field>
+			<field name="website_published">True</field>
+			<field name="url">/website/profile</field>
+			<field name="type">qweb</field>
+			<field name="key">gtalent_pro_customization.profile</field>
+			<field name="arch" type="xml">
+				<t t-name="gtalent_pro_customization.profile">
+					<t t-call="website.layout">
+                        <div id="wrap">
+
+							<div class="profilepage-main">
+
+
+								<section class="profile-header">
+
+						<div class="container">
+								<div class="row">
+								<div class="candidate-detail-header">
+								<div class="flex-sm">
+										<div class="col-md-8 col-sm-9 col-12">
+												<div class="flex">
+
+														<div class="candidate-thumbnail flex-middle">
+																<div class="inner-image">
+
+																<t t-if="not applicant">
+																	<div width="260" height="260">
+																		<span itemprop="image" t-field="partner.image_1920"
+																			t-options='{"widget": "image", "class": "img-responsive"}'
+																			t-att-alt="partner.name"/>
+																	</div>
+																</t>
+
+																<t t-if="applicant">
+																	<div width="260" height="260">
+																		<span itemprop="image" t-field="partner.image_128"
+																			t-options='{"widget": "image", "class": "img-responsive"}'
+																			t-att-alt="partner.partner_name"/>
+																	</div>
+																</t>
+														<!--<img width="260" height="260" src="/gtalent_pro_customization/static/src/images/profile-img/profile-pic.jpg" class="attachment-full size-full wp-post-image" alt="" /> </div>-->
+																</div>
+														</div>
+
+														<div class="candidate-information">
+																<div class="title-wrapper">
+																	<h1 class="candidate-title"><t t-if="not applicant"><t t-esc="partner.name"/></t>
+																		<t t-if="applicant"><t t-esc="partner.partner_name"/></t>
+																	</h1>
+																	<!--<span class="urgent">Urgent</span>-->
+																												</div>
+										<!--<a href="#">Accounting / Finance</a>-->
+
+																<div class="job-metas-cadidate">
+																																<div class="candidate-phone">
+																							<div class="phone-wrapper phone-hide">
+											<i class="flaticon-phone-call text-theme"></i>
+
+																								<span class="phone-show"><t t-if="not applicant"><t t-esc="partner.phone"/></t><t t-if="applicant"><t t-esc="partner.partner_mobile"/></t> <span class="bg-theme"></span></span>
+											</div>
+																					</div>
+																	<div class="candidate-email"><i class="flaticon-mail text-theme"></i><t t-if="not applicant"><t t-esc="partner.email"/></t><t t-if="applicant"><t t-esc="partner.email_from"/></t></div>
+																												</div>
+																<div class="job-metas-cadidate">
+																																<div class="candidate-address"><i class="flaticon-location-pin text-theme"></i><t t-t="partner.city"/> <t t-esc="partner.state_id.name if partner.state_id else ''"/> <t t-tsc="partner.country_id.name if partner.country_id else ''"/></div>
+																												</div>
+														</div>
+												</div>
+										</div>
+										<div class="col-12 col-sm-3 col-md-4">
+												<div class="candidate-detail-buttons">
+														<div class="wrapper-shortlist mb-3">
+																		<t t-if="hr_applicant_obj">
+																			<a t-att-href="'/web/content/%i' % hr_applicant_obj.id + '?download=true'" t-att-title="hr_applicant_obj.name" class="btn btn-theme btn-block btn-download-cv cannot-download-cv-btn " data-msg="Please login with &quot;Employer&quot; to download CV.">
+																				 Shortlist
+																			</a>
+																		</t>
+															            <t t-if="not hr_applicant_obj">
+																			<a href="#" class="btn btn-theme btn-block btn-download-cv cannot-download-cv-btn " data-msg="Please login with &quot;Employer&quot; to download CV.">Shortlist</a>
+																		</t>
+														</div>
+
+														<div class="socialicons">
+															<t t-if="partner.social_facebook_acc"><a t-att-href="partner.social_facebook_acc" class="fa fa-facebook"></a></t>
+															<t t-if="partner.social_youtube_acc"><a href="partner.social_youtube_acc" class="fa fa-youtube"></a></t>
+															<t t-if="partner.social_googleplus_acc"><a href="partner.social_googleplus_acc" class="fa fa-google-plus"></a></t>
+															<t t-if="partner.social_github_acc"><a href="partner.social_github_acc" class="fa fa-github"></a></t>
+															<t t-if="partner.social_linkedin_acc"><a href="partner.social_linkedin_acc" class="fa fa-linkedin"></a></t>
+														</div>
+
+														</div>
+										</div>
+								</div>
+							</div>
+					</div>
+			</div>
+	</section>
+
+
+<div class="customfixed-header" id="fixedheader">
+
+<div class="container">
+	<div class="header-tabs-nav">
+						<ul id="customtop-menu">
+							<li class=""><a href="#experiance-summary">Experience Summary</a></li>
+							<li class=""><a href="#education-section">Education Details</a></li>
+							<li class=""><a href="#experiance-section">Experience Details</a></li>
+							<li class=""><a href="#skills-section">Skills</a></li>
+							<li class=""><a href="#assessmenst">Assessments</a></li>
+							<li class=""><a href="#course">Course</a></li>
+							<li class=""><a href="#certification">Certification</a></li>
+							<li class=""><a href="#projects">Projects</a></li>
+							<li class=""><a href="#award">Awards</a></li>
+							<li class=""><a href="#hobbies">Hobbies</a></li>
+						</ul>
+	</div>
+
+
+</div>
+</div>
+
+
+<div class="headertab-content">
+	<div class="container">
+			<div class="row">
+   	<div class="col-md-8 col-12">
+
+
+   			<div class="education-deatilssec my_resume_eduarea" id="experiance-summary">
+				<h4>Experience Summary   ( <t t-esc="len(partner.experience_summary_ids)"/> )</h4>
+
+				<t t-foreach="partner.experience_summary_ids" t-as="record">
+					<div class="content">
+						<div class="circle bgc-thm"></div>
+							<p class="edu_center">
+						   <span class="university"><t t-esc="record.summary_detail"/></span>
+						  </p>
+					</div>
+				</t>
+			</div>
+
+
+<!-- START Education Summery -->
+
+			<div class="education-deatilssec my_resume_eduarea" id="education-section">
+					<h4>Education Details   ( <t t-esc="len(partner.educational_type_id)"/> )</h4>
+					<t t-foreach="partner.educational_type_id" t-as="record">
+						<div class="content">
+							<div class="circle bgc-thm"></div>
+								 <p class="edu_center">
+								   <span class="university"><t t-esc="record.degree_type_id.name"/></span>
+									<t t-if="record.degree_start_year and record.degree_end_year">
+										<small class="year"><t t-esc="record.degree_start_year"/> - <t t-esc="record.degree_end_year"/></small>
+									</t>
+									<t t-if="record.degree_start_year and not record.degree_end_year">
+										<small class="year"><t t-esc="record.degree_start_year"/></small>
+									</t>
+								  </p>
+							<span class="university"><t t-esc="record.name.name"/></span><br/>
+							<span class="university"><t t-esc="record.name.name"/></span><br/>
+							<span class="university"><t t-esc="record.city"/></span>
+						<!--<p class="mb0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin a ipsum tellus. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>-->
+						</div>
+					</t>
+			</div>
+
+<!-- END Education Summery -->
+
+
+<!-- START Experiance Summery -->
+
+			<div class="education-deatilssec my_resume_eduarea" id="experiance-section">
+						<h4>Experience Details   ( <t t-esc="len(partner.employment_type_id)"/> )</h4>
+					<t t-foreach="partner.employment_type_id" t-as="record">
+						<div class="content">
+							<div class="circle bgc-thm"></div>
+							<p class="mb0">
+								 <span class="edu_center"><t t-esc="record.designation_type_id"/></span>
+								 <t t-if="record.employment_start_date and record.employment_end_date">
+								 	<small class="start_date"><t t-esc="record.employment_start_date"/> - <t t-esc="record.employment_end_date"/></small>
+								 </t>
+								<t t-if="record.employment_start_date and not record.employment_end_date">
+								 	<small class="start_date"><t t-esc="record.employment_start_date"/> - present</small>
+								 </t>
+							</p>
+							<span class="edu_center"><t t-esc="record.company_name.name"/></span><br/>
+							<p class="mb0"><t t-esc="record.job_summary"/></p>
+						</div>
+					</t>
+			</div>
+
+<!-- END Experiance Summery -->
+
+		<!-- START SKILLS Summery -->
+
+			<div class="education-deatilssec my_resume_eduarea" id="skills-section">
+			<h4>Skills  ( <t t-esc="len(partner.applicant_skill_ids)"/> )</h4>
+
+			<t t-foreach="partner.applicant_skill_ids" t-as="record">
+				<div class="progress_bar">
+					<div class="pro-bar">
+						<small class="progress_bar_title">
+							<t t-esc="record.skill_id.name"/>
+							<span class="progress_number"><t t-esc="record.level_progress"/>%</span>
+						</small>
+						<span class="progress-bar-inner" t-attf-style="background-color: #fdba04; width: {{40}}%;" t-att-data-value="record.level_progress" t-att-data-percentage-value="record.level_progress"></span>
+					</div>
+			  </div>
+				<!--<div class="progress_bar">-->
+					<!--<div class="pro-bar">-->
+						<!--<small class="progress_bar_title">-->
+							<!--<t t-esc="record.skill_id.name"/>-->
+							<!--<span class="progress_number"><t t-esc="record.level_progress"/>%</span>-->
+						<!--</small>-->
+						<!--<span class="progress-bar-inner" style="background-color: #1abc9c; width: {{record.level_progress}}%;" t-att-data-value="record.level_progress" t-att-data-percentage-value="record.level_progress"></span>-->
+					<!--</div>-->
+				<!--</div>-->
+			</t>
+
+			            <!--<div class="progress_bar">-->
+			                <!--<div class="pro-bar">-->
+			                    <!--<small class="progress_bar_title">-->
+			                        <!--CSS3-->
+			                        <!--<span class="progress_number">75%</span>-->
+			                    <!--</small>-->
+			                    <!--<span class="progress-bar-inner" style="background-color: #fdba04; width: 75%;" data-value="75" data-percentage-value="75"></span>-->
+			                <!--</div>-->
+			            <!--</div>-->
+
+									<!--<div class="progress_bar">-->
+			                <!--<div class="pro-bar">-->
+			                    <!--<small class="progress_bar_title">-->
+			                        <!--Bootstrap 4-->
+			                        <!--<span class="progress_number">95%</span>-->
+			                    <!--</small>-->
+			                    <!--<span class="progress-bar-inner" style="background-color: #fd0404; width: 95%;" data-value="95" data-percentage-value="95"></span>-->
+			                <!--</div>-->
+			            <!--</div>-->
+
+
+									<!--<div class="progress_bar">-->
+			                <!--<div class="pro-bar">-->
+			                    <!--<small class="progress_bar_title">-->
+			                        <!--Angular JS-->
+			                        <!--<span class="progress_number">40%</span>-->
+			                    <!--</small>-->
+			                    <!--<span class="progress-bar-inner" style="background-color: #041cfd; width: 40%;" data-value="40" data-percentage-value="40"></span>-->
+			                <!--</div>-->
+			            <!--</div>-->
+
+
+</div>
+<!-- END SKILLS Summery -->
+
+
+<!-- START Assessment Summery -->
+
+			<div class="education-deatilssec my_resume_eduarea" id="assessmenst">
+					<h4>Assessment Details   ( <t t-esc="len(partner.assesment_type_id)"/> )</h4>
+
+					<t t-foreach="partner.assesment_type_id" t-as="record">
+						<div class="content">
+							<div class="circle bgc-thm"></div>
+								<p class="edu_center">
+								    <span class="university"><t t-esc="record.name"/></span> | 
+								    <span class="university"><t t-esc="record.vendor"/></span> | 
+									<span class="year"><t t-esc="record.assessment_date"/></span> | 
+								    <span class="university"><t t-esc="record.assessment_scores"/></span>
+								</p>
+							<!--<h4 class="edu_stats"><t t-esc="record.degree_type.name"/></h4>-->
+						<!--<p class="mb0"><t t-esc="record.assessment_description.name"/></p>-->
+						</div>
+					</t>
+			</div>
+
+<!-- END Assessment Summery -->
+
+<!-- START Course Summery -->
+
+			<div class="education-deatilssec my_resume_eduarea" id="course">
+					<h4>Course Details   ( <t t-esc="len(partner.course_id)"/> )</h4>
+					<t t-foreach="partner.course_id" t-as="record">
+						<div class="content">
+							<div class="circle bgc-thm"></div>
+								 <p class="edu_center">
+								   <span class="university"><t t-esc="record.course"/></span> | 
+								   <span class="university"><t t-esc="record.course_vendor"/></span> | 
+									<t t-if="record.course_start and record.course_end">
+										<span class="year"><t t-esc="record.course_start"/> - <t t-esc="record.course_end"/></span>
+									</t>
+								  </p>
+							<!-- <h4 class="edu_stats"><t t-esc="record.course_technology"/></h4> -->
+						<!--<p class="mb0"><t t-esc="record.assessment_description"/></p>-->
+						</div>
+					</t>
+			</div>
+
+<!-- END Course Summery -->
+
+<!-- START Course Summery -->
+
+			<div class="education-deatilssec my_resume_eduarea" id="certification">
+					<h4>Certificate Details   ( <t t-esc="len(partner.certificate_id)"/> )</h4>
+
+					<t t-foreach="partner.certificate_id" t-as="record">
+						<div class="content">
+							<div class="circle bgc-thm"></div>
+								 <p class="edu_center">
+								   <span class="university"><t t-esc="record.certificate_name"/></span> | 
+									<!--<small class="year"><t t-esc="record.course_start"/> - <t t-esc="record.course_end"/></small>-->
+								  </p>
+								  <span class="university"><t t-esc="record.certificate_vendor"/></span>
+							<!-- <h4 class="edu_stats"><t t-esc="record.certificate_technology"/></h4> -->
+						<!--<p class="mb0"><t t-esc="record.assessment_description"/></p>-->
+						</div>
+					</t>
+			</div>
+
+<!-- END Course Summery -->
+
+<!-- START Course Summery -->
+
+	<div class="education-deatilssec my_resume_eduarea" id="award">
+			<h4>Awards   ( <t t-esc="len(partner.awards_id)"/> )</h4>
+
+			<t t-foreach="partner.awards_id" t-as="record">
+				<div class="content">
+					<div class="circle bgc-thm"></div>
+						 <p class="edu_center">
+						   <span class="university"><t t-esc="record.award_name"/></span>
+							<small class="year"><t t-esc="record.award_year"/></small>
+						  </p>
+					<p class="edu_stats">Present By : <t t-esc="record.present_by"/></p>
+				<!--<p class="mb0"><t t-esc="record.assessment_description"/></p>-->
+				</div>
+			</t>
+	</div>
+
+<!-- END Course Summery -->
+
+<!-- START Course Summery -->
+
+			<div class="education-deatilssec my_resume_eduarea" id="projects">
+					<h4>Project Details   ( <t t-esc="len(partner.project_id)"/> )</h4>
+
+					<t t-foreach="partner.project_id" t-as="record">
+						<div class="content">
+							<div class="circle bgc-thm"></div>
+								 <p class="edu_center">
+								   <span class="university"><t t-esc="record.name"/></span>
+									<!--<small class="year"><t t-esc="record.course_start"/> - <t t-esc="record.course_end"/></small>-->
+								  </p>
+							<h4 class="edu_stats"><t t-esc="record.technology"/></h4>
+						<!--<p class="mb0"><t t-esc="record.assessment_description"/></p>-->
+						</div>
+					</t>
+			</div>
+
+<!-- END Course Summery -->
+
+
+<!-- START Course Summery -->
+
+			<div class="education-deatilssec my_resume_eduarea" id="hobbies">
+					<h4>Hobbies   ( <t t-esc="len(partner.hobbies_id)"/> )</h4>
+
+					<t t-foreach="partner.hobbies_id" t-as="record">
+						<div class="content">
+							<div class="circle bgc-thm"></div>
+								 <p class="edu_center">
+								   <span class="university"><t t-esc="record.name"/></span>
+									<!--<small class="year"><t t-esc="record.course_start"/> - <t t-esc="record.course_end"/></small>-->
+								  </p>
+							<!--<h4 class="edu_stats"><t t-esc="record.certificate_technology"/></h4>-->
+						<p class="mb0"><t t-esc="record.hobbies_achievements"/></p>
+						</div>
+					</t>
+			</div>
+
+<!-- END Course Summery -->
+
+
+		</div>
+
+<div class="col-md-4 col-12">
+		<div class="profile-rightside">
+			<ul class="list">
+									<li>
+											<div class="icon">
+												<img width="40" src="/gtalent_pro_customization/static/src/images/profile-icon/qualification.svg" alt="" />
+											</div>
+											<div class="details">
+													<div class="text">Qualification</div>
+												<div class="value"><t t-if="not applicant_id"><t t-esc="partner.qualification"/></t> </div>
+											</div>
+								</li>
+
+
+								<li>
+										<div class="icon">
+												<img width="40" src="/gtalent_pro_customization/static/src/images/profile-icon/experiance.svg" alt="" />
+										</div>
+										<div class="details">
+												<div class="text">Experience</div>
+											<div class="value">
+												<t t-if="not applicant_id"><t t-esc="partner.years_of_exp"/></t>
+												<t t-if="applicant_id"><t t-esc="partner.app_yrs_of_exp"/></t>
+											</div>
+										</div>
+							</li>
+
+
+							<li>
+									<div class="icon">
+											<img width="40" src="/gtalent_pro_customization/static/src/images/profile-icon/skills.svg" alt="" />
+									</div>
+									<div class="details">
+											<div class="text">Skills</div>
+										<div class="value"><t t-foreach="partner.applicant_skill_ids" t-as="record"><t t-esc="record.skill_id.name"/>, </t></div>
+									</div>
+						</li>
+
+
+
+													<li>
+															<div class="icon">
+																	<img width="40" src="/gtalent_pro_customization/static/src/images/profile-icon/assessment.svg" alt="" />
+															</div>
+															<div class="details">
+																	<div class="text">Assessments</div>
+																	<div class="value"><t t-esc="len(partner.assesment_type_id)"/></div>
+															</div>
+												</li>
+
+
+												<li>
+														<div class="icon">
+																<img width="40" src="/gtalent_pro_customization/static/src/images/profile-icon/course.svg" alt="" />
+														</div>
+														<div class="details">
+																<div class="text">Courses</div>
+																<div class="value"><t t-esc="len(partner.course_id)"/></div>
+														</div>
+											</li>
+
+											<li>
+													<div class="icon">
+														<img width="40" src="/gtalent_pro_customization/static/src/images/profile-icon/certification.svg" alt="" />
+													</div>
+													<div class="details">
+															<div class="text">Certification</div>
+															<div class="value"><t t-esc="len(partner.certificate_id)"/></div>
+													</div>
+										</li>
+
+										<li>
+												<div class="icon">
+														<img width="40" src="/gtalent_pro_customization/static/src/images/profile-icon/projects.svg" alt="" />
+												</div>
+												<div class="details">
+														<div class="text">Projects</div>
+														<div class="value"><t t-esc="len(partner.project_id)"/></div>
+												</div>
+									</li>
+
+
+									<li>
+											<div class="icon">
+													<img width="40" src="/gtalent_pro_customization/static/src/images/profile-icon/awards.svg" alt="" />
+											</div>
+											<div class="details">
+													<div class="text">Awards</div>
+													<div class="value"><t t-esc="len(partner.awards_id)"/></div>
+											</div>
+								</li>
+
+					</ul>
+
+
+
+		</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+
+
+
+		</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+							</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+					</t>
+				</t>
+			</field>
+		</record>
+	</data>
+</odoo>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+ 	<!-- Company List Action -->
+	     <record id="company_user_details_list_action" model="ir.actions.act_window">
+	        <field name="name">Recruitment Companies Details</field>
+	        <field name="res_model">res.partner</field>
+	        <field name="view_mode">kanban,tree,form,activity</field>
+	        <field name="domain">[('gtalent_users', '=', 'recruitment_vendor')]</field>
+	        <field name="view_id" ref="base.res_partner_kanban_view"/>
+	    </record>
+	
+	     <menuitem
+	            id="company_user_details_list"
+	            sequence="12"
+	            name="Recruitment Vendor"
+	            parent="hr_recruitment.menu_hr_recruitment_root"
+	            action="company_user_details_list_action"/>
+                                   
+            
+    <!-- Inherit Kanban view for displaying fields as per companies -->
+    <record id="inherit_partner_kanban_view_college" model="ir.ui.view">
+    <field name="name">inherit.partner.kanban.view.college</field>
+    <field name="model">res.partner</field>
+    <field name="inherit_id" ref="base.res_partner_kanban_view"/>
+    <field name="arch" type="xml">
+    <xpath expr="//t//div[@class='oe_kanban_details']//li[@t-if='record.email.raw_value']" position="inside">
+         <field name="gtalent_users" invisible="1"/>
+          <!-- Displaying phone number on kanban -->
+          <li t-if="record.phone.raw_value">
+             <field name="phone" attrs="{'invisible': [('gtalent_users', '!=', 'recruitment_vendor')]}"/>
+          </li>
+             
+         <!-- Displaying website on kanban -->
+          <li t-if="record.website.raw_value" class="o_text_overflow">
+             <field name="website" widget="url" attrs="{'invisible': [('gtalent_users', '!=', 'recruitment_vendor')]}"/>
+          </li>
+          
+         
+     
+    </xpath>
+    </field>
+    </record>
+    
+ <menuitem
+        name="Manage Jobs"
+        parent="hr_recruitment.menu_hr_recruitment_root"
+        id="hr_recruitment.menu_crm_case_categ0_act_job" sequence="2"/>
+        
+  <menuitem
+        name="GTalent Pro"
+        id="hr_recruitment.menu_hr_recruitment_root" sequence="80"/>
+        
+<!--        groups="gtalent_pro_customization.g_admin,gtalent_pro_customization.g_recruiter"-->  -->  
+        
+            
+    <!-- <record model="ir.ui.menu" id="hr_recruitment.menu_crm_case_categ0_act_job">
+      <field name="name">Manage Jobs</field>
+      <field name="groups">gtalent_pro_customization.g_admin</field>
+    </record> -->
+            
+</odoo>

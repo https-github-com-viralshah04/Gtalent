@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <template id="custom_contactus_form_v" name="Contact Form" inherit_id="website_crm.contactus_form" customize_show="True">
+            <xpath expr="//form/div" position="before">
+                <div class="form-group row form-field o_website_form_required_custom">
+                    <label class="col-lg-3 col-md-4 col-form-label" for="category">Category</label>
+                    <div class="col-lg-7 col-md-8">
+						<select name="category" placeholder="Industry Type" class="form-control">
+							<option value="" class="form-control">Select Category</option>
+								 <t t-foreach="categories" t-as="category">
+									 <option t-att-value="category.id">
+										 <t t-esc="category.name" />
+									 </option>
+								 </t>
+						</select>
+                    </div>
+                </div>
+            </xpath>
+        </template>
+</odoo>

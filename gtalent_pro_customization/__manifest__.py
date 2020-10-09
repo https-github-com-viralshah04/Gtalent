@@ -5,7 +5,7 @@
     'author': 'Pragmatic TechSoft Pvt Ltd.',
     'website': 'http://www.pragtech.co.in',
     'summary': 'The module will add applicant related data and will customize the complete flow of recruitment process',
-    'depends': ['base', 'hr', 'hr_recruitment', 'account', 'hr_skills', 'mail', 'contacts', 'website_hr_recruitment', 'website_crm'],
+    'depends': ['base','hr','hr_recruitment','account','hr_skills','mail','contacts', 'website_hr_recruitment','website_crm'],
     'data': [
         'security/ir.model.access.csv',
         'security/gtalentpro_security.xml',
@@ -13,7 +13,7 @@
         'data/website_data.xml',
         'views/share_data.xml',
         'views/company_request_wizard.xml',
-        #         'views/res_company_view.xml',
+#         'views/res_company_view.xml',
         'views/hr_applicant_view.xml',
         'views/hr_applicant_assessment.xml',
         'views/hr_applicant_industry_view.xml',
@@ -42,9 +42,9 @@
         'views/hr_degree_type.xml',
         'views/talents_view.xml',
         'views/auth_signup.xml',
-        #         'views/hr_talents_view.xml',
+#         'views/hr_talents_view.xml',
         'views/footer.xml',
-        #         'views/company_view.xml'
+#         'views/company_view.xml'
         'views/profile_page.xml',
         'views/inherit_mail_message_view.xml',
         'views/inherit_contactus.xml',
@@ -55,4 +55,4 @@
     'installable': True,
     'application': False,
     'auto_install': False,
-}
+    }

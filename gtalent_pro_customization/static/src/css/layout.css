@@ -599,7 +599,6 @@ h2 small {    color: #666666;
 .full-time {
     color: #000;
     background: #cecece;
-    margin-left: 65%;
 }
 
 .part-time {
@@ -1302,6 +1301,7 @@ line-height: 20px;
     padding: 40px;
     text-align: center;
     margin-top: 40px;
+    color: green;
     margin-bottom: 40px;}
 
 .thankyou-div h1 {margin-bottom: 10px;
@@ -1312,8 +1312,17 @@ line-height: 20px;
 .thankyou-div h5{    margin-bottom: 40px;
     font-size: 18px;
     font-weight: 500;}
-
-
+.highlight-error{
+    border-color: red;
+}
+.tag {
+  padding: 3px 6px;
+  display: inline-block;
+  border: 1px solid blue;
+  background: aliceblue;
+  border-radius: 2px;
+  margin-right: 10px;
+}
 .edit-btn {padding: 10px;
     border: 0px;
     border-radius: 50%;
@@ -1321,6 +1330,15 @@ line-height: 20px;
     height: 38px;
     background-color: #36429f;
     color: #fff; }
+
+.view-btn{padding: 10px;
+    border: 0px;
+    border-radius: 50%;
+    width: 38px;
+    height: 38px;
+    background-color: #0ddae4;
+    color: #fff;
+}
 
 .delete-btn {padding: 10px;
         border: 0px;
@@ -1509,16 +1527,3 @@ font-weight: bold;
 .o_my_sidebar h2 {text-align: center;}
 
 .profile-image img {width:100%;}
-
-.custom-text-input{
-    border: 2px solid #DDD;
-    width: 100%;
-    padding: 5px;
-}
-
-
-.input-group-addon
-{
-    background-color:#FFF; 
-    margin-top: 8px;
-}

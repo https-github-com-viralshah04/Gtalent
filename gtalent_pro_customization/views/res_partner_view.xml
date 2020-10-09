@@ -167,8 +167,7 @@
 	             	<field name="degree_percentage" required="1" string="Percentage/CGPA"/>
 	             	<field name="upload_certifcate" string="Certiifcate Upload"/>
 	             </tree>
- 
-            </field>
+             </field>
 			</group>
 			</page>
 
@@ -201,8 +200,6 @@
               <field name="link" widget="url"/>
               <field name="assessment_date"/>
 			</tree>
-
-
 			</field>
 			</group>
 			</page>

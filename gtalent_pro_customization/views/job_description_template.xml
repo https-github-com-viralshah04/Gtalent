@@ -102,52 +102,11 @@
                                     </div>
                                 </div>
                                 <div class="form-row">
-                                    <div class="form-group col-md-6 form-field workexp ">
-                                        <label class="col-form-label" for="experience">Degree</label>
-                                        <select t-attf-class="form-control" placeholder="Degree" name="degree">
-                                            <t t-foreach="request.env['hr.recruitment.degree'].search([])" t-as="degree">
-                                                <option t-att-value="degree.id">
-                                                    <t t-esc="degree.name" />
-                                                </option>
-                                            </t>
-                                        </select>
-                                    </div>
-                                    <div class="form-group form-field col-md-6">
-                                        <label class="col-form-label" for="education">Specialization</label>
-                                        <select t-attf-class="form-control" placeholder="Specialization" name="specialization">
-                                            <option value="computer">Computer</option>
-                                            <option value="network">Network</option>
-                                            <option value="network">Medical</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-row">
                                     <div class="form-group col-md-6 form-field ">
                                         <label class="col-form-label" for="Keyskills">Key skills</label>
                                         <!-- <input type="text" class="form-control o_website_form_input" placeholder="Key skills"  name="Keyskills"/>-->
                                         <input type='text' placeholder='Please Enter Key Skills' class='flexdatalist form-control' data-min-length='1' data-searchContain='true' multiple='multiple' list='skills' name='Keyskills' />
                                         <datalist id="skills">
-                                            <option value="Node.js">Node.jssss</option>
-                                            <option value="Accessibility">Accessibility</option>
-                                            <option value="Wireframing">Wireframing</option>
-                                            <option value="HTML5">HTML5</option>
-                                            <option value="CSS3">CSS3</option>
-                                            <option value="DOM Manipulation">DOM Manipulation</option>
-                                            <option value="MVC">MVC</option>
-                                            <option value="MVVM">MVVM</option>
-                                            <option value="MV*">MV*</option>
-                                            <option value="Modules">Modules</option>
-                                            <option value="Microdata">Microdata</option>
-                                            <option value="JavaScript">JavaScript</option>
-                                            <option value="jQuery">jQuery</option>
-                                            <option value="ReactJS">ReactJS</option>
-                                        </datalist>
-                                    </div>
-                                    <div class="form-group col-md-6 form-field ">
-                                        <label class="col-form-label" for="Keyskills">Secondary Key skills</label>
-                                        <!-- <input type="text" class="form-control o_website_form_input" placeholder="Key skills"  name="Keyskills"/>-->
-                                        <input type='text' placeholder='Please Enter Key Skills' class='flexdatalist form-control' data-min-length='1' data-searchContain='true' multiple='multiple' list='skills' name='SecondaryKeyskills' />
-                                        <datalist id="secondaryskills">
                                             <option value="Node.js">Node.jssss</option>
                                             <option value="Accessibility">Accessibility</option>
                                             <option value="Wireframing">Wireframing</option>

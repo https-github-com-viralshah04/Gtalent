@@ -11,9 +11,6 @@
 			<!--<xpath expr="//label[@for='description']" position="replace">-->
 				<!--<label for="description"/>-->
 			<!--</xpath>-->
-			<xpath expr="//div[hasclass('oe_title')]" position="before">
-				<field name="image" widget="image" class="oe_avatar"/>
-			</xpath>
 
             <xpath expr="//form//sheet" position="inside">
             	<notebook>
@@ -38,9 +35,6 @@
 								<field name="education"/>
 
 								<field name="Key_skills"/>
-								<field name="s_key_skill"/>
-								<field name="degree_id"/>
-								<field name="specialization"/>
 							</group>
 
 		                </group>

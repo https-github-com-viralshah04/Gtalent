@@ -91,15 +91,7 @@
                                 <t t-if="job.work_location">
                                 <li><b>Work Location : </b><t t-esc="job.work_location"/></li>
                                 </t>
-                                <t t-if="job.s_key_skill">
-                                    <li><b>Secondary Key Skills : </b><t t-esc="job.s_key_skill"/></li>
-                                </t>
-                                <t t-if="job.specialization">
-                                    <li><b>Specialization : </b><t t-esc="job.specialization"/></li>
-                                </t>
-                                <t t-if="job.degree_id">
-                                    <li><b>Degree : </b><t t-esc="job.degree_id.name"/></li>
-                                </t>
+
                             </ul>
                       </div>
           </div>

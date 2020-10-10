@@ -7,16 +7,16 @@
         <field name="model">companies.requests</field>
         <field name="arch" type="xml">
             <tree string="Requests">
-            <field name="request_date" readonly="1"/>
-             <field name="company_request" string="Request From" readonly="1" invisible="1"/>
-             <field name="company_ref" string="Request From" readonly="1"/>
-             <field name="college_ref" string="Request To"  readonly="1"/>
-             <field name="request_to" string="Request To" invisible="1" readonly="1"/>
-             <field name="industry_name" string="Industry" readonly="1"/>
-             <field name="candidate_type" string="Candidate Type" readonly="1"/>
-             <field name="specialization" string="Specialization" readonly="1"/>
-             <field name="no_of_applicants_requested" string="Number of Applicants Requested" readonly="1"/>
-             <field name="request_status" string="Status"/>
+                <field name="request_date" readonly="1"/>
+                <field name="company_request" string="Request From" readonly="1" invisible="1"/>
+                <field name="company_ref" string="Request From" readonly="1"/>
+                <field name="college_ref" string="Request To"  readonly="1"/>
+                <field name="request_to" string="Request To" invisible="1" readonly="1"/>
+                <field name="industry_name" string="Industry" readonly="1"/>
+                <field name="candidate_type" string="Candidate Type" readonly="1"/>
+                <field name="specialization" string="Specialization" readonly="1"/>
+                <field name="no_of_applicants_requested" string="Number of Applicants Requested" readonly="1"/>
+                <field name="request_status" string="Status"/>
             </tree>
         </field>
     </record>
@@ -30,45 +30,137 @@
             <header>
             <field name="request_status"  widget="statusbar"/>
             <button type="object" 
-		            name="approve_company_request" 
-		            string="Approve Request" 
-		            class="oe_right oe_button_box btn-primary" 
-		            icon="fa-check-square-o"  
-		            confirm="Are you sure you want to approve the request?"
-		            attrs="{'invisible' : [('request_status','=','approved')]}"/>
+                    name="approve_company_request" 
+                    string="Approve Request" 
+                    class="oe_right oe_button_box btn-primary" 
+                    icon="fa-check-square-o"  
+                    confirm="Are you sure you want to approve the request?"
+                    attrs="{'invisible' : [('request_status','=','approved')]}"/>
             </header>
             <sheet>
-            <widget name="web_ribbon" text="Approved"  attrs="{'invisible': [('request_status', '=', 'pending')]}"/>
-            <group string="Information">
-             <field name="request_date" readonly="1"/>
-             <field name="company_request" string="Request From" invisible="1" readonly="1"/>
-             <field name="company_ref" string="Request From" readonly="1"/>
-             <field name="college_ref" string="Request To"  readonly="1"/>
-             <field name="request_to" string="Request To" invisible="1" readonly="1"/>
-             <field name="industry_name" string="Industry" readonly="1"/>
-             <field name="candidate_type" string="Candidate Type" readonly="1"/>
-             <field name="specialization" string="Specialization" readonly="1"/>
-             <field name="no_of_applicants_requested" string="Number of Applicants Requested" readonly="1"/>
-             </group>
+                <widget name="web_ribbon" text="Approved"  attrs="{'invisible': [('request_status', '=', 'pending')]}"/>
+                <group string="Information">
+                    <field name="request_date" readonly="1"/>
+                    <field name="company_request" string="Request From" invisible="1" readonly="1"/>
+                    <field name="company_ref" string="Request From" readonly="1"/>
+                    <field name="college_ref" string="Request To"  readonly="1"/>
+                    <field name="request_to" string="Request To" invisible="1" readonly="1"/>
+                    <field name="industry_name" string="Industry" readonly="1"/>
+                    <field name="candidate_type" string="Candidate Type" readonly="1"/>
+                    <field name="specialization" string="Specialization" readonly="1"/>
+                    <field name="no_of_applicants_requested" string="Number of Applicants Requested" readonly="1"/>
+                </group>
              </sheet>
+            <div class="oe_chatter">
+                <field name="activity_ids" widget="mail_activity"/>
+                <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+                <field name="message_ids" widget="mail_thread"/>
+            </div>
           </form>
         </field>
     </record>
+
+    <record id="view_companies_requests_kanban" model="ir.ui.view">
+       <field name="name">companies.requests.kanban</field>
+       <field name="model">companies.requests</field>
+       <field name="arch" type="xml">
+            <kanban class="o_hr_employee_kanban">
+                <field name="request_date"/>
+                <field name="company_ref" string="Request From"/>
+                <field name="college_ref" string="Request To"/>
+                <field name="request_to" string="Request To"/>
+                <field name="industry_name" string="Industry"/>
+                <field name="candidate_type" string="Candidate Type"/>
+                <field name="specialization" string="Specialization"/>
+                <field name="no_of_applicants_requested" string="Number of Applicants Requested" readonly="1"/>
+                <field name="request_status" string="Status"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click o_kanban_record_has_image_fill o_hr_kanban_record">
+                            <div class="oe_kanban_details">
+                                <div class="o_kanban_record_top">
+                                    <div class="o_kanban_record_headings">
+                                       <ul>
+                                            <strong>Request Date:</strong><li t-if="record.request_date.raw_value" class="o_text_overflow"><field name="request_date"/></li><br/>
+                                            <strong>Request From:</strong><li t-if="record.company_ref.raw_value" class="o_text_overflow"><field name="company_ref"/></li><br/>
+                                            <strong>Request To:</strong><li t-if="record.request_to.raw_value" class="o_text_overflow"><field name="request_to"/></li><br/>
+                                            <strong>Candidate Type:</strong><li t-if="record.candidate_type.raw_value" class="o_text_overflow"><field name="candidate_type"/></li><br/>
+                                            <strong>Status:</strong><li t-if="record.request_status.raw_value" class="o_text_overflow"><field name="request_status"/></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+
+    <record id="view_companies_requests_calendar" model="ir.ui.view">
+        <field name="name">companies.requests.calendar</field>
+        <field name="model">companies.requests</field>
+        <field name="arch" type="xml">
+            <calendar color="request_date" date_start="request_date" mode="month">
+                <field name="request_date"/>
+                <!-- <field name="company_ref"/>
+                <field name="college_ref"/>
+                <field name="industry_name"/>
+                <field name="candidate_type"/>
+                <field name="specialization"/>
+                <field name="no_of_applicants_requested"/>
+                <field name="request_status"/> -->
+            </calendar>
+        </field>
+    </record>
+
+    <record id="view_companies_requests_graph" model="ir.ui.view">
+        <field name="name">companies.requests.graph</field>
+        <field name="model">companies.requests</field>
+        <field name="arch" type="xml">
+            <graph string="Requests">
+                <field name="request_date"/>
+                <field name="company_ref" string="Request From"/>
+                <field name="college_ref" string="Request To"/>
+                <field name="industry_name" string="Industry"/>
+                <field name="candidate_type" string="Candidate Type"/>
+                <field name="specialization" string="Specialization"/>
+                <field name="no_of_applicants_requested" string="Number of Applicants Requested" />
+                <field name="request_status" string="Status"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="view_companies_requests_pivot" model="ir.ui.view">
+        <field name="name">companies.requests.pivot</field>
+        <field name="model">companies.requests</field>
+        <field name="arch" type="xml">
+            <pivot string="Requests" disable_linking="True">
+                <field name="candidate_type" type="col"/>
+                <field name="request_status" string="Status" type="row"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_companies_requests_gantt" model="ir.ui.view">
+        <field name="name">companies.requests.gantt</field>
+        <field name="model">companies.requests</field>
+        <field name="arch" type="xml">
+            <gantt date_stop="request_date" date_start="request_date" string="Requests" default_group_by="request_status">
+            </gantt>
+        </field>
+    </record>
  
- <!-- Companies Requests Action -->
+    <!-- Companies Requests Action -->
     <record id="companies_requests_action" model="ir.actions.act_window">
         <field name="name">Requests</field>
         <field name="res_model">companies.requests</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">tree,form,kanban,calendar,graph,pivot,gantt,activity</field>
         <field name="view_id" ref="companies_applicants_requests_tree_view"/>
     </record>
 
-     <menuitem
-            id="menu_companies_request_applicants"
-            name=" All Requests"
-            sequence="13"
-            parent="hr_recruitment.menu_hr_recruitment_root"
-            action="companies_requests_action"/>
-            
-            
+     <menuitem id="menu_companies_request_applicants" name=" All Requests" sequence="13" parent="hr_recruitment.menu_hr_recruitment_root" action="companies_requests_action"/>
+
+
 </odoo>

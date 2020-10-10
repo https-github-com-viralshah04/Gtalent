@@ -5,7 +5,7 @@
     'author': 'Pragmatic TechSoft Pvt Ltd.',
     'website': 'http://www.pragtech.co.in',
     'summary': 'The module will add applicant related data and will customize the complete flow of recruitment process',
-    'depends': ['base','hr','hr_recruitment','account','hr_skills','mail','contacts', 'website_hr_recruitment','website_crm'],
+    'depends': ['base','sale','crm','hr','hr_recruitment','account','hr_skills','mail','contacts', 'website_hr_recruitment','website_crm','mass_mailing','survey'],
     'data': [
         'security/ir.model.access.csv',
         'security/gtalentpro_security.xml',

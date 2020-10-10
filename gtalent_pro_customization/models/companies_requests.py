@@ -6,6 +6,7 @@ import logging
 _logger = logging.getLogger(__name__)
 class CompaniesRequests(models.Model):
     _name = 'companies.requests'
+    _inherit = ['mail.thread', 'mail.activity.mixin']
     _rec_name = 'company_ref'
     
     

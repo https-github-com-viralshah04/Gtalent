@@ -1,91 +1,139 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
     <data>
+
+        <record model="ir.module.category" id="module_category_gtatent">
+            <field name="name">Gtalent</field>
+            <field name="description">Gtalent Management System</field>
+            <field name="sequence">10</field>
+        </record>
+
         <record id="g_recruiter" model="res.groups">
             <field name="name">Gtalent Company/Employer</field>
+            <field name="category_id" ref="gtalent_pro_customization.module_category_gtatent"/>
+            <field name="users" eval="[(4, ref('base.user_root'))]"/>
         </record>
 
         <record id="g_candidate" model="res.groups">
             <field name="name">Gtalent Candidate</field>
+            <field name="category_id" ref="gtalent_pro_customization.module_category_gtatent"/>
+            <field name="users" eval="[(4, ref('base.user_root'))]"/>
         </record>
 
         <record id="g_college" model="res.groups">
             <field name="name">Gtalent College</field>
+            <field name="category_id" ref="gtalent_pro_customization.module_category_gtatent"/>
+            <field name="users" eval="[(4, ref('base.user_root'))]"/>
         </record>
 
         <record id="g_admin" model="res.groups">
             <field name="name">Gtalent Administrator</field>
+            <field name="category_id" ref="gtalent_pro_customization.module_category_gtatent"/>
+            <field name="users" eval="[(4, ref('base.user_root'))]"/>
         </record>
+
+        <record id="group_gtalent_sale" model="res.groups">
+            <field name="name">Gtalent Sale</field>
+            <field name="category_id" ref="gtalent_pro_customization.module_category_gtatent"/>
+            <field name="users" eval="[(4, ref('base.user_root'))]"/>
+        </record>
+
+        <record id="group_gtalent_purchase" model="res.groups">
+            <field name="name">Gtalent Purchase</field>
+            <field name="category_id" ref="gtalent_pro_customization.module_category_gtatent"/>
+            <field name="users" eval="[(4, ref('base.user_root'))]"/>
+        </record>
+
+        <record id="group_gtalent_email_marketing" model="res.groups">
+            <field name="name">Gtalent Email Marketing</field>
+            <field name="category_id" ref="gtalent_pro_customization.module_category_gtatent"/>
+            <field name="users" eval="[(4, ref('base.user_root'))]"/>
+        </record>
+
+        <record id="group_gtalent_sms_marketing" model="res.groups">
+            <field name="name">Gtalent SMS Marketing</field>
+            <field name="category_id" ref="gtalent_pro_customization.module_category_gtatent"/>
+            <field name="users" eval="[(4, ref('base.user_root'))]"/>
+        </record>
+
+        <record id="group_gtalent_surveys" model="res.groups">
+            <field name="name">Gtalent Surveys</field>
+            <field name="category_id" ref="gtalent_pro_customization.module_category_gtatent"/>
+            <field name="users" eval="[(4, ref('base.user_root'))]"/>
+        </record>
+
+        <record id="group_gtalent_crm" model="res.groups">
+            <field name="name">Gtalent CRM</field>
+            <field name="category_id" ref="gtalent_pro_customization.module_category_gtatent"/>
+            <field name="users" eval="[(4, ref('base.user_root'))]"/>
+        </record>
+        
+            <record id="ir_rule_company_request_rule0" model="ir.rule">
+            <field name="name">Request Visibility Rule for Company</field>
+            <field eval="1" name="active"/>
+            <field name="model_id" ref="gtalent_pro_customization.model_companies_requests"/>
+            <field eval="[(6,0,[ref('gtalent_pro_customization.g_recruiter')])]" name="groups"/>
+            <field name="domain_force">[('company_ref','=',user.partner_id.id)]</field>
+            <field eval="1" name="perm_read"/>
+            <field eval="1" name="perm_write"/>
+            <field eval="1" name="perm_create"/>
+            <field eval="1" name="perm_unlink"/>
+            <field eval="0" name="global"/>
+            </record>
+            
+            
+            <record id="ir_rule_gtalent_admin_rule0" model="ir.rule">
+            <field name="name">Gtalent Admin Rule</field>
+            <field eval="1" name="active"/>
+            <field name="model_id" ref="gtalent_pro_customization.model_companies_requests"/>
+            <field eval="[(6,0,[ref('gtalent_pro_customization.g_admin')])]" name="groups"/>
+            <field name="domain_force">[(1,'=',1)]</field>
+            <field eval="1" name="perm_read"/>
+            <field eval="1" name="perm_write"/>
+            <field eval="1" name="perm_create"/>
+            <field eval="1" name="perm_unlink"/>
+            <field eval="0" name="global"/>
+            </record>
+        
+        
+            <record id="ir_rule_college_request_rule0" model="ir.rule">
+            <field name="name">Request Visibility for College</field>
+            <field eval="1" name="active"/>
+            <field name="model_id" ref="gtalent_pro_customization.model_companies_requests"/>
+            <field eval="[(6,0,[ref('gtalent_pro_customization.g_college')])]" name="groups"/>
+            <field name="domain_force">[('college_ref','=',user.partner_id.id)]</field>
+            <field eval="1" name="perm_read"/>
+            <field eval="1" name="perm_write"/>
+            <field eval="1" name="perm_create"/>
+            <field eval="1" name="perm_unlink"/>
+            <field eval="0" name="global"/>
+            </record>
+        
+        
+            <record id="ir_rule_gtalent_college0" model="ir.rule">
+            <field name="name">College should see own applicants</field>
+            <field eval="1" name="active"/>
+            <field name="model_id" ref="gtalent_pro_customization.model_hr_applicant"/>
+            <field eval="[(6,0,[ref('gtalent_pro_customization.g_college')])]" name="groups"/>
+            <field name="domain_force">[('applicant_college','=',user.partner_id.id)]</field>
+            <field eval="1" name="perm_read"/>
+            <field eval="1" name="perm_write"/>
+            <field eval="1" name="perm_create"/>
+            <field eval="1" name="perm_unlink"/>
+            <field eval="0" name="global"/>
+            </record>
+        
+            <record id="ir_rule_talent_rule0" model="ir.rule">
+            <field name="name">Companies should see only the applicants shared with them</field>
+            <field eval="1" name="active"/>
+            <field name="model_id" ref="gtalent_pro_customization.model_hr_applicant"/>
+            <field eval="[(6,0,[ref('gtalent_pro_customization.g_recruiter')])]" name="groups"/>
+            <field name="domain_force">[('shared_applicant_info_ids.shared_company.id','=',user.partner_id.id)]</field>
+            <field eval="1" name="perm_read"/>
+            <field eval="1" name="perm_write"/>
+            <field eval="1" name="perm_create"/>
+            <field eval="1" name="perm_unlink"/>
+            <field eval="0" name="global"/>
+            </record>
     </data>
-    
-    
-	<data noupdate="1">
-    		<record id="ir_rule_company_request_rule0" model="ir.rule">
-			<field name="name">Request Visibility Rule for Company</field>
-			<field eval="1" name="active"/>
-			<field name="model_id" ref="gtalent_pro_customization.model_companies_requests"/>
-			<field eval="[(6,0,[ref('gtalent_pro_customization.g_recruiter')])]" name="groups"/>
-			<field name="domain_force">[('company_ref','=',user.partner_id.id)]</field>
-			<field eval="1" name="perm_read"/>
-			<field eval="1" name="perm_write"/>
-			<field eval="1" name="perm_create"/>
-			<field eval="1" name="perm_unlink"/>
-			<field eval="0" name="global"/>
-			</record>
-			
-			
-			<record id="ir_rule_gtalent_admin_rule0" model="ir.rule">
-			<field name="name">Gtalent Admin Rule</field>
-			<field eval="1" name="active"/>
-			<field name="model_id" ref="gtalent_pro_customization.model_companies_requests"/>
-			<field eval="[(6,0,[ref('gtalent_pro_customization.g_admin')])]" name="groups"/>
-			<field name="domain_force">[(1,'=',1)]</field>
-			<field eval="1" name="perm_read"/>
-			<field eval="1" name="perm_write"/>
-			<field eval="1" name="perm_create"/>
-			<field eval="1" name="perm_unlink"/>
-			<field eval="0" name="global"/>
-			</record>
-		
-		
-			<record id="ir_rule_college_request_rule0" model="ir.rule">
-			<field name="name">Request Visibility for College</field>
-			<field eval="1" name="active"/>
-			<field name="model_id" ref="gtalent_pro_customization.model_companies_requests"/>
-			<field eval="[(6,0,[ref('gtalent_pro_customization.g_college')])]" name="groups"/>
-			<field name="domain_force">[('college_ref','=',user.partner_id.id)]</field>
-			<field eval="1" name="perm_read"/>
-			<field eval="1" name="perm_write"/>
-			<field eval="1" name="perm_create"/>
-			<field eval="1" name="perm_unlink"/>
-			<field eval="0" name="global"/>
-			</record>
-		
-		
-			<record id="ir_rule_gtalent_college0" model="ir.rule">
-			<field name="name">College should see own applicants</field>
-			<field eval="1" name="active"/>
-			<field name="model_id" ref="gtalent_pro_customization.model_hr_applicant"/>
-			<field eval="[(6,0,[ref('gtalent_pro_customization.g_college')])]" name="groups"/>
-			<field name="domain_force">[('applicant_college','=',user.partner_id.id)]</field>
-			<field eval="1" name="perm_read"/>
-			<field eval="1" name="perm_write"/>
-			<field eval="1" name="perm_create"/>
-			<field eval="1" name="perm_unlink"/>
-			<field eval="0" name="global"/>
-			</record>
-		
-			<record id="ir_rule_talent_rule0" model="ir.rule">
-			<field name="name">Companies should see only the applicants shared with them</field>
-			<field eval="1" name="active"/>
-			<field name="model_id" ref="gtalent_pro_customization.model_hr_applicant"/>
-			<field eval="[(6,0,[ref('gtalent_pro_customization.g_recruiter')])]" name="groups"/>
-			<field name="domain_force">[('shared_applicant_info_ids.shared_company.id','=',user.partner_id.id)]</field>
-			<field eval="1" name="perm_read"/>
-			<field eval="1" name="perm_write"/>
-			<field eval="1" name="perm_create"/>
-			<field eval="1" name="perm_unlink"/>
-			<field eval="0" name="global"/>
-			</record>
-	</data>
 </odoo>

@@ -1,20 +1,313 @@
 <?xml version="1.0" encoding="utf-8"?>
-<odoo>
-    
- <!-- Talents List Action -->
-     <record id="talent_details_list_action" model="ir.actions.act_window">
-        <field name="name">Talents</field>
-        <field name="res_model">hr.applicant</field>
-        <field name="view_mode">kanban,tree,form,pivot,graph,calendar,activity</field>
-        <field name="domain"></field>
-        <field name="view_id" ref="hr_recruitment.hr_kanban_view_applicant"/>
-    </record>
+    <odoo>
 
-     <menuitem
-            id="talent__details_list"
-            name="Talents"
-            sequence="9"
-            parent="hr_recruitment.menu_hr_recruitment_root"
-            action="talent_details_list_action"/>
-            
+        <record id="inherit_hr_applicant_form_view" model="ir.ui.view">
+            <field name="name">inherit.hr.applicant.form.view</field>
+            <field name="model">hr.applicant</field>
+            <field name="inherit_id" ref="hr_recruitment.hr_applicant_view_form"/>
+            <field name="arch" type="xml">
+                <!-- Commented by Alfiya as per customer's requirement -->
+                <!-- Adding is alumni field
+                <xpath expr="//field[@name='email_from']" position="before">
+                    <field name="is_alumni"/>
+                </xpath> -->
+                <xpath expr="//group/group[4]" position="replace">
+                    <group string="Contract">
+                        <label for="salary_proposed" string="Current CTC"/>
+                            <div class="o_row">
+                                <field name="salary_proposed"/>
+                                <span attrs="{'invisible':[('salary_proposed_extra','=',False)]}"> + </span>
+                                <field name="salary_proposed_extra" placeholder="Extra advantages..."/>
+                            </div>
+                 
+                        <label for="salary_expected" string="Expected CTC"/>
+                        <div class="o_row">
+                            <field name="salary_expected"/>
+                            <span attrs="{'invisible':[('salary_expected_extra','=',False)]}"> + </span>
+                            <field name="salary_expected_extra" placeholder="Extra advantages..."/>
+                        </div>
+                        <field name="availability"/>
+                        <field name="emp_id" invisible="1"/>
+                    </group>
+                </xpath>
+
+                <!-- Making email and mobile phone as mandatory -->
+                <xpath expr="//field[@name='email_from']" position="attributes">
+                    <attribute name="required">1</attribute>    
+                </xpath>
+                <xpath expr="//field[@name='partner_mobile']" position="attributes">
+                    <attribute name="required">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='email_cc']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='partner_phone']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='availability']" position="replace">
+                    <field name="notice_availability" string="Notice Period"/>
+                </xpath>
+                <xpath expr="//field[@name='job_id']" position="after">
+                    <field name="applicant_college" required="1" domain="[('gtalent_users','=','campus')]"/>
+                    <field name="current_designation"/>
+                    <field name="app_yrs_of_exp"/>
+                </xpath>
+                <!-- Making degree and department field as invisible,as already we are using it in custom tabs -->
+                <xpath expr="//field[@name='type_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>   
+                </xpath>
+                <xpath expr="//field[@name='department_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>   
+                </xpath>
+                <xpath expr="//widget[@name='web_ribbon']" position="after">
+                    <field name="image_128" widget="image" class="oe_avatar"/>
+                </xpath>
+                <!-- Adding Interview Status Related Field -->
+                <xpath expr="//field[@name='description']" position="before">
+                    <group name="Interview Status">
+                    <field name="ai_interview_status"/>
+                    </group>
+                </xpath>
+                <!-- Adding smart links to the view -->
+                <xpath expr="//sheet//div/button[@name='action_makeMeeting']" position="after">
+                    <button class="oe_stat_button" icon="fa-pencil-square" type="object" help="Educational Details of this applicant">
+                        <field name="education_count" widget="statinfo" string="Education"/>
+                    </button>
+                   <button name="action_make_experience" class="oe_stat_button" icon="fa-users" type="object" help="Experience Details of this applicant">
+                        <field name="experience_count" widget="statinfo" string="Experience"/>
+                    </button>
+                    <button name="action_make_certification" class="oe_stat_button" icon="fa-trophy" type="object" help="Certification Details of this applicant">
+                        <field name="certification_count" widget="statinfo" string="Certification"/>
+                    </button>
+                    <button name="action_make_skills" class="oe_stat_button" icon="fa-align-center" type="object" help="Skills Details of this applicant">
+                        <field name="skills_count" widget="statinfo" string="Skills"/>
+                    </button>
+                    <button name="action_make_assessment" class="oe_stat_button" icon="fa-check-circle" type="object" help="Assessment Details of this applicant">
+                       <field name="assessment_count" widget="statinfo" string="Assessment"/>
+                    </button>
+                    <button name="action_make_project" class="oe_stat_button" icon="fa-th-list" type="object" help="Project Details of this applicant">
+                       <field name="projects_count" widget="statinfo" string="Projects"/>
+                    </button>
+                </xpath>
+                <!-- Adding custom pages to the view -->
+                <xpath expr="//sheet/field[@name='description']" position="after">
+                    <notebook>
+                        <page name="personal_info" string="Personal Information">
+                            <group name="top">
+                                <group name="personal_info_a">
+                                    <field name="app_gender" required="1"/>
+                                    <field name="nationality" required="1"/>
+                                    <field name="blood_group"/>
+                                    <field name="language"/>
+                                    <field name="category"/>
+                                    <field name="aadhar_number" required="1"/>
+                                </group>
+                                <group name="personal_info_b">
+                                    <field name="source" required="1"/>
+                                    <field name="uploaded_by"/>
+                                    <field name="candidate_type"/>
+                                    <!-- <field name="candidate_exp"/> -->
+                                    <field name="candidate_birth_date"/>
+                                    <field name="recruitment_industry_id"/>
+                                    <field name="visa_info"/>
+                                </group>
+                            </group>
+                            <group name="top">
+                                <group name="left"  string="Address Details">
+                                   <field name="type" class="oe_inline"/>
+                                   <label for="street" string="Address"/>
+                                   <div class="o_address_format">
+                                       <field name="street" placeholder="Street..." class="o_address_street"/>
+                                       <field name="street2" placeholder="Street 2..." class="o_address_street"/>
+                                       <field name="city" placeholder="City" class="o_address_city" required="1"/>
+                                       <field name="state_id" class="o_address_state" placeholder="State" options='{"no_open": True}'/>
+                                       <field name="zip" placeholder="ZIP" class="o_address_zip"/>
+                                       <field name="country_id" placeholder="Country" class="o_address_country" options='{"no_open": True, "no_create": True}'/>
+                                   </div>
+                                </group>
+                                <group name="right" string="Social Media">
+                                    <field name="social_twitter_acc"/>
+                                    <field name="social_facebook_acc"/>
+                                    <field name="social_github_acc"/>
+                                    <field name="social_linkedin_acc"/>
+                                    <field name="social_youtube_acc"/>
+                                    <field name="social_googleplus_acc"/>
+                                    <field name="social_instagram_acc"/>
+                                </group>
+                            </group>
+                            <group>
+                                <field name="experience_summary_info" string="Experience Summary"/>
+                            </group>
+                        </page>
+                        <!-- Educational Details Page -->
+                        <page name="educational_details" string="Educational Details">
+                            <group name="top">
+                                <field name="educational_type_id">
+                                    <tree editable="bottom">
+                                        <field name="degree_type_id" required="1"/>
+                                        <field name="degree_type" required="1"/>
+                                        <field name="name" required="1" domain="[('gtalent_users','=','campus')]"/>
+                                        <field name="state_id" required="1"/>
+                                        <field name="country_id" required="1"/>
+                                        <field name="degree_start_year"  required="1"/>
+                                        <field name="degree_end_year"  required="1"/>
+                                        <field name="degree_score" required="1"/>
+                                        <field name="degree_percentage" required="1" string="Percentage/CGPA"/>
+                                        <field name="upload_certificate_filename" invisible="1" string="Certificate Details"/>
+                                        <field widget="binary" height="64" name="upload_certifcate" filename="upload_certificate_filename" string="Certificate Upload"/>
+                                    </tree>
+                                </field>
+                            </group>
+                        </page>
+                        <!--     Employment Page-->
+                        <page name="employment_info" string="Employment Details">
+                            <group>
+                                <field name="employment_type_id">
+                                <tree editable="bottom">
+                                <field name="company_name" required="1"/>
+                                <field name="designation_type_id" required="1"/>
+                                <field name="department_type_id" required="1"/>
+                                <field name="employment_start_date" required="1"/>
+                                <field name="employment_end_date" required="1"/>
+                                <field name="emp_duration"/>
+                                <field name="employment_attachment_filename" invisible="1" string="Details"/>
+                                <field widget="binary" height="64" name="upload_employment_attachment" filename="employment_attachment_filename" required="1"/>
+                                </tree>
+                                </field>
+                            </group>
+                        </page>
+                        <!-- Applicant Assessment Page -->
+                        <page name="assessment_info" string="Assessment">
+                            <group name="top">
+                                <field name="assesment_type_id">
+                                    <tree editable="bottom">
+                                        <field name="name"/>
+                                        <field name="assessment_description" widget="many2many_tags"/>
+                                        <field name="assessment_scores"/>
+                                        <field name="vendor"/>
+                                        <field name="link" widget="url"/>
+                                        <field name="assessment_date"/>
+                                    </tree>
+                                </field>
+                            </group>
+                        </page>
+                        <!-- Course and Certificates Page -->
+                        <page name="course_certificate_info" string="Course and Certificates">
+                            <group name="top">
+                                <field name="course_id" string="Course Details">
+                                    <tree editable="bottom">
+                                        <field name="course" string="Course/Training"/>
+                                        <field name="course_vendor" />
+                                        <field name="course_technology"/>
+                                        <field name="course_status"/>
+                                        <field name="course_start"/>
+                                        <field name="course_end"/>
+                                        <field name="course_documents_filename" invisible="1"/>
+                                        <field name="course_documents" widget="binary" height="64" filename="course_documents_filename"/>
+                                    </tree>
+                                </field>
+                            </group>
+                            <group name="top">
+                                <field name="certificate_id" string="Certificate Details">
+                                    <tree editable="bottom">
+                                        <field name="certificate_name"/>
+                                        <field name="certificate_vendor"/>
+                                        <field name="certificate_id"/>
+                                        <field name="certificate_technology"/>
+                                        <field name="certificate_level"/>
+                                        <field name="certificate_documents_filename" invisible="1"/>
+                                        <field name="certificate_documents" widget="binary" height="64" filename="certificate_documents_filename"/>
+                                    </tree>
+                                </field>
+                            </group>
+                            <group name="top">
+                                <field name="awards_id" string="Award Details">
+                                    <tree editable="bottom">
+                                        <field name="award_name"/>
+                                        <field name="present_by"/>
+                                        <field name="award_year"/>
+                                    </tree>
+                                </field>
+                            </group>
+                        </page>
+                        <!-- Awards Page
+                        <page name="certificate_awards_info" string="Awards">
+                        
+                        </page> -->
+                        
+                        <!-- Skills Page-->
+                        <page name="skills_info" string="Skills">
+                            <div class="o_hr_skills_group o_group_skills col-lg-5 d-flex flex-column">
+                          <!--   <field name="progress_rate" widget="percentpie" options="{'max_field': 'maximum_rate'}"/> -->
+                              <separator string="Skills"/>
+                              <field mode="tree" nolabel="1" name="applicant_skill_ids"  widget="hr_skills">
+                                <tree>
+                                    <field name="skill_type_id" invisible="1"/>
+                                    <field name="skill_id"/>
+                                    <field name="skill_level_id"/>
+                                    <field name="level_progress" widget="progressbar"/>
+                                </tree>
+                              </field>
+                            </div>
+                        </page>
+                        <!-- Projects Page-->
+                        <page name="projects_info" string="Projects">
+                            <group name="top">
+                                 <field name="project_id" required="1">
+                                     <tree editable="bottom">
+                                        <field name="name" required="1"/>
+                                        <field name="project_for" required="1"/>
+                                        <field name="recruitment_industry_id" required="1"/>
+                                        <field name="technology" required="1"/>
+                                        <field name="team_size" required="1"/>
+                                        <field name="project_link" widget="url"/>
+                                     </tree>
+                                 </field>
+                            </group>
+                        </page>
+                        <!-- Hobbies Page -->
+                        <page name="hobbies_info" string="Hobbies">
+                            <group name="top">
+                                <field name="hobbies_id">
+                                    <tree editable="bottom">
+                                        <field name="name"/>
+                                        <field name="hobbies_comments"/>
+                                        <field name="hobbies_achievements"/>
+                                    </tree>
+                                </field>
+                            </group>
+                        </page>
+
+                        <!-- Shared Details Tab -->
+                        <page name="shared_details" string="Shared Details">
+                            <group>
+                                <field name="shared_applicant_info_ids">
+                                    <tree editable="bottom">
+                                        <field name="shared_company"/>
+                                        <field name="stage_status"/>
+                                        <field name="shared_date"/>
+                                    </tree>
+                                </field>
+                            </group>
+                        </page>
+                    </notebook>
+                </xpath>
+                <!-- Change in Archive ribbon to Visible -->
+                <xpath expr="//sheet/widget[@name='web_ribbon']" position="replace">
+                   <widget name="web_ribbon" text="Invisible" bg_color="bg-danger" attrs="{'invisible': [('active', '=', True)]}"/>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Talents List Action -->
+         <record id="talent_details_list_action" model="ir.actions.act_window">
+            <field name="name">Talents</field>
+            <field name="res_model">hr.applicant</field>
+            <field name="view_mode">kanban,tree,form,pivot,graph,calendar,activity</field>
+            <field name="domain"></field>
+            <field name="view_id" ref="hr_recruitment.hr_kanban_view_applicant"/>
+        </record>
+
+        <menuitem id="talent_details_list" name="Talents" sequence="9" parent="hr_recruitment.menu_hr_recruitment_root" action="talent_details_list_action"/>
+
 </odoo>

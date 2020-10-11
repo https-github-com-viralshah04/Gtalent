@@ -26,3 +26,7 @@ class Job(models.Model):
     roles_responsibility = fields.Text(string='Roles and Responsibility')
     education = fields.Selection([('graduate', 'Graduate'), ('postgraduate', 'Post Graduate')],string='Education')
     Key_skills = fields.Char(string='Key Skills')
+    s_key_skill = fields.Char(string='Secondary Key Skills')
+    image = fields.Image("Image")
+    specialization = fields.Char(string='Specialization')
+    degree_id = fields.Many2one('hr.recruitment.degree', string='Degree')

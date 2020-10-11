@@ -48,7 +48,13 @@ class WebsiteForm(WebsiteForm):
             if category and category[1]:
                 values.update({'category':int(category[1])})
                 custom = ''
-        return super(WebsiteForm, self).insert_record(request, model, values, custom,None)
+        res = super(WebsiteForm, self).insert_record(
+            request, model, values, custom, None)
+        # Send Application Acknowledgement
+        if res:
+            request.env['hr.applicant'].sudo().browse(
+                int(res)).send_application_acknowledgement()
+        return res
 
 
 class WebsiteJobDescription(http.Controller):
@@ -125,7 +131,10 @@ class WebsiteJobDescription(http.Controller):
             'roles_responsibility': kw.get("rolesandresponsibility"),
             'education': kw.get("education"),
             'Key_skills': kw.get("Keyskills"),
+            's_key_skill': kw.get("SecondaryKeyskills"),
             'no_of_recruitment': kw.get("NoofVacancies"),
+            'specialization': kw.get("specialization"),
+            'degree_id': int(kw.get("degree")),
         }
         hr_job_obj = request.env['hr.job'].sudo().create(vals)
         return request.render("gtalent_pro_customization.thanks_mail_send_massage_request")

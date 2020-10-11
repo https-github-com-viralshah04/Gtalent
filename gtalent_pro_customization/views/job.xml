@@ -4,145 +4,58 @@
         <t t-call="website.layout">
             <div id="wrap">
                 <div class="oe_structure">
-                    <section class="bannerimg-section">
-                        <div class="banner_photo" style="background-image:url(/gtalent_pro_customization/static/src/images/jobs-page.jpeg);" />
-                        <div class="bannerbackground-dots" />
-                        <div class="bannerbackground col-md-12">
-                            <div class="container">
-                                <div class="row">
-                                    <h1>Join us and help disrupt the enterprise market!</h1>
-                                    <P>Join us, we offer you an extraordinary chance to learn, to develop and to be part of an exciting experience and team.</P>
-                                    <div class="jobsearch-field">
-                                        <form action="/jobs" method="post">
-                                            <div class="row justify-content-center">
-                                                <div class="col-lg-5 col-md-5 col-xs-12">
-                                                    <div class="form-group">
-                                                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />
-                                                        <input class="form-control" type="text" name="search" id="search" placeholder="Job Title or Company Name" />
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-4 col-md-4 col-xs-12">
-                                                    <div class="form-group">
-                                                        <input class="form-control" type="text" name="location" id="location" placeholder="Location" />
-                                                        <!--<div class="search-category-container">
-                                              <label class="styled-select form-control">
-                                                 <select>
-                                                    <option value="none">Locations</option>
-                                                    <option value="none">New York</option>
-                                                    <option value="none">California</option>
-                                                    <option value="none">Washington</option>
-                                                    <option value="none">Birmingham</option>
-                                                    <option value="none">Chicago</option>
-                                                    <option value="none">Phoenix</option>
-                                                 </select>
-                                              </label>
-                                           </div>-->
-                                                        <i class="lni-map-marker" />
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-2 col-md-2 col-xs-12">
-                                                    <button type="submit" class="btn search-btn">
-                                                        <i class="lni-search" />
-                                                        search
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                    <!--<div class="browse-bydiv">-->
-                                    <!--<h3>Browse Recruiters</h3>-->
-                                    <!--<div class="browse-div">-->
-                                    <!--<ul>-->
-                                    <!--&lt;!&ndash;<li class="active"><a href="#">Browse by Role </a> </li>&ndash;&gt;-->
-                                    <!--<li><a href="?group_by=job_role">Browse by Role</a></li>-->
-                                    <!--<li><a href="/jobs?group_by=industry">Browse by Industry</a></li>-->
-                                    <!--<li><a href="#">Browse by State</a></li>-->
-                                    <!--<li><a href="#">Browse by Skill</a></li>-->
-                                    <!--</ul>-->
-                                    <!--</div>-->
-                                    <!--</div>-->
-                                </div>
+                    <div class="container">
+                        <div class="row">         
+                          <div class="col-lg-12">
+                            <div class="inner-header">
+                              <h3>Find Job</h3>
                             </div>
+                            <div class="job-search-form bg-cyan job-featured-search">
+                              <form role="search"  t-att-action="'/jobs'" method="get">
+                                <div class="row justify-content-center">
+                                  <div class="col-lg-5 col-md-5 col-xs-12">
+                                    <div class="form-group">
+                                      <input class="form-control" name="search" type="text" placeholder="Job Title or Company Name" t-att-value="search"/>
+                                    </div>
+                                  </div>
+                                  <div class="col-lg-1 col-md-1 col-xs-12">
+                                    <button type="submit" class="button"><i class="lni-search"></i></button>
+                                  </div>
+                                </div>
+                              </form>
+                            </div>
+                          </div>
                         </div>
-                    </section>
+                    </div>
                 </div>
                 <div class="oe_structure">
-                    <section class="greybg">
-                        <div class="container oe_website_jobs">
+                    <section id="featured" class="section bg-cyan">
+                        <div class="container">
                             <div class="row">
-                                <div class="d-none" id="jobs_grid_left" />
-                                <div class="col-lg-12" id="jobs_grid">
-                                    <div t-if="not jobs">
-                                        <div class="text-center text-muted">
-                                            <h3 class="css_editable_hidden">
-                                                <a t-attf-href="/contactus">Contact us</a>
-                                                for job opportunities.
-                                            </h3>
-                                            <h4 groups="hr_recruitment.group_hr_recruitment_manager">
-                                                Create new job pages from the
-                                                <strong>
-                                                    <i>+New</i>
-                                                </strong>
-                                                top-right button.
-                                            </h4>
-                                        </div>
+                              <t t-foreach="jobs" t-as="record">
+                                <div class="col-lg-4 col-md-6 col-xs-12">
+                                  <div class="job-featured">
+                                    <div class="icon">
+                                    	<img t-if="record.image" t-att-src="image_data_uri(record.image)"/>
                                     </div>
-                                    <!--<div t-foreach="group_by_job_role" t-as="record">-->
-                                    <!--<t t-esc="record['job_role']"/> (<t t-esc="record['job_role_count']">)<br></br>-->
-                                    <!--&lt;!&ndash;<t t-esc="record['job_role']"/>&ndash;&gt;-->
-                                    <!--&lt;!&ndash;<t t-esc="record['job_role']"/>&ndash;&gt;-->
-                                    <!--&lt;!&ndash;<t t-if="job.job_type == record['job_role']">&ndash;&gt;-->
-                                    <!--&lt;!&ndash;</t>&ndash;&gt;-->
-                                    <!--</t>-->
-                                    <!--</div>-->
-                                    <div class="row jobs-sec" t-if="jobs">
-                                        <div t-foreach="group_by_job_role" t-as="record">
-                                            <t t-esc="record['job_role']" /> (<t t-esc="record['job_role_count']">)<br></br>
-                                                <!--<t t-esc="record['job_role']"/>-->
-                                                <!--<t t-esc="record['job_role']"/>-->
-                                                <!--<t t-if="job.job_type == record['job_role']">-->
-                                                <!--</t>-->
-                                            </t>
-                                        </div>
-                                        <div t-foreach="jobs" t-as="job" t-attf-class="mb16 col-md-6#{'' if job_index else ''}">
-                                            <div class="jobs-per">
-                                                <a t-attf-href="/jobs/detail/#{ slug(job) }">
-                                                    <div class="company-logo">
-                                                        <t t-if="job.company_id">
-                                                            <span itemprop="image" t-field="job.company_id.logo" t-options='{"widget": "image", "class": "img-responsive"}' t-att-alt="job.company_id.name" />
-                                                        </t>
-                                                        <t t-else="">
-                                                            <img src="/gtalent_pro_customization/static/src/images/website_logo_transparent_background.png" />
-                                                        </t>
-                                                    </div>
-                                                    <div class="media-body" t-att-data-publish="job.website_published and 'on' or 'off'">
-                                                        <h2 t-field="job.name" />
-                                                        <h3>
-                                                            <small class="company_name">
-                                                                <t t-esc="job.company_id.name" /></small>
-                                                        </h3>
-                                                        <!--<h3>-->
-                                                        <!--<small t-if="job.no_of_recruitment &gt; 1">-->
-                                                        <!--<t t-esc="job.no_of_recruitment" />-->
-                                                        <!--open positions-->
-                                                        <!--</small>-->
-                                                        <!--</h3>-->
-                                                        <div class="location-canditatename">
-                                                            <span t-field="job.address_id" t-options="{&quot;widget&quot;: &quot;contact&quot;,&quot;fields&quot;: [&quot;address&quot;],&quot;no_tag_br&quot;: True}" />
-                                                        </div>
-                                                        <span t-if="not job.website_published" class="badge badge-danger">unpublished</span>
-                                                        <div class="text-muted">
-                                                            <i class="fa fa-clock-o" title="Publication date" role="img" aria-label="Publication date" />
-                                                            <span t-field="job.write_date" />
-                                                        </div>
-                                                        <span t-if="job.job_type" class="full-time">
-                                                            <t t-esc="job.job_type" /></span>
-                                                    </div>
-                                                </a>
-                                            </div>
-                                        </div>
+                                    <div class="content">
+                                      <h3><a t-attf-href="/jobs/detail/#{ slug(record) }"><span t-field="record.name" /> <span t-field="record.job_type" /></a></h3>
+                                      <p class="brand"><span t-field="record.company_id.name" /></p>
+                                      <p class="brand">Exp:<span t-field="record.experience_year"/></p>
+                                      <div class="tags">  
+                                        <span><i class="lni-map-marker"></i> <span t-field="record.address_id.city" /></span> 
+                                        <span><i class="lni-map-marker"></i> <span t-field="record.address_id.state_id.name" /></span>
+                                        <span><i class="lni-user"></i> <span t-field="record.address_id.country_id.name" /></span>  
+                                      </div>
+                                      <span class="brand">Posted date:<span t-field="record.create_date"/></span>
+                                      <span class="text-right full-time"><span t-field="record.job_type" /></span>
                                     </div>
+                                  </div>
                                 </div>
+                              </t>
+                              <div class="col-12 text-center mt-4">
+                                <a href="#" class="btn btn-common">Browse All Jobs</a>
+                              </div>
                             </div>
                         </div>
                     </section>

@@ -599,6 +599,7 @@ h2 small {    color: #666666;
 .full-time {
     color: #000;
     background: #cecece;
+    margin-left: 65%;
 }
 
 .part-time {

@@ -11,6 +11,7 @@
         'security/gtalentpro_security.xml',
         'views/applicant_share_wizard.xml',
         'data/website_data.xml',
+        'data/mail_template.xml',
         'views/share_data.xml',
         'views/company_request_wizard.xml',
 #         'views/res_company_view.xml',

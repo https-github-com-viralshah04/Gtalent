@@ -562,8 +562,16 @@ class InheritHrApplicant(models.Model):
 #                 }
 #             share_data = self.env['hr.talents'].sudo().create(applicants_data)
 #             _logger.info("Shared Data is --> {}".format(share_data))
-         
-                
+
+    def send_application_acknowledgement(self):
+        for applicant in self:
+            template_id = self.env.ref(
+                'gtalent_pro_customization.mail_template_application_acknowledgement')
+            if template_id:
+                template_id.sudo().with_context(email_to=','.join(
+                    [str(applicant.user_id.partner_id.email)])).send_mail(self.id, force_send=True)
+
+
 class InheritHREmployeeSkills(models.Model):
     _inherit = 'hr.employee.skill'
         

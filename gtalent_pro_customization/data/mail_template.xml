@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+        <!-- Application acknowledgement email template | Workable -->
+        <record id="mail_template_application_acknowledgement" model="mail.template">
+            <field name="name">Application Acknowledgement</field>
+            <field name="subject">Thank you for your application / Your application at (${object.company_id.name})</field>
+            <field name="model_id" ref="gtalent_pro_customization.model_hr_applicant"/>
+            <field name="email_from">${(user.email or '')|safe}</field>
+            <field name="email_to"> ${ctx['email_to']|safe} </field>
+            <field name="lang">${user.lang}</field>
+            <field name="body_html" type="xml">
+                <div style="margin: 0px; padding: 0px;">
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                        Hi (${object.name}) / Dear (${object.name}),<br/>
+
+                        <p>Thank you for applying to the (${object.name}) position at (${object.company_id.name}).</p><br/>
+
+                        <p>I’d like to inform you that we received your [application/resume/portfolio.] Our hiring team is currently reviewing all applications and we are planning to schedule interviews [mention timeframe, e.g. in the next two weeks.] If you are among qualified candidates, you will receive [e.g. a call/email] from our one of our recruiters to schedule [e.g. a phone interview.] In any case, we will keep you posted on the status of your application.</p><br/>
+
+                        <p>Thank you, again, for taking the time to apply to this role at (${object.company_id.name})</p>
+
+                        <br/>
+                        <br/> Best regards,<br/>
+                        ${user.signature | safe}<br/>
+                    </p>
+                </div>
+            </field>
+        </record>
+    </data>
+</odoo>

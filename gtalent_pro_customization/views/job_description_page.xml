@@ -35,63 +35,56 @@
                                         "no_tag_br": True
                                         }'/>
                     <br></br>
-                      <div class="jobheader-explocation">
+                      <div class="jobheader-explocation container ">
                             <ul>
-                                <t t-if="job.job_role">
-                                <li><b>Job Role : </b> <t t-esc="job.job_role"/></li>
-                                </t>
-                                <t t-if="job.company_id">
-                                    <li><b>Company Name : </b> <t t-esc="job.company_id.name"/></li>
-                                </t>
-                                <t t-if="job.company_website">
-                                <li><b>Company Website : </b> <t t-esc="job.company_website"/></li>
-                                </t>
-                                <t t-if="job.candidate_type">
-                                    <li>
-                                        <t t-if="job.candidate_type == 'experience'">
-                                            <b>Candidate Type : </b> Experience
+                                <div class="float-left col-6 p-5">
+                                    <li t-if="job.job_role"><b>Job Role : </b> <t t-esc="job.job_role"/></li>
+                                    <li  t-if="job.company_id"><b>Company Name : </b> <t t-esc="job.company_id.name"/></li>
+                                    <li  t-if="job.company_website"><b>Company Website : </b> <t t-esc="job.company_website"/>
+                                    </li>
+                                        <li  t-if="job.candidate_type">
+                                            <t t-if="job.candidate_type == 'experience'">
+                                                <b>Candidate Type : </b> Experience
+                                            </t>
+                                            <t t-if="job.candidate_type == 'fresher'">
+                                                <b>Candidate Type : </b> Fresher
+                                            </t>
+                                            <t t-if="job.candidate_type == 'contractor'">
+                                                <b>Candidate Type : </b> Contractor
+                                            </t>
+                                        </li>
+                                        <!--<t t-if="job.candidate_type != 'fresher'">-->
+                                        <!--<li><b>Work Experience </b> <t t-esc="job.job_type"/></li>-->
+                                        <!--</t>-->
+                                    <li t-if="job.job_type" ><b>Job Type : </b>
+                                        <t t-if="job.job_type == 'permanent'">
+                                            Permanent
                                         </t>
-                                        <t t-if="job.candidate_type == 'fresher'">
-                                            <b>Candidate Type : </b> Fresher
+                                        <t t-if="job.job_type == 'contract'">
+                                            Contract
                                         </t>
-                                        <t t-if="job.candidate_type == 'contractor'">
-                                            <b>Candidate Type : </b> Contractor
+                                        <t t-if="job.job_type == 'intern'">
+                                            Intern
                                         </t>
                                     </li>
-                                    <!--<t t-if="job.candidate_type != 'fresher'">-->
-                                    <!--<li><b>Work Experience </b> <t t-esc="job.job_type"/></li>-->
+                                    <li t-if="job.education" ><b>Education : </b>
+                                        <t t-if="job.education == 'graduate'">
+                                            Graduate
+                                        </t>
+                                        <t t-if="job.education == 'postgraduate'">
+                                            Post Graduate
+                                        </t>
+                                    </li>
+                                </div>
+                                <div class="float-right col-6 p-5">
+                                    <!--<t t-if="job.job_type">-->
+                                    <li ><b>Salary Range : </b> Rs 1.20 - 3.00 Lacs p.a.</li>
                                     <!--</t>-->
-                                </t>
-                                <t t-if="job.job_type">
-                                <li><b>Job Type : </b>
-                                    <t t-if="job.job_type == 'permanent'">
-                                        Permanent
-                                    </t>
-                                    <t t-if="job.job_type == 'contract'">
-                                        Contract
-                                    </t>
-                                    <t t-if="job.job_type == 'intern'">
-                                        Intern
-                                    </t>
-                                </li>
-                                </t>
-                                <t t-if="job.education">
-                                <li><b>Education : </b>
-                                    <t t-if="job.education == 'graduate'">
-                                        Graduate
-                                    </t>
-                                    <t t-if="job.education == 'postgraduate'">
-                                        Post Graduate
-                                    </t>
-                                </li>
-                                </t>
-                                <!--<t t-if="job.job_type">-->
-                                <li><b>Salary Range : </b> Rs 1.20 - 3.00 Lacs p.a.</li>
-                                <!--</t>-->
-                                <t t-if="job.work_location">
-                                <li><b>Work Location : </b><t t-esc="job.work_location"/></li>
-                                </t>
-
+                                    <li t-if="job.work_location" ><b>Work Location : </b><t t-esc="job.work_location"/></li>
+                                    <li t-if="job.s_key_skill" ><b>Secondary Key Skills : </b><t t-esc="job.s_key_skill"/></li>
+                                    <li t-if="job.specialization" ><b>Specialization : </b><t t-esc="job.specialization"/></li>
+                                    <li t-if="job.degree_id" ><b>Degree : </b><t t-esc="job.degree_id.name"/></li>
+                                </div>
                             </ul>
                       </div>
           </div>
@@ -105,44 +98,45 @@
                 <!--<div t-field="job.website_description"/>-->
         <!--</div>-->
 
-        <div class="job-detail-whitebg">
-            <t t-if="job.company_profile">
-                <h4>Company Profile</h4>
-                <p>
-                <div t-field="job.company_profile"/>
-                </p>
-            </t>
-            <t t-if="job.description">
-                <h4>Job Description</h4>
-                <p>
-                <div t-field="job.description"/>
-                </p>
-            </t>
-            <t t-if="job.functional_area">
-                <h4>Functional Area</h4>
-                <p>
-                <div t-field="job.functional_area"/>
-                </p>
-            </t>
-            <t t-if="job.roles_responsibility">
-                <h4>Roles and Responsibility</h4>
-                <p>
-                <div t-field="job.roles_responsibility"/>
-                </p>
-            </t>
-            <t t-if="job.company_benefits">
-                <h4>Company Benefits</h4>
-                <p>
-                <div t-field="job.company_benefits"/>
-                </p>
-            </t>
-            <t t-if="job.instructions">
-                <h4>Instructions</h4>
-                <p>
-                <div t-field="job.instructions"/>
-                </p>
-            </t>
-
+        <div class="job-detail-whitebg container">
+            <div class="row p-3">
+                <t t-if="job.company_profile">
+                    <label class="col-lg-2 col-form-label float-left" for="comments">Company Profile :</label>
+                    <div class="col-lg-9">
+                        <textarea name="comments" readonly="readonly" t-esc="job.company_profile" rows="5" cols="30" class="form-control"/>
+                    </div>
+                </t>
+                <t t-if="job.description">
+                    <label class="col-lg-2 col-form-label float-left" for="comments">Job Description :</label>
+                    <div class="col-lg-9">
+                        <textarea name="comments" readonly="readonly" t-esc="job.description" rows="5"  cols="30" class="form-control"/>
+                    </div>
+                </t>
+                <t t-if="job.functional_area">
+                    <label class="col-lg-2 col-form-label float-left" for="comments">Functional Area :</label>
+                    <div class="col-lg-9">
+                        <textarea name="comments" readonly="readonly" t-esc="job.functional_area" rows="5" cols="30" class="form-control"/>
+                    </div>
+                </t>
+                <t t-if="job.roles_responsibility">
+                    <label class="col-2 col-form-label float-left" for="comments">Roles and Responsibility :</label>
+                    <div class="col-9">
+                        <textarea name="comments" readonly="readonly" t-esc="job.roles_responsibility" rows="5" cols="30" class="form-control"/>
+                    </div>
+                </t>
+                <t t-if="job.company_benefits">
+                    <label class="col-lg-2 col-form-label float-left" for="comments">Company Benefits :</label>
+                    <div class="col-lg-9">
+                        <textarea name="comments" readonly="readonly" t-esc="job.company_benefits" rows="5" cols="30" class="form-control"/>
+                    </div>
+                </t>
+                <t t-if="job.instructions">
+                    <label class="col-lg-2 col-form-label float-left" for="comments">Instructions :</label>
+                    <div class="col-lg-9">
+                        <textarea name="comments" readonly="readonly" t-esc="job.instructions" rows="5" cols="30" class="form-control"/>
+                    </div>
+                </t>
+            </div>
         </div>
 
 

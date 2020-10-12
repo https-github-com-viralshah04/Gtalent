@@ -41,6 +41,7 @@
 								<field name="s_key_skill"/>
 								<field name="degree_id"/>
 								<field name="specialization"/>
+								<field name="language_id"/>
 							</group>
 
 		                </group>

@@ -77,19 +77,17 @@
                                 <!--	              </div>-->
                                 <!--	          </div>-->
                                 <div class="form-row">
-                                    <div class="form-group col-md-6 form-field workexp ">
+                                    <div class="form-group col-md-6 form-field">
                                         <label class="col-form-label" for="experience">Work Experience</label>
                                         <div class="row" style="align-items: center;">
-                                            <div class="input-group col-5 col-md-5">
-                                            	<input class="form-control" type="text" name="experience_year" id="experience_year" placeholder="Min"/>
-                                                <span class="input-group-addon"> Years</span>
+                                            <div class="col-5 row container">
+                                            	<input class="form-control col-6 ml-4" type="text" name="experience_year" id="experience_year" placeholder="Min"/>
+                                                <span class="col-2" style="margin-top: 13px;"> Years</span>
                                             </div>
-                                            <div class="col-2 col-md-2">
-                                                <span class="mt-3"> to </span>
-                                            </div>
-                                            <div class="input-group col-5 col-md-5">
-                                                <input class="form-control" type="text" name="experience_month" id="experience_month" placeholder="Max"/>
-                                                <span class="input-group-addon"> Years</span>
+                                            <span class="col-2 ml-3" style="margin-bottom: 9px;"> To </span>
+                                            <div class="col-5 row container">
+                                                <input class="form-control col-6 ml-4" type="text" name="experience_month" id="experience_month" placeholder="Max"/>
+                                                <span class="col-2 " style="margin-top: 13px;"> Years</span>
                                             </div>
                                         </div>
                                     </div>
@@ -144,7 +142,7 @@
                                         </datalist>
                                     </div>
                                     <div class="form-group col-md-6 form-field ">
-                                        <label class="col-form-label" for="Keyskills">Secondary Key skills</label>
+                                        <label class="col-form-label" for="Keyskills">Secondary skills</label>
                                         <!-- <input type="text" class="form-control o_website_form_input" placeholder="Key skills"  name="Keyskills"/>-->
                                         <input type='text' placeholder='Please Enter Key Skills' class='flexdatalist form-control' data-min-length='1' data-searchContain='true' multiple='multiple' list='skills' name='SecondaryKeyskills' />
                                         <datalist id="secondaryskills">
@@ -181,18 +179,15 @@
                                     <div class="form-group col-md-6 form-field">
                                         <label class="col-form-label" for="salaryrange">Annual Salary Range</label>
                                         <div class="row" style="align-items: center;">
-                                            <div class="input-group col-md-5 col-5">
-                                                <input class="form-control" type="number" name="salaryrange" id="minsalaryrange" placeholder="Min Salary"/><span class="input-group-addon">Lakh</span>
+                                            <div class="col-5 row container">
+                                                <input class="form-control col-6 ml-4" type="text" name="salaryrange" id="minsalaryrange" placeholder="Min"/>
+                                                <span class="col-2" style="margin-top: 13px;">Lakh</span>
                                             </div>
-                                            <div class="col-md-2 col-2">
-                                                <span class="mt-3"> to </span>
+                                            <span class="col-2 ml-3" style="margin-bottom: 9px;"> To </span>
+                                            <div class="col-5 row container">
+                                                <input type="text" class="form-control col-6 ml-4" name="maxsalaryrange" id="salaryrange" placeholder="Max"/>
+                                              <span class="col-2" style="margin-top: 13px;"> Lakh</span>
                                             </div>
-                                            <div class="input-group col-md-5 col-5">
-                                                <input type="text" class="form-control" name="maxsalaryrange" id="salaryrange" placeholder="Max Salary"/>
-                                              <span class="input-group-addon"> Lakh</span>
-                                            </div>
-
-
                                         </div>
                                     </div>
                                     <div class="form-group col-md-6 form-field ">

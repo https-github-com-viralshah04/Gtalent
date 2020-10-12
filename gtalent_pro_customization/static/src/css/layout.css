@@ -581,7 +581,7 @@ h2 small {    color: #666666;
 
 .company-logo {margin-right:20px;}
 
-.full-time, .part-time {
+.full-time-manage, .full-time, .part-time {
     font-size: 11px;
     font-weight: 500;
     display: inline-block;
@@ -602,12 +602,17 @@ h2 small {    color: #666666;
     margin-left: 65%;
 }
 
+.full-time-manage {
+    color: #000;
+    background: #cecece;
+}
+
 .part-time {
     color: #ff6046;
     background: #ffd8d2;
 }
 
-.full-time:hover, .part-time:hover, .btn-open:hover {
+.full-time-manage:hover, .full-time:hover, .part-time:hover, .btn-open:hover {
     box-shadow: 0px 3px 9px rgba(96, 94, 94, 0.17);
 }
 

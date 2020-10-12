@@ -22,7 +22,8 @@ class Website(Website):
 
     @http.route(website=True, auth="public", sitemap=False)
     def web_login(self, redirect=None, *args, **kw):
-        response = super(Website, self).web_login(redirect=redirect, *args, **kw)
+        response = super(Website, self).web_login(
+            redirect=redirect, *args, **kw)
         if not redirect and request.params['login_success']:
             if request.env['res.users'].browse(request.uid).has_group('base.group_user'):
                 redirect = b'/web?' + request.httprequest.query_string
@@ -46,7 +47,7 @@ class WebsiteForm(WebsiteForm):
         if 'category' in custom:
             category = custom.split(':')
             if category and category[1]:
-                values.update({'category':int(category[1])})
+                values.update({'category': int(category[1])})
                 custom = ''
         res = super(WebsiteForm, self).insert_record(
             request, model, values, custom, None)
@@ -60,11 +61,12 @@ class WebsiteForm(WebsiteForm):
 class WebsiteJobDescription(http.Controller):
 
     @http.route(['/website/profile'], type='http', auth="public", website=True)
-    def website_profile(self,**post):
+    def website_profile(self, **post):
         values = {}
         applicant_id = False
         if 'applicant_id' in post and post.get('applicant_id'):
-            applicant = request.env['hr.applicant'].sudo().browse(post.get('applicant_id'))
+            applicant = request.env['hr.applicant'].sudo().browse(
+                post.get('applicant_id'))
             partner = applicant
             applicant_id = True
 
@@ -78,10 +80,11 @@ class WebsiteJobDescription(http.Controller):
                 model = 'hr.applicant'
                 # attachment_id = request.env['ir.attachment'].sudo().search(
                 #     [('res_model', '=', model), ('res_id', '=', hr_applicant_obj.id)])
-                values.update({'hr_applicant_obj':hr_applicant_obj.attachment_ids})
+                values.update(
+                    {'hr_applicant_obj': hr_applicant_obj.attachment_ids})
         values.update({
             'partner': partner,
-            'applicant_id':applicant_id,
+            'applicant_id': applicant_id,
         })
         return request.render("gtalent_pro_customization.profile", values)
 
@@ -91,9 +94,9 @@ class WebsiteJobDescription(http.Controller):
         res_company_obj = request.env['res.company'].sudo().search([])
         industry_obj = request.env['hr.recruitment.industry'].sudo().search([])
         values = {
-                'custom_job' : custom_job,
-                'res_company_obj': res_company_obj,
-                'industry_obj' : industry_obj,
+            'custom_job': custom_job,
+            'res_company_obj': res_company_obj,
+            'industry_obj': industry_obj,
         }
         return request.render("gtalent_pro_customization.custom_job_description_form_page", values)
 
@@ -110,17 +113,17 @@ class WebsiteJobDescription(http.Controller):
     @http.route(['/custom_job_description_detail_form'], type='http', auth="public", website=True)
     def job_description_detail_form(self, **kw):
         vals = {
-           'name': kw.get('name'),
-           'job_role': kw.get('role'),
-           'company_id' : kw.get('company'),
-           'industry_type_id': kw.get('industry'),
-           'experience_year': kw.get('experience_year'),
+            'name': kw.get('name'),
+            'job_role': kw.get('role'),
+            'company_id': kw.get('company'),
+            'industry_type_id': kw.get('industry'),
+            'experience_year': kw.get('experience_year'),
             'experience_month': kw.get('experience_month'),
-           'work_location': kw.get('worklocation'),
-           'candidate' : kw.get('candidate'),
-           'description': kw.get('jobdescription'),
-           'job_type': kw.get('jobtype'),
-           'candidate_type': kw.get("candidatetype"),
+            'work_location': kw.get('worklocation'),
+            'candidate': kw.get('candidate'),
+            'description': kw.get('jobdescription'),
+            'job_type': kw.get('jobtype'),
+            'candidate_type': kw.get("candidatetype"),
             'company_website': kw.get("companywebsite"),
             'min_salary_range': kw.get("minsalaryrange"),
             'max_salary_range': kw.get("maxsalaryrange"),
@@ -138,17 +141,19 @@ class WebsiteJobDescription(http.Controller):
         }
         hr_job_obj = request.env['hr.job'].sudo().create(vals)
         return request.render("gtalent_pro_customization.thanks_mail_send_massage_request")
-    
+
     @http.route('/applicant/profile', type='http', auth='public', website=True)
-    def applicant_profile(self,**kwargs):
+    def applicant_profile(self, **kwargs):
         if request.env.user._is_public():
             return request.render("gtalent_pro_customization.logged_in_template")
         else:
-            hr_recruitment_degree_id = http.request.env['hr.recruitment.degree'].search([])
+            hr_recruitment_degree_id = http.request.env['hr.recruitment.degree'].search([
+            ])
             # res_partner_id = http.request.env['res.partner'].sudo().search([('is_college', '=', True)])
             res_country_id = http.request.env['res.country'].sudo().search([])
             state_id = http.request.env['res.country.state'].sudo().search([])
-            applicant_employment = http.request.env['applicant.employment'].sudo().search([])
+            applicant_employment = http.request.env['applicant.employment'].sudo().search([
+            ])
             countries = request.env['res.country'].sudo().search([])
             state = request.env['res.country.state'].sudo().search([])
             employment_info = request.env.user.partner_id.employment_type_id
@@ -163,47 +168,52 @@ class WebsiteJobDescription(http.Controller):
             shared_info = request.env.user.partner_id.shared_applicant_info_ids
             summary = request.env.user.partner_id.experience_summary_ids
             partner = request.env.user.partner_id
-            applicant_college_list_id = http.request.env['res.partner'].sudo().search([('gtalent_users','=','campus')])
-            companies = request.env['res.partner'].sudo().search([('gtalent_users','=','employer')])
+            applicant_college_list_id = http.request.env['res.partner'].sudo().search(
+                [('gtalent_users', '=', 'campus')])
+            companies = request.env['res.partner'].sudo().search(
+                [('gtalent_users', '=', 'employer')])
             skill_types = request.env['hr.skill.type'].sudo().search([])
             skills = request.env['hr.skill'].sudo().search([])
             skill_level = request.env['hr.skill.level'].sudo().search([])
             shared_companies = request.env['res.partner'].sudo().search([])
-            stage_status_ids = request.env['hr.recruitment.stage'].sudo().search([])
-            degree_type = request.env['hr.recruitment.degree.type'].sudo().search([])
-            industry_obj = request.env['hr.recruitment.industry'].sudo().search([])
+            stage_status_ids = request.env['hr.recruitment.stage'].sudo().search([
+            ])
+            degree_type = request.env['hr.recruitment.degree.type'].sudo().search([
+            ])
+            industry_obj = request.env['hr.recruitment.industry'].sudo().search([
+            ])
 
             values = {
                 'hr_recruitment_degree_id': hr_recruitment_degree_id,
                 'state_id': state_id,
                 'res_country_id': res_country_id,
                 'applicant_employment': applicant_employment,
-                'countries':countries,
-                'state':state,
-                'states':state,
-                'employment_info':employment_info,
-                'assessment_info':assessment_info,
-                'hobbies_info':hobbies_info,
-                'project_info':project_info,
-                'companies':companies,
-                'education_info':education_info,
-                'applicant_college_list_id':applicant_college_list_id,
-                'skill_types':skill_types,
-                'skills':skills,
-                'skill_level':skill_level,
-                'shared_companies':shared_companies,
-                'stage_status_ids':stage_status_ids,
-                'course_info':course_info,
-                'certificate_info':certificate_info,
-                'award_info':award_info,
-                'shared_info':shared_info,
-                'skill_info':skill_info,
+                'countries': countries,
+                'state': state,
+                'states': state,
+                'employment_info': employment_info,
+                'assessment_info': assessment_info,
+                'hobbies_info': hobbies_info,
+                'project_info': project_info,
+                'companies': companies,
+                'education_info': education_info,
+                'applicant_college_list_id': applicant_college_list_id,
+                'skill_types': skill_types,
+                'skills': skills,
+                'skill_level': skill_level,
+                'shared_companies': shared_companies,
+                'stage_status_ids': stage_status_ids,
+                'course_info': course_info,
+                'certificate_info': certificate_info,
+                'award_info': award_info,
+                'shared_info': shared_info,
+                'skill_info': skill_info,
                 'summary': summary,
-                'partner':partner,
-                'degree_type':degree_type,
-                'industry_obj':industry_obj,
+                'partner': partner,
+                'degree_type': degree_type,
+                'industry_obj': industry_obj,
             }
-        return request.render("gtalent_pro_customization.job_application_form_template",values)
+        return request.render("gtalent_pro_customization.job_application_form_template", values)
 
     @http.route('/create_applicant_experience_summary', type='http', auth='user', website=True, csrf=False)
     def create_applicant_summary_detail(self, **post):
@@ -214,7 +224,8 @@ class WebsiteJobDescription(http.Controller):
             vals['partner_id'] = request.env.user.partner_id.id
             if request.env.user.partner_id.applicant_id:
                 vals['applicant_id'] = request.env.user.partner_id.applicant_id.id
-            share_applicant_data = request.env['experience.summary'].sudo().create(vals)
+            share_applicant_data = request.env['experience.summary'].sudo().create(
+                vals)
         return request.redirect("/applicant/profile")
 
     @http.route('/create_applicant_shared_details', type='http', auth='user', website=True, csrf=False)
@@ -225,13 +236,15 @@ class WebsiteJobDescription(http.Controller):
         if post.get('stage_status'):
             vals['stage_status'] = int(post.get('stage_status'))
         if post.get('shared_date'):
-            vals['shared_date'] = dt.strptime(str(post.get('shared_date')), "%Y-%m-%d")
+            vals['shared_date'] = dt.strptime(
+                str(post.get('shared_date')), "%Y-%m-%d")
 
         if vals:
             vals['partner_id'] = request.env.user.partner_id.id
             if request.env.user.partner_id.applicant_id:
                 vals['applicant_id'] = request.env.user.partner_id.applicant_id.id
-            share_applicant_data = request.env['share.applicant.data'].sudo().create(vals)
+            share_applicant_data = request.env['share.applicant.data'].sudo().create(
+                vals)
         return request.redirect("/applicant/profile")
 
     @http.route('/update_applicant_shared_details', type='http', auth='user', website=True, csrf=False)
@@ -242,11 +255,13 @@ class WebsiteJobDescription(http.Controller):
         if post.get('stage_status'):
             vals['stage_status'] = int(post.get('stage_status'))
         if post.get('shared_date'):
-            vals['shared_date'] = dt.strptime(str(post.get('shared_date')), "%Y-%m-%d")
+            vals['shared_date'] = dt.strptime(
+                str(post.get('shared_date')), "%Y-%m-%d")
 
         if post.get('applicant_shared_details_id') and vals:
             vals['partner_id'] = request.env.user.partner_id.id
-            shared_detail_id = request.env['share.applicant.data'].sudo().browse(int(post.get('applicant_shared_details_id')))
+            shared_detail_id = request.env['share.applicant.data'].sudo().browse(
+                int(post.get('applicant_shared_details_id')))
             share_applicant_data = shared_detail_id.sudo().write(vals)
         return request.redirect("/applicant/profile")
 
@@ -254,7 +269,8 @@ class WebsiteJobDescription(http.Controller):
     def create_applicant_employment(self, **post):
         vals = {}
         if 'other_company_name' in post and len(post.get('other_company_name')) > 0:
-            company_name_1 = request.env['res.partner'].search([('name', '=', post.get('other_company_name'))])
+            company_name_1 = request.env['res.partner'].search(
+                [('name', '=', post.get('other_company_name'))])
             if company_name_1:
                 if post.get('company_name'):
                     vals['company_name'] = company_name_1.id
@@ -262,7 +278,7 @@ class WebsiteJobDescription(http.Controller):
                 company_name = request.env['res.partner'].create({
                     'name': post.get('other_company_name'),
                     'gtalent_users': 'employer'
-                    })
+                })
                 if post.get('company_name'):
                     vals['company_name'] = company_name.id
         else:
@@ -273,9 +289,11 @@ class WebsiteJobDescription(http.Controller):
         if post.get('department_type_id'):
             vals['department_type_id'] = post.get('department_type_id')
         if post.get('employment_start_date'):
-            vals['employment_start_date'] = dt.strptime(str(post.get('employment_start_date')), "%Y-%m-%d")
+            vals['employment_start_date'] = dt.strptime(
+                str(post.get('employment_start_date')), "%Y-%m-%d")
         if post.get('employment_end_date'):
-            vals['employment_end_date'] = dt.strptime(str(post.get('employment_end_date')), "%Y-%m-%d")
+            vals['employment_end_date'] = dt.strptime(
+                str(post.get('employment_end_date')), "%Y-%m-%d")
         if post.get('deliverables'):
             vals['deliverables'] = post.get('deliverables')
         if post.get('job_summary'):
@@ -292,16 +310,20 @@ class WebsiteJobDescription(http.Controller):
             #     # 'res_id': application.id,
             # })
             # if attachment_id:
-            vals['upload_employment_attachment'] = base64.encodestring(post['upload_employment_attachment'].read())
+            vals['upload_employment_attachment'] = base64.encodestring(
+                post['upload_employment_attachment'].read())
 
         if vals:
             vals['partner_id'] = request.env.user.partner_id.id
             if request.env.user.partner_id.applicant_id:
                 vals['applicant_id'] = request.env.user.partner_id.applicant_id.id
-            employment = request.env['applicant.employment'].sudo().create(vals)
-            request.env.user.partner_id.employment_type_id = [(4, employment.id)]
+            employment = request.env['applicant.employment'].sudo().create(
+                vals)
+            request.env.user.partner_id.employment_type_id = [
+                (4, employment.id)]
             if request.env.user.partner_id.applicant_id:
-                request.env.user.partner_id.applicant_id.employment_type_id = [(4, employment.id)]
+                request.env.user.partner_id.applicant_id.employment_type_id = [
+                    (4, employment.id)]
         return request.redirect("/applicant/profile")
 
     @http.route('/create_project_details', type='http', auth='user', website=True, csrf=False)
@@ -314,9 +336,11 @@ class WebsiteJobDescription(http.Controller):
         if post.get('project_for'):
             vals['project_for'] = post.get('project_for')
         if post.get('project_start_date'):
-            vals['project_start_date'] = dt.strptime(str(post.get('project_start_date')), "%Y-%m-%d")
+            vals['project_start_date'] = dt.strptime(
+                str(post.get('project_start_date')), "%Y-%m-%d")
         if post.get('project_end_date'):
-            vals['project_end_date'] = dt.strptime(str(post.get('project_end_date')), "%Y-%m-%d")
+            vals['project_end_date'] = dt.strptime(
+                str(post.get('project_end_date')), "%Y-%m-%d")
         if post.get('technology'):
             vals['technology'] = post.get('technology')
         if post.get('impact'):
@@ -326,7 +350,8 @@ class WebsiteJobDescription(http.Controller):
         if post.get('project_summary'):
             vals['project_summary'] = post.get('project_summary')
         if post.get('project_accomplishments'):
-            vals['project_accomplishments'] = post.get('project_accomplishments')
+            vals['project_accomplishments'] = post.get(
+                'project_accomplishments')
         if post.get('team_size'):
             vals['team_size'] = int(post.get('team_size'))
         if post.get('project_duration'):
@@ -342,7 +367,8 @@ class WebsiteJobDescription(http.Controller):
             project = request.env['applicant.project'].sudo().create(vals)
             request.env.user.partner_id.project_id = [(4, project.id)]
             if request.env.user.partner_id.applicant_id:
-                request.env.user.partner_id.applicant_id.project_id = [(4, project.id)]
+                request.env.user.partner_id.applicant_id.project_id = [
+                    (4, project.id)]
 
         return request.redirect("/applicant/profile")
 
@@ -356,9 +382,11 @@ class WebsiteJobDescription(http.Controller):
         if post.get('project_for'):
             vals['project_for'] = post.get('project_for')
         if post.get('project_start_date'):
-            vals['project_start_date'] = dt.strptime(str(post.get('project_start_date')), "%Y-%m-%d")
+            vals['project_start_date'] = dt.strptime(
+                str(post.get('project_start_date')), "%Y-%m-%d")
         if post.get('project_end_date'):
-            vals['project_end_date'] = dt.strptime(str(post.get('project_end_date')), "%Y-%m-%d")
+            vals['project_end_date'] = dt.strptime(
+                str(post.get('project_end_date')), "%Y-%m-%d")
         if post.get('technology'):
             vals['technology'] = post.get('technology')
         if post.get('impact'):
@@ -368,7 +396,8 @@ class WebsiteJobDescription(http.Controller):
         if post.get('project_summary'):
             vals['project_summary'] = post.get('project_summary')
         if post.get('project_accomplishments'):
-            vals['project_accomplishments'] = post.get('project_accomplishments')
+            vals['project_accomplishments'] = post.get(
+                'project_accomplishments')
         if post.get('team_size'):
             vals['team_size'] = int(post.get('team_size'))
         if post.get('project_duration'):
@@ -381,7 +410,8 @@ class WebsiteJobDescription(http.Controller):
 
             # if request.env.user.partner_id.applicant_id:
             #     vals['applicant_id'] = request.env.user.partner_id.applicant_id.id
-            project = request.env['applicant.project'].sudo().browse(int(post.get('applicant_project_id')))
+            project = request.env['applicant.project'].sudo().browse(
+                int(post.get('applicant_project_id')))
             project.sudo().write(vals)
             # request.env.user.partner_id.project_id = [(4, project.id)]
         return request.redirect("/applicant/profile")
@@ -416,7 +446,8 @@ class WebsiteJobDescription(http.Controller):
         if vals:
             vals['partner_id'] = request.env.user.partner_id.id
             if post.get('applicant_hobbies_id'):
-                hobbies = request.env['hr.recruitment.hobbies'].sudo().browse(int(post.get('applicant_hobbies_id')))
+                hobbies = request.env['hr.recruitment.hobbies'].sudo().browse(
+                    int(post.get('applicant_hobbies_id')))
                 project = hobbies.sudo().write(vals)
         return request.redirect("/applicant/profile")
 
@@ -451,9 +482,11 @@ class WebsiteJobDescription(http.Controller):
         if post.get('department_type_id'):
             vals['department_type_id'] = post.get('department_type_id')
         if post.get('employment_start_date'):
-            vals['employment_start_date'] = dt.strptime(str(post.get('employment_start_date')), "%Y-%m-%d")
+            vals['employment_start_date'] = dt.strptime(
+                str(post.get('employment_start_date')), "%Y-%m-%d")
         if post.get('employment_end_date'):
-            vals['employment_end_date'] = dt.strptime(str(post.get('employment_end_date')), "%Y-%m-%d")
+            vals['employment_end_date'] = dt.strptime(
+                str(post.get('employment_end_date')), "%Y-%m-%d")
         if post.get('deliverables'):
             vals['deliverables'] = post.get('deliverables')
         if post.get('job_summary'):
@@ -470,11 +503,13 @@ class WebsiteJobDescription(http.Controller):
             #     # 'res_id': application.id,
             # })
             # if attachment_id:
-            vals['upload_employment_attachment'] = base64.encodestring(post['upload_employment_attachment'].read())
+            vals['upload_employment_attachment'] = base64.encodestring(
+                post['upload_employment_attachment'].read())
 
         if post.get('applicant_employment_id') and vals:
             vals['partner_id'] = request.env.user.partner_id.id
-            applicant_employment_id = request.env['applicant.employment'].browse(int(post.get('applicant_employment_id')))
+            applicant_employment_id = request.env['applicant.employment'].browse(
+                int(post.get('applicant_employment_id')))
             employment = applicant_employment_id.sudo().write(vals)
         return request.redirect("/applicant/profile")
 
@@ -488,9 +523,11 @@ class WebsiteJobDescription(http.Controller):
         if post.get('department_type_id'):
             vals['department_type_id'] = post.get('department_type_id')
         if post.get('employment_start_date'):
-            vals['employment_start_date'] = dt.strptime(str(post.get('employment_start_date')), "%Y-%m-%d")
+            vals['employment_start_date'] = dt.strptime(
+                str(post.get('employment_start_date')), "%Y-%m-%d")
         if post.get('employment_end_date'):
-            vals['employment_end_date'] = dt.strptime(str(post.get('employment_end_date')), "%Y-%m-%d")
+            vals['employment_end_date'] = dt.strptime(
+                str(post.get('employment_end_date')), "%Y-%m-%d")
         if post.get('deliverables'):
             vals['deliverables'] = post.get('deliverables')
         if post.get('job_summary'):
@@ -507,11 +544,13 @@ class WebsiteJobDescription(http.Controller):
             #     # 'res_id': application.id,
             # })
             # if attachment_id:
-            vals['upload_employment_attachment'] = base64.encodestring(post['upload_employment_attachment'].read())
+            vals['upload_employment_attachment'] = base64.encodestring(
+                post['upload_employment_attachment'].read())
 
         if post.get('applicant_employment_id') and vals:
             vals['partner_id'] = request.env.user.partner_id.id
-            applicant_employment_id = request.env['applicant.employment'].browse(int(post.get('applicant_employment_id')))
+            applicant_employment_id = request.env['applicant.employment'].browse(
+                int(post.get('applicant_employment_id')))
             employment = applicant_employment_id.sudo().write(vals)
         return request.redirect("/applicant/profile")
 
@@ -536,7 +575,8 @@ class WebsiteJobDescription(http.Controller):
     def get_applicant_employment_details(self, **post):
         result = {}
         if post.get('employment_id'):
-            employment_id = request.env['applicant.employment'].browse(int(post.get('employment_id')))
+            employment_id = request.env['applicant.employment'].browse(
+                int(post.get('employment_id')))
             if employment_id:
                 if employment_id.company_name:
                     result['company_name'] = employment_id.company_name.id
@@ -549,13 +589,14 @@ class WebsiteJobDescription(http.Controller):
                 result['deliverables'] = employment_id.deliverables
                 result['job_summary'] = employment_id.job_summary
                 result['job_accomplishments'] = employment_id.job_accomplishments
-        return json.dumps(result,default=date_utils.json_default)
+        return json.dumps(result, default=date_utils.json_default)
 
     @http.route(['/get_applicant_hobbies_details'], type='http', auth='public', website=True)
     def get_applicant_hobbies_details(self, **post):
         result = {}
         if post.get('record_id'):
-            record_id = request.env['hr.recruitment.hobbies'].browse(int(post.get('record_id')))
+            record_id = request.env['hr.recruitment.hobbies'].browse(
+                int(post.get('record_id')))
             if record_id:
                 result['name'] = record_id.name
                 result['hobbies_comments'] = record_id.hobbies_comments
@@ -566,7 +607,8 @@ class WebsiteJobDescription(http.Controller):
     def get_applicant_award_details(self, **post):
         result = {}
         if post.get('record_id'):
-            record_id = request.env['applicant.awards'].browse(int(post.get('record_id')))
+            record_id = request.env['applicant.awards'].browse(
+                int(post.get('record_id')))
             if record_id:
                 result['award_name'] = record_id.award_name
                 result['present_by'] = record_id.present_by
@@ -577,7 +619,8 @@ class WebsiteJobDescription(http.Controller):
     def get_applicant_certificate_details(self, **post):
         result = {}
         if post.get('record_id'):
-            record_id = request.env['applicant.certificate'].browse(int(post.get('record_id')))
+            record_id = request.env['applicant.certificate'].browse(
+                int(post.get('record_id')))
             if record_id:
                 result['certificate_name'] = record_id.certificate_name
                 result['certificate_vendor'] = record_id.certificate_vendor
@@ -590,7 +633,8 @@ class WebsiteJobDescription(http.Controller):
     def get_applicant_course_details(self, **post):
         result = {}
         if post.get('record_id'):
-            record_id = request.env['applicant.courses'].browse(int(post.get('record_id')))
+            record_id = request.env['applicant.courses'].browse(
+                int(post.get('record_id')))
             if record_id:
                 result['course'] = record_id.course
                 result['course_vendor'] = record_id.course_vendor
@@ -598,13 +642,14 @@ class WebsiteJobDescription(http.Controller):
                 result['course_status'] = record_id.course_status
                 result['course_start'] = record_id.course_start
                 result['course_end'] = record_id.course_end
-        return json.dumps(result,default=date_utils.json_default)
+        return json.dumps(result, default=date_utils.json_default)
 
     @http.route(['/get_applicant_education_details'], type='http', auth='public', website=True)
     def get_applicant_education_details(self, **post):
         result = {}
         if post.get('record_id'):
-            record_id = request.env['applicant.college.list'].browse(int(post.get('record_id')))
+            record_id = request.env['applicant.college.list'].browse(
+                int(post.get('record_id')))
             if record_id:
                 result['degree_type_id'] = record_id.degree_type_id.id
                 result['degree_type'] = record_id.degree_type.id
@@ -622,7 +667,8 @@ class WebsiteJobDescription(http.Controller):
     def get_applicant_shared_details(self, **post):
         result = {}
         if post.get('record_id'):
-            record_id = request.env['share.applicant.data'].browse(int(post.get('record_id')))
+            record_id = request.env['share.applicant.data'].browse(
+                int(post.get('record_id')))
             if record_id:
                 result['shared_company'] = record_id.shared_company.id
                 result['stage_status'] = record_id.stage_status.id
@@ -633,7 +679,8 @@ class WebsiteJobDescription(http.Controller):
     def get_applicant_project_details(self, **post):
         result = {}
         if post.get('record_id'):
-            record_id = request.env['applicant.project'].browse(int(post.get('record_id')))
+            record_id = request.env['applicant.project'].browse(
+                int(post.get('record_id')))
             if record_id:
                 result['project_link'] = record_id.project_link
                 result['project_accomplishments'] = record_id.project_accomplishments
@@ -654,7 +701,8 @@ class WebsiteJobDescription(http.Controller):
     def get_applicant_assessment_details(self, **post):
         result = {}
         if post.get('record_id'):
-            record_id = request.env['hr.recruitment.assessment'].browse(int(post.get('record_id')))
+            record_id = request.env['hr.recruitment.assessment'].browse(
+                int(post.get('record_id')))
             if record_id:
                 result['assessment_name'] = record_id.name
                 result['assessment_description'] = record_id.assessment_description
@@ -668,7 +716,8 @@ class WebsiteJobDescription(http.Controller):
     def delete_applicant_employment(self, **post):
         result = {}
         if post.get('employment_id'):
-            employment_id = request.env['applicant.employment'].browse(int(post.get('employment_id')))
+            employment_id = request.env['applicant.employment'].browse(
+                int(post.get('employment_id')))
             if employment_id:
                 employment_id.sudo().unlink()
         return json.dumps(result)
@@ -677,14 +726,15 @@ class WebsiteJobDescription(http.Controller):
     def create_applicant_education(self, **post):
         vals = {}
         if 'other_name' in post and len(post.get('other_name')) > 0:
-            degree_type_id_1 = request.env['hr.recruitment.degree.type'].search([('name', '=', post.get('other_name'))])
+            degree_type_id_1 = request.env['hr.recruitment.degree.type'].search(
+                [('name', '=', post.get('other_name'))])
             if degree_type_id_1:
                 if post.get('degree_type_id'):
                     vals['degree_type_id'] = degree_type_id_1.id
             else:
                 degree_type_id = request.env['hr.recruitment.degree.type'].create({
                     'name': post.get('other_name'),
-                    })
+                })
                 if post.get('degree_type_id'):
                     vals['degree_type_id'] = degree_type_id.id
         else:
@@ -693,7 +743,8 @@ class WebsiteJobDescription(http.Controller):
         if post.get('hr_recruitment_degree_id'):
             vals['degree_type'] = int(post.get('hr_recruitment_degree_id'))
         if 'other_colleage_name' in post and len(post.get('other_colleage_name')) > 0:
-            degree_type_id_1 = request.env['res.partner'].search([('name', '=', post.get('other_colleage_name'))])
+            degree_type_id_1 = request.env['res.partner'].search(
+                [('name', '=', post.get('other_colleage_name'))])
             if degree_type_id_1:
                 if post.get('institute'):
                     vals['institute'] = degree_type_id_1.id
@@ -701,7 +752,7 @@ class WebsiteJobDescription(http.Controller):
                 degree_type_id = request.env['res.partner'].create({
                     'name': post.get('other_colleage_name'),
                     'gtalent_users': 'campus',
-                    })
+                })
                 if post.get('institute'):
                     vals['institute'] = degree_type_id.id
         else:
@@ -722,12 +773,14 @@ class WebsiteJobDescription(http.Controller):
         if post.get('degree_class'):
             vals['degree_class'] = post.get('degree_class')
         if post.get('upload_certificate'):
-            vals['upload_certifcate'] = base64.encodestring(post['upload_certificate'].read())
+            vals['upload_certifcate'] = base64.encodestring(
+                post['upload_certificate'].read())
         if vals:
             vals['partner_id'] = request.env.user.partner_id.id
             if request.env.user.partner_id.applicant_id:
                 vals['applicant_id'] = request.env.user.partner_id.applicant_id.id
-            employment = request.env['applicant.college.list'].sudo().create(vals)
+            employment = request.env['applicant.college.list'].sudo().create(
+                vals)
         return request.redirect("/applicant/profile")
 
     @http.route('/update_applicant_education', type='http', auth='user', website=True, csrf=False)
@@ -754,10 +807,12 @@ class WebsiteJobDescription(http.Controller):
         if post.get('degree_class'):
             vals['degree_class'] = post.get('degree_class')
         if post.get('upload_certificate'):
-            vals['upload_certifcate'] = base64.encodestring(post['upload_certificate'].read())
+            vals['upload_certifcate'] = base64.encodestring(
+                post['upload_certificate'].read())
         if post.get('applicant_education_id') and vals:
             vals['partner_id'] = request.env.user.partner_id.id
-            education = request.env['applicant.college.list'].sudo().browse(int(post.get('applicant_education_id')))
+            education = request.env['applicant.college.list'].sudo().browse(
+                int(post.get('applicant_education_id')))
             result = education.sudo().write(vals)
         return request.redirect("/applicant/profile")
 
@@ -773,11 +828,14 @@ class WebsiteJobDescription(http.Controller):
         if post.get('course_status'):
             vals['course_status'] = post.get('course_status')
         if post.get('course_start'):
-            vals['course_start'] = dt.strptime(str(post.get('course_start')), "%Y-%m-%d")
+            vals['course_start'] = dt.strptime(
+                str(post.get('course_start')), "%Y-%m-%d")
         if post.get('course_end'):
-            vals['course_end'] = dt.strptime(str(post.get('course_end')), "%Y-%m-%d")
+            vals['course_end'] = dt.strptime(
+                str(post.get('course_end')), "%Y-%m-%d")
         if post.get('course_documents'):
-            vals['course_documents'] = base64.encodestring(post['course_documents'].read())
+            vals['course_documents'] = base64.encodestring(
+                post['course_documents'].read())
 
         if vals:
             vals['partner_id'] = request.env.user.partner_id.id
@@ -798,15 +856,19 @@ class WebsiteJobDescription(http.Controller):
         if post.get('course_status'):
             vals['course_status'] = post.get('course_status')
         if post.get('course_start'):
-            vals['course_start'] = dt.strptime(str(post.get('course_start')), "%Y-%m-%d")
+            vals['course_start'] = dt.strptime(
+                str(post.get('course_start')), "%Y-%m-%d")
         if post.get('course_end'):
-            vals['course_end'] = dt.strptime(str(post.get('course_end')), "%Y-%m-%d")
+            vals['course_end'] = dt.strptime(
+                str(post.get('course_end')), "%Y-%m-%d")
         if post.get('course_documents'):
-            vals['course_documents'] = base64.encodestring(post['course_documents'].read())
+            vals['course_documents'] = base64.encodestring(
+                post['course_documents'].read())
 
         if post.get('applicant_course_id') and vals:
             vals['partner_id'] = request.env.user.partner_id.id
-            courses = request.env['applicant.courses'].sudo().browse(int(post.get('applicant_course_id')))
+            courses = request.env['applicant.courses'].sudo().browse(
+                int(post.get('applicant_course_id')))
             courses.sudo().write(vals)
         return request.redirect("/applicant/profile")
 
@@ -824,7 +886,8 @@ class WebsiteJobDescription(http.Controller):
         if post.get('certificate_level'):
             vals['certificate_level'] = post.get('certificate_level')
         if post.get('certificate_documents'):
-            vals['certificate_documents'] = base64.encodestring(post['certificate_documents'].read())
+            vals['certificate_documents'] = base64.encodestring(
+                post['certificate_documents'].read())
 
         if vals:
             vals['partner_id'] = request.env.user.partner_id.id
@@ -847,11 +910,13 @@ class WebsiteJobDescription(http.Controller):
         if post.get('certificate_level'):
             vals['certificate_level'] = post.get('certificate_level')
         if post.get('certificate_documents'):
-            vals['certificate_documents'] = base64.encodestring(post['certificate_documents'].read())
+            vals['certificate_documents'] = base64.encodestring(
+                post['certificate_documents'].read())
 
         if post.get('applicant_certificate_id') and vals:
             vals['partner_id'] = request.env.user.partner_id.id
-            courses = request.env['applicant.certificate'].sudo().browse(int(post.get('applicant_certificate_id')))
+            courses = request.env['applicant.certificate'].sudo().browse(
+                int(post.get('applicant_certificate_id')))
             courses.sudo().write(vals)
         return request.redirect("/applicant/profile")
 
@@ -884,7 +949,8 @@ class WebsiteJobDescription(http.Controller):
 
         if post.get('applicant_award_id') and vals:
             vals['partner_id'] = request.env.user.partner_id.id
-            courses = request.env['applicant.awards'].sudo().browse(int(post.get('applicant_award_id')))
+            courses = request.env['applicant.awards'].sudo().browse(
+                int(post.get('applicant_award_id')))
             courses.sudo().write(vals)
         return request.redirect("/applicant/profile")
 
@@ -902,16 +968,20 @@ class WebsiteJobDescription(http.Controller):
         if post.get('link'):
             vals['link'] = post.get('link')
         if post.get('assessment_date'):
-            vals['assessment_date'] = dt.strptime(str(post.get('assessment_date')), "%Y-%m-%d")
+            vals['assessment_date'] = dt.strptime(
+                str(post.get('assessment_date')), "%Y-%m-%d")
 
         if vals:
             vals['partner_id'] = request.env.user.partner_id.id
             # if request.env.user.partner_id.applicant_id:
             #     vals['applicant_id'] = request.env.user.partner_id.applicant_id.id
-            assessment = request.env['hr.recruitment.assessment'].sudo().create(vals)
-            request.env.user.partner_id.assesment_type_id = [(4, assessment.id)]
+            assessment = request.env['hr.recruitment.assessment'].sudo().create(
+                vals)
+            request.env.user.partner_id.assesment_type_id = [
+                (4, assessment.id)]
             if request.env.user.partner_id.applicant_id:
-                request.env.user.partner_id.applicant_id.assesment_type_id = [(4, assessment.id)]
+                request.env.user.partner_id.applicant_id.assesment_type_id = [
+                    (4, assessment.id)]
 
         return request.redirect("/applicant/profile")
 
@@ -929,11 +999,13 @@ class WebsiteJobDescription(http.Controller):
         if post.get('link'):
             vals['link'] = post.get('link')
         if post.get('assessment_date'):
-            vals['assessment_date'] = dt.strptime(str(post.get('assessment_date')), "%Y-%m-%d")
+            vals['assessment_date'] = dt.strptime(
+                str(post.get('assessment_date')), "%Y-%m-%d")
 
         if post.get('applicant_assessment_id') and vals:
             vals['partner_id'] = request.env.user.partner_id.id
-            assessment = request.env['hr.recruitment.assessment'].sudo().browse(int(post.get('applicant_assessment_id')))
+            assessment = request.env['hr.recruitment.assessment'].sudo().browse(
+                int(post.get('applicant_assessment_id')))
             assessment.sudo().write(vals)
             # request.env.user.partner_id.assesment_type_id = [(4, assessment.id)]
         return request.redirect("/applicant/profile")
@@ -950,7 +1022,8 @@ class WebsiteJobDescription(http.Controller):
     def delete_applicant_education(self, **post):
         result = {}
         if post.get('record_id'):
-            record_id = request.env['applicant.college.list'].browse(int(post.get('record_id')))
+            record_id = request.env['applicant.college.list'].browse(
+                int(post.get('record_id')))
             if record_id:
                 record_id.sudo().unlink()
         return json.dumps(result)
@@ -959,7 +1032,8 @@ class WebsiteJobDescription(http.Controller):
     def delete_applicant_skill(self, **post):
         result = {}
         if post.get('record_id'):
-            record_id = request.env['hr.employee.skill'].browse(int(post.get('record_id')))
+            record_id = request.env['hr.employee.skill'].browse(
+                int(post.get('record_id')))
             if record_id:
                 record_id.sudo().unlink()
         return json.dumps(result)
@@ -968,7 +1042,8 @@ class WebsiteJobDescription(http.Controller):
     def delete_applicant_assessment(self, **post):
         result = {}
         if post.get('record_id'):
-            record_id = request.env['hr.recruitment.assessment'].browse(int(post.get('record_id')))
+            record_id = request.env['hr.recruitment.assessment'].browse(
+                int(post.get('record_id')))
             if record_id:
                 record_id.sudo().unlink()
         return json.dumps(result)
@@ -977,7 +1052,8 @@ class WebsiteJobDescription(http.Controller):
     def delete_applicant_hobbies(self, **post):
         result = {}
         if post.get('record_id'):
-            record_id = request.env['hr.recruitment.hobbies'].browse(int(post.get('record_id')))
+            record_id = request.env['hr.recruitment.hobbies'].browse(
+                int(post.get('record_id')))
             if record_id:
                 record_id.sudo().unlink()
         return json.dumps(result)
@@ -986,7 +1062,8 @@ class WebsiteJobDescription(http.Controller):
     def delete_applicant_project(self, **post):
         result = {}
         if post.get('record_id'):
-            record_id = request.env['applicant.project'].browse(int(post.get('record_id')))
+            record_id = request.env['applicant.project'].browse(
+                int(post.get('record_id')))
             if record_id:
                 record_id.sudo().unlink()
         return json.dumps(result)
@@ -995,7 +1072,8 @@ class WebsiteJobDescription(http.Controller):
     def delete_applicant_shared_doc(self, **post):
         result = {}
         if post.get('record_id'):
-            record_id = request.env['share.applicant.data'].browse(int(post.get('record_id')))
+            record_id = request.env['share.applicant.data'].browse(
+                int(post.get('record_id')))
             if record_id:
                 record_id.sudo().unlink()
         return json.dumps(result)
@@ -1004,7 +1082,8 @@ class WebsiteJobDescription(http.Controller):
     def delete_applicant_course(self, **post):
         result = {}
         if post.get('record_id'):
-            record_id = request.env['applicant.courses'].browse(int(post.get('record_id')))
+            record_id = request.env['applicant.courses'].browse(
+                int(post.get('record_id')))
             if record_id:
                 record_id.sudo().unlink()
         return json.dumps(result)
@@ -1013,7 +1092,8 @@ class WebsiteJobDescription(http.Controller):
     def delete_applicant_certificate(self, **post):
         result = {}
         if post.get('record_id'):
-            record_id = request.env['applicant.certificate'].browse(int(post.get('record_id')))
+            record_id = request.env['applicant.certificate'].browse(
+                int(post.get('record_id')))
             if record_id:
                 record_id.sudo().unlink()
         return json.dumps(result)
@@ -1022,15 +1102,15 @@ class WebsiteJobDescription(http.Controller):
     def delete_applicant_award(self, **post):
         result = {}
         if post.get('record_id'):
-            record_id = request.env['applicant.awards'].browse(int(post.get('record_id')))
+            record_id = request.env['applicant.awards'].browse(
+                int(post.get('record_id')))
             if record_id:
                 record_id.sudo().unlink()
         return json.dumps(result)
 
-
-    @http.route('/save/profile', type='http', auth='user', website=True,csrf=False)
-    def save_applicant_profile(self,**post):
-        vals= {}
+    @http.route('/save/profile', type='http', auth='user', website=True, csrf=False)
+    def save_applicant_profile(self, **post):
+        vals = {}
         if post.get('save_personal_details') != 'true':
             if post['myfile']:
                 user_data = base64.encodestring(post['myfile'].read())
@@ -1077,7 +1157,7 @@ class WebsiteJobDescription(http.Controller):
         if post.get('zip'):
             vals['zip'] = post.get('zip')
         if post.get('country_id'):
-            vals['country_id']= int(post.get('country_id'))
+            vals['country_id'] = int(post.get('country_id'))
         if post.get('social_twitter_acc'):
             vals['social_twitter_acc'] = post.get('social_twitter_acc')
         if post.get('social_facebook_acc'):
@@ -1093,7 +1173,8 @@ class WebsiteJobDescription(http.Controller):
         if post.get('social_instagram_acc'):
             vals['social_instagram_acc'] = post.get('social_instagram_acc')
         if post.get('birth_date'):
-            vals['date_of_birth'] = dt.strptime(str(post.get('birth_date')), "%Y-%m-%d")
+            vals['date_of_birth'] = dt.strptime(
+                str(post.get('birth_date')), "%Y-%m-%d")
 
         partner = request.env.user.partner_id
         partner.sudo().write(vals)
@@ -1110,7 +1191,8 @@ class WebsiteJobDescription(http.Controller):
                     user_data = base64.encodestring(post['myfile'].read())
                     vals.update({'image_128': user_data})
                 if post.get('birth_date'):
-                    vals['candidate_birth_date'] = dt.strptime(str(post.get('birth_date')), "%Y-%m-%d")
+                    vals['candidate_birth_date'] = dt.strptime(
+                        str(post.get('birth_date')), "%Y-%m-%d")
 
                 if 'image_1920' in vals:
                     del vals['image_1920']
@@ -1151,17 +1233,15 @@ class WebsiteJobDescription(http.Controller):
     #     }
     #     return json.dumps(value)
 
-
-
-    #@http.route('/save/educational_details', type='http', auth='user', website=True)
-    #def save_educational_details(self, redirect=None, **post):
+    # @http.route('/save/educational_details', type='http', auth='user', website=True)
+    # def save_educational_details(self, redirect=None, **post):
 
 
 class AuthSignupHome(AuthSignupHome):
 
     @http.route()
     def web_login(self, *args, **kw):
-        
+
         ensure_db()
         response = super(AuthSignupHome, self).web_login(*args, **kw)
         response.qcontext.update(self.get_auth_signup_config())
@@ -1173,16 +1253,20 @@ class AuthSignupHome(AuthSignupHome):
             values = {}
             if kw.get('user_type'):
                 if kw.get('user_type') == 'candidate':
-                    user_access_group = request.env.ref('gtalent_pro_customization.g_candidate')
+                    user_access_group = request.env.ref(
+                        'gtalent_pro_customization.g_candidate')
                     values['gtalent_users'] = 'candidate'
                 if kw.get('user_type') == 'recruiter':
-                    user_access_group = request.env.ref('gtalent_pro_customization.g_recruiter')
+                    user_access_group = request.env.ref(
+                        'gtalent_pro_customization.g_recruiter')
                     values['gtalent_users'] = 'employer'
                 if kw.get('user_type') == 'college':
-                    user_access_group = request.env.ref('gtalent_pro_customization.g_college')
+                    user_access_group = request.env.ref(
+                        'gtalent_pro_customization.g_college')
                     values['gtalent_users'] = 'campus'
                 if user_access_group:
-                    logged_user.sudo().write({'groups_id': [(4, user_access_group.id)]})
+                    logged_user.sudo().write(
+                        {'groups_id': [(4, user_access_group.id)]})
             if logged_user.partner_id:
                 if kw.get('gender'):
                     values['app_gender'] = kw.get('gender')
@@ -1209,7 +1293,8 @@ class AuthSignupHome(AuthSignupHome):
                 if kw.get('phone'):
                     values['phone'] = kw.get('phone')
                 if kw.get('date_of_birth'):
-                    values['date_of_birth'] = dt.strptime(str(kw.get('date_of_birth')), "%Y-%m-%d")
+                    values['date_of_birth'] = dt.strptime(
+                        str(kw.get('date_of_birth')), "%Y-%m-%d")
                 if kw.get('experience'):
                     values['years_of_exp'] = kw.get('experience')
                 if kw.get('qualification'):
@@ -1233,27 +1318,35 @@ class AuthSignupHome(AuthSignupHome):
 
                 placement_officer = {}
                 if kw.get('placement_officer_name'):
-                    placement_officer['placement_officer_name'] = kw.get('placement_officer_name')
+                    placement_officer['placement_officer_name'] = kw.get(
+                        'placement_officer_name')
                 if kw.get('placement_officer_mobile'):
-                    placement_officer['placement_officer_contact'] = kw.get('placement_officer_mobile')
+                    placement_officer['placement_officer_contact'] = kw.get(
+                        'placement_officer_mobile')
                 if kw.get('placement_officer_email'):
-                    placement_officer['placement_officer_email'] = kw.get('placement_officer_email')
+                    placement_officer['placement_officer_email'] = kw.get(
+                        'placement_officer_email')
                 if placement_officer:
                     placement_officer['placement_officer_position'] = 'placement_officer'
                     placement_officer['campus_id'] = logged_user.partner_id.id
-                    officer = request.env['campus.placement.details'].sudo().create(placement_officer)
+                    officer = request.env['campus.placement.details'].sudo().create(
+                        placement_officer)
 
                 placement_head = {}
                 if kw.get('placement_head_name'):
-                    placement_head['placement_officer_name'] = kw.get('placement_head_name')
+                    placement_head['placement_officer_name'] = kw.get(
+                        'placement_head_name')
                 if kw.get('placement_head_mobile'):
-                    placement_head['placement_officer_contact'] = kw.get('placement_head_mobile')
+                    placement_head['placement_officer_contact'] = kw.get(
+                        'placement_head_mobile')
                 if kw.get('placement_head_email'):
-                    placement_head['placement_officer_email'] = kw.get('placement_head_email')
+                    placement_head['placement_officer_email'] = kw.get(
+                        'placement_head_email')
                 if placement_head:
                     placement_head['placement_officer_position'] = 'placement_head'
                     placement_head['campus_id'] = logged_user.partner_id.id
-                    officer = request.env['campus.placement.details'].sudo().create(placement_head)
+                    officer = request.env['campus.placement.details'].sudo().create(
+                        placement_head)
 
                 logged_user.partner_id.sudo().write(values)
         if request.httprequest.method == 'GET' and request.session.uid and request.params.get('redirect'):
@@ -1281,14 +1374,16 @@ class AuthSignupHome(AuthSignupHome):
                     if user_sudo and template:
                         template.sudo().with_context(
                             lang=user_sudo.lang,
-                            auth_login=werkzeug.url_encode({'auth_login': user_sudo.email}),
+                            auth_login=werkzeug.url_encode(
+                                {'auth_login': user_sudo.email}),
                         ).send_mail(user_sudo.id, force_send=True)
                 return self.web_login(*args, **kw)
             except UserError as e:
                 qcontext['error'] = e.name or e.value
             except (SignupError, AssertionError) as e:
                 if request.env["res.users"].sudo().search([("login", "=", qcontext.get("login"))]):
-                    qcontext["error"] = _("Another user is already registered using this email address.")
+                    qcontext["error"] = _(
+                        "Another user is already registered using this email address.")
                 else:
                     _logger.error("%s", e)
                     qcontext['error'] = _("Could not create a new account.")
@@ -1342,8 +1437,9 @@ class WebsiteHrRecruitment(WebsiteHrRecruitment):
         '/jobs/job_type/<string:job_type>/industry/<model("hr.recruitment.industry"):industry>',
         '/jobs/country/<model("res.country"):country>/job_type/<string:job_type>/industry/<model("hr.recruitment.industry"):industry>',
     ], type='http', auth="public", website=True, sitemap=sitemap_jobs)
-    def jobs(self, country=None, department=None, office_id=None,job_type=None,industry=None,search='', location='',browseby='', **kwargs):
-        env = request.env(context=dict(request.env.context, show_address=True, no_tag_br=True))
+    def jobs(self, country=None, department=None, office_id=None, job_type=None, industry=None, search='', location='', browseby='', **kwargs):
+        env = request.env(context=dict(request.env.context,
+                                       show_address=True, no_tag_br=True))
         Country = env['res.country']
         Jobs = env['hr.job']
         # group_by_job_role = []
@@ -1354,20 +1450,22 @@ class WebsiteHrRecruitment(WebsiteHrRecruitment):
 
         # List jobs available to current UID
         domain = request.website.website_domain()
-        job_ids = Jobs.search(domain, order="is_published desc, no_of_recruitment desc").ids
+        job_ids = Jobs.search(
+            domain, order="is_published desc, no_of_recruitment desc").ids
         # Browse jobs as superuser, because address is restricted
         jobs = Jobs.sudo().browse(job_ids)
 
         if search:
-            jobs = Jobs.search(['|', ('name', 'ilike', search), ('company_id.name', 'ilike', search)])
+            jobs = Jobs.search(
+                ['|', ('name', 'ilike', search), ('company_id.name', 'ilike', search)])
         elif location:
             jobs = Jobs.search([('address_id.state_id', 'ilike', location)])
         if search and location:
 
-            jobs = Jobs.search([ ('name', 'ilike', search),'|', ('company_id.name', 'ilike', search), ('address_id.state_id', 'ilike', location), ])
+            jobs = Jobs.search([('name', 'ilike', search), '|', ('company_id.name',
+                                                                 'ilike', search), ('address_id.state_id', 'ilike', location), ])
         # if browseby:
         #     jobs = Jobs.search([],groupby=browseby)
-
 
         # Default search by user country
         if not (country or department or office_id or kwargs.get('all_countries')):
@@ -1392,15 +1490,18 @@ class WebsiteHrRecruitment(WebsiteHrRecruitment):
         countries = set(o.country_id for o in offices if o.country_id)
 
         if department:
-            jobs = [j for j in jobs if j.department_id and j.department_id.id == department.id]
+            jobs = [
+                j for j in jobs if j.department_id and j.department_id.id == department.id]
 
         job_types = set(j.job_type for j in jobs if j.job_type)
         if job_type:
             jobs = [j for j in jobs if j.job_type and j.job_type == job_type]
 
-        industries = set(j.industry_type_id for j in jobs if j.industry_type_id)
+        industries = set(
+            j.industry_type_id for j in jobs if j.industry_type_id)
         if industry:
-            jobs = [j for j in jobs if j.industry_type_id and j.industry_type_id.id == industry.id]
+            jobs = [
+                j for j in jobs if j.industry_type_id and j.industry_type_id.id == industry.id]
 
         if office_id and office_id in [x.id for x in offices]:
             jobs = [j for j in jobs if j.address_id and j.address_id.id == office_id]
@@ -1412,12 +1513,42 @@ class WebsiteHrRecruitment(WebsiteHrRecruitment):
             'countries': countries,
             'departments': departments,
             'offices': offices,
-            'job_types':job_types,
-            'industries':industries,
+            'job_types': job_types,
+            'industries': industries,
             'country_id': country,
             'department_id': department,
             'office_id': office_id,
-            'job_type':job_type,
-            'industry_id':industry,
+            'job_type': job_type,
+            'industry_id': industry,
             # 'group_by_job_role':group_by_job_role,
         })
+
+    #  Manage Jobs
+
+    @http.route(['/website/manage/jobs'], type='http', auth="public", website=True)
+    def website_manage_jobs(self, **post):
+        values = {}
+        # applicant_id = False
+        # if 'applicant_id' in post and post.get('applicant_id'):
+        #     applicant = request.env['hr.applicant'].sudo().browse(
+        #         post.get('applicant_id'))
+        #     partner = applicant
+        #     applicant_id = True
+
+        #     # model = 'hr.applicant'
+        #     # attachment_id = request.env['ir.attachment'].sudo().search([('res_model', '=', model),('res_id', '=', applicant.id)],limit=1)
+        # else:
+        #     partner = request.env.user.partner_id
+        #     hr_applicant_obj = request.env['hr.applicant'].sudo().search(
+        #         ['|', ('email_from', '=', partner.email), ('partner_id', '=', partner.id)], limit=1)
+        #     if hr_applicant_obj:
+        #         model = 'hr.applicant'
+        #         # attachment_id = request.env['ir.attachment'].sudo().search(
+        #         #     [('res_model', '=', model), ('res_id', '=', hr_applicant_obj.id)])
+        #         values.update(
+        #             {'hr_applicant_obj': hr_applicant_obj.attachment_ids})
+        # values.update({
+        #     'partner': partner,
+        #     'applicant_id': applicant_id,
+        # })
+        return request.render("gtalent_pro_customization.managed_jobs", values)

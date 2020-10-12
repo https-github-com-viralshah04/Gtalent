@@ -1749,6 +1749,7 @@ Pricing Table
   padding: 30px;
   box-shadow: 0px 0px 14px rgba(191, 191, 191, 0.24); }
 
+.full-time-manage,
 .full-time,
 .part-time {
   font-size: 11px;
@@ -1763,14 +1764,15 @@ Pricing Table
   -o-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out; }
 
-.full-time {
+.full-time, .full-time-manage {
   color: #26ae61;
   background: #d5ffe7; }
 
 .part-time {
   color: #ff6046;
   background: #ffd8d2; }
-
+  
+.full-time-manage:hover,
 .full-time:hover,
 .part-time:hover,
 .btn-open:hover {

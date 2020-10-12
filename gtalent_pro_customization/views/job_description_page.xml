@@ -78,12 +78,12 @@
                                 </div>
                                 <div class="float-right col-6 p-5">
                                     <!--<t t-if="job.job_type">-->
-                                    <li ><b>Salary Range : </b> Rs 1.20 - 3.00 Lacs p.a.</li>
-                                    <!--</t>-->
-                                    <li t-if="job.work_location" ><b>Work Location : </b><t t-esc="job.work_location"/></li>
-                                    <li t-if="job.s_key_skill" ><b>Secondary Key Skills : </b><t t-esc="job.s_key_skill"/></li>
-                                    <li t-if="job.specialization" ><b>Specialization : </b><t t-esc="job.specialization"/></li>
                                     <li t-if="job.degree_id" ><b>Degree : </b><t t-esc="job.degree_id.name"/></li>
+                                    <li t-if="job.specialization" ><b>Specialization : </b><t t-esc="job.specialization"/></li>
+                                    <!--</t>-->
+                                    <li t-if="job.s_key_skill" ><b>Secondary Skills : </b><t t-esc="job.s_key_skill"/></li>
+                                    <li t-if="job.work_location" ><b>Work Location : </b><t t-esc="job.work_location"/></li>
+                                    <li ><b>Salary Range : </b> Rs 1.20 - 3.00 Lacs p.a.</li>
                                 </div>
                             </ul>
                       </div>

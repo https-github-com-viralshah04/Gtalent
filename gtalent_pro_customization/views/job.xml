@@ -42,12 +42,12 @@
                                       <h3><a t-attf-href="/jobs/detail/#{ slug(record) }"><span t-field="record.name" /> <span t-field="record.job_type" /></a></h3>
                                       <p class="brand"><span t-field="record.company_id.name" /></p>
                                       <p class="brand">Exp:<span t-field="record.experience_year"/></p>
-                                      <div class="tags">  
-                                        <span><i class="lni-map-marker"></i> <span t-field="record.address_id.city" /></span> 
+                                      <div class="tags row">  
+                                        <span t-if="record.address_id.city"><i class="lni-map-marker"></i> <span t-field="record.address_id.city" /></span> 
                                         <span><i class="lni-map-marker"></i> <span t-field="record.address_id.state_id.name" /></span>
                                         <span><i class="lni-user"></i> <span t-field="record.address_id.country_id.name" /></span>  
                                       </div>
-                                      <span class="brand">Posted date:<span t-field="record.create_date"/></span>
+                                      <span class="brand row">Posted date:<span t-field="record.create_date"/></span>
                                       <span class="text-right full-time"><span t-field="record.job_type" /></span>
                                     </div>
                                   </div>
